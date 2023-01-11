@@ -3,10 +3,10 @@ import './App.css'
 import { ChakraProvider } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+const queryClient = new QueryClient()
+
 function App(): JSX.Element {
   const [count, setCount] = useState(0)
-
-  const queryClient = new QueryClient()
 
   return (
     <QueryClientProvider client={queryClient}>
