@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import './App.css'
 import { ChakraProvider } from '@chakra-ui/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
-function App(): JSX.Element {
+function Sample(): JSX.Element {
   const [count, setCount] = useState(0)
 
   return (
@@ -29,6 +30,17 @@ function App(): JSX.Element {
       </ChakraProvider>
     </QueryClientProvider>
   )
+}
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Sample />,
+  },
+])
+
+function App(): JSX.Element {
+  return <RouterProvider router={router} />
 }
 
 export default App
