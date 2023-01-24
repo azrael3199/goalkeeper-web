@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   FormControl,
   FormErrorMessage,
@@ -6,6 +7,7 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Link,
   Stack,
   Text,
 } from '@chakra-ui/react'
@@ -160,6 +162,15 @@ const Register = (): JSX.Element => {
         >
           Sign Up
         </Button>
+        <Box textAlign="center" paddingY="20px">
+          <Text>
+            Already a member? Sign in
+            <Link href="/login" color="teal.400">
+              {' '}
+              here.
+            </Link>
+          </Text>
+        </Box>
       </Stack>
     </form>
   )
