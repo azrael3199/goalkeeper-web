@@ -43,6 +43,16 @@ const Register = (): JSX.Element => {
 
   return (
     <Center bg="midnightGreen" style={styles.bg}>
+      <Box position="fixed" bgGradient="linear(135deg, malachite, teal)" style={styles.square as object} />
+      <Box position="fixed" bgGradient="linear(45deg, ripeMango, yellow)" style={styles.circle as object} />
+      <Box position="fixed" bgGradient="linear(45deg, gray.400, isabelline)" style={styles.triangle as object} />
+      <Box position="fixed" bgGradient="linear(to-r, teal, cyan)" style={styles.diamond as object} />
+
+      <Box position="fixed" bgGradient="linear(135deg, malachite, teal)" style={styles.square1 as object} />
+      <Box position="fixed" bgGradient="linear(45deg, ripeMango, yellow)" style={styles.circle1 as object} />
+      <Box position="fixed" bgGradient="linear(45deg, gray.400, isabelline)" style={styles.triangle1 as object} />
+      <Box position="fixed" bgGradient="linear(to-r, teal, cyan)" style={styles.diamond1 as object} />
+
       <Card bg="white" style={styles.card}>
         <form className="form-login">
           <Stack spacing={4} w="md">

@@ -1,9 +1,15 @@
+import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { fireEvent, render, screen } from '@testing-library/react'
 import Register from '../pages/Register'
+import theme from '../theme'
 
 describe('Register Page', (): void => {
   beforeEach((): void => {
-    render(<Register />)
+    render(
+      <ChakraProvider theme={extendTheme(theme)}>
+        <Register />
+      </ChakraProvider>
+    )
   })
   test('should render sign up with google', (): void => {
     expect(screen.getByText(/Sign Up Using Google/i)).toBeInTheDocument()
