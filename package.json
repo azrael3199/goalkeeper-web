@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:watch": "jest --watchAll --collectCoverage",
-    "lint": "eslint --config .eslintrc.json 'src/**/*.{ts,tsx}'"
+    "lint": "eslint --config .eslintrc.json \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.6",
