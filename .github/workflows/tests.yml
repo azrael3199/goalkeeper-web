@@ -20,7 +20,7 @@ jobs:
       run: pnpm lint
     
     - name: Run Tests
-      run: pnpm test
+      run: pnpm test --coverage
     
     - name: Code Coverage Report
       uses: irongut/CodeCoverageSummary@v1.3.0
