@@ -4,10 +4,36 @@ jobs:
   integration-1:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
-    - run: npm install -g pnpm
-    - run: pnpm install
-    - run: pnpm lint
-    - run: pnpm run build
-    - run: pnpm test
+    - name: Checkout
+      uses: actions/checkout@v2
+    
+    - name: Setup Node
+      uses: actions/setup-node@v2
+    
+    - name: Install PNPM
+      run: npm install -g pnpm
+    
+    - name: Install Deps
+      run: pnpm install
+    
+    - name: Run Lint
+      run: pnpm lint
+    
+    - name: Run Tests
+      run: pnpm test
+    
+    - name: Code Coverage Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
+      with:
+        filename: coverage/index.html
+        badge: true
+        fail_below_min: true
+        format: markdown
+        hide_branch_rate: false
+        hide_complexity: true
+        indicators: true
+        output: both
+        thresholds: '60 80'
+    
+    - name: Build App
+      run: pnpm run build
