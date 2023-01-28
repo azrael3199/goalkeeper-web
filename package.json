@@ -9,6 +9,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
+    "test:coverage": "vitest --coverage",
     "test:watch": "jest --watchAll --collectCoverage",
     "lint": "eslint --config .eslintrc.json \"src/**/*.{ts,tsx}\""
   },
@@ -42,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
     "@vitejs/plugin-react": "^3.0.0",
+    "@vitest/coverage-c8": "^0.28.3",
     "eslint": "^8.31.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",

@@ -32,15 +32,15 @@ const Login = (): JSX.Element => {
     isPasswordFocused
 
   return (
-    <Center bg="midnightGreen" style={styles.bg}>
-      <Box position="fixed" bgGradient="linear(135deg, malachite, teal)" style={styles.square as object} />
-      <Box position="fixed" bgGradient="linear(45deg, ripeMango, yellow)" style={styles.circle as object} />
-      <Box position="fixed" bgGradient="linear(45deg, gray.400, isabelline)" style={styles.triangle as object} />
+    <Center bg="midnightGreen.500" style={styles.bg}>
+      <Box position="fixed" bgGradient="linear(135deg, malachite.400, teal)" style={styles.square as object} />
+      <Box position="fixed" bgGradient="linear(45deg, ripeMango.500, yellow)" style={styles.circle as object} />
+      <Box position="fixed" bgGradient="linear(45deg, gray.400, isabelline.100)" style={styles.triangle as object} />
       <Box position="fixed" bgGradient="linear(to-r, teal, cyan)" style={styles.diamond as object} />
 
-      <Box position="fixed" bgGradient="linear(135deg, malachite, teal)" style={styles.square1 as object} />
-      <Box position="fixed" bgGradient="linear(45deg, ripeMango, yellow)" style={styles.circle1 as object} />
-      <Box position="fixed" bgGradient="linear(45deg, gray.400, isabelline)" style={styles.triangle1 as object} />
+      <Box position="fixed" bgGradient="linear(135deg, malachite.400, teal)" style={styles.square1 as object} />
+      <Box position="fixed" bgGradient="linear(45deg, ripeMango.500, yellow)" style={styles.circle1 as object} />
+      <Box position="fixed" bgGradient="linear(45deg, gray.400, isabelline.100)" style={styles.triangle1 as object} />
       <Box position="fixed" bgGradient="linear(to-r, teal, cyan)" style={styles.diamond1 as object} />
 
       <Card bg="white" style={styles.card}>
@@ -51,7 +51,7 @@ const Login = (): JSX.Element => {
               title="Signing in using Google Account"
               leftIcon={<FcGoogle />}
               variant="outline"
-              colorScheme="teal"
+              colorScheme="midnightGreen"
               alignItems="center"
               justifyContent="center"
             >
@@ -103,7 +103,7 @@ const Login = (): JSX.Element => {
             </FormControl>
             <Button
               leftIcon={<MdSend />}
-              colorScheme="teal"
+              colorScheme="midnightGreen"
               variant="solid"
               aria-label="Login Into GoalKeeper"
               type="submit"
@@ -113,7 +113,7 @@ const Login = (): JSX.Element => {
             <Box textAlign="center" paddingY="20px">
               <Text>
                 Not a member yet? Sign up
-                <Link href="/register" color="teal.400">
+                <Link href="/register" color="midnightGreen.500">
                   {' '}
                   here.
                 </Link>
