@@ -31,8 +31,8 @@ describe('Register Page', (): void => {
       expect(screen.getByText(/Enter A valid First Name/i)).toBeInTheDocument()
     })
     test('no error if firstname is valid', (): void => {
-      const passwordInput = screen.getByPlaceholderText(/Enter Password/i)
-      fireEvent.change(passwordInput, { target: { value: 'Jacob' } })
+      const firstnameInput = screen.getByPlaceholderText(/Enter First Name/i)
+      fireEvent.change(firstnameInput, { target: { value: 'Jacob' } })
       expect(screen.queryByText(/Enter A valid First Name/i)).not.toBeInTheDocument()
     })
   })
@@ -43,6 +43,16 @@ describe('Register Page', (): void => {
     })
     test('correct input element', (): void => {
       expect(screen.getByPlaceholderText(/Enter Last Name/i)).toBeInTheDocument()
+    })
+    test('error if lastname is invalid', (): void => {
+      const lastnameInput = screen.getByPlaceholderText(/Enter Last Name/i)
+      fireEvent.change(lastnameInput, { target: { value: '12345' } })
+      expect(screen.getByText(/Enter A valid Last Name/i)).toBeInTheDocument()
+    })
+    test('no error if lastname is valid', (): void => {
+      const lastnameInput = screen.getByPlaceholderText(/Enter Last Name/i)
+      fireEvent.change(lastnameInput, { target: { value: 'Jacob' } })
+      expect(screen.queryByText(/Enter A valid Last Name/i)).not.toBeInTheDocument()
     })
   })
 
