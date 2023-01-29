@@ -27,10 +27,14 @@ const Register = (): JSX.Element => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [isFirstnameFocused, setIsFirstnameFocused] = useState(false)
+  const [isLastnameFocused, setIsLastnameFocused] = useState(false)
   const [isEmailFocused, setIsEmailFocused] = useState(false)
   const [isPasswordFocused, setIsPasswordFocused] = useState(false)
   const [isConfirmPasswordFocused, setIsConfirmPasswordFocused] = useState(false)
 
+  const isFirstnameError = !/^[a-z ,.'-]+$/i.test(firstname) && isFirstnameFocused
+  const isLastnameError = !/^[a-z ,.'-]+$/i.test(lastname) && isLastnameFocused
   const isEmailError = !/^([a-z0-9_.]{3,})@([a-z0-9-+]{2,})\.([a-z0-9.-]{2,})$/i.test(email) && isEmailFocused
   const isPasswordError =
     !/^(?=(.*[a-z]){3,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/.test(password) &&
@@ -71,7 +75,7 @@ const Register = (): JSX.Element => {
               OR
             </Text>
             <hr />
-            <FormControl>
+            <FormControl isInvalid={isFirstnameError}>
               <FormLabel>First Name</FormLabel>
               <InputGroup>
                 <InputLeftAddon pointerEvents="none" color="gray.600">
@@ -84,11 +88,13 @@ const Register = (): JSX.Element => {
                   value={firstname}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
                     setFirstname(e.target.value.trim())
+                    setIsFirstnameFocused(true)
                   }}
                 />
               </InputGroup>
+              {isFirstnameFocused ? <FormErrorMessage>Enter a valid First Name</FormErrorMessage> : <></>}
             </FormControl>
-            <FormControl>
+            <FormControl isInvalid={isLastnameError}>
               <FormLabel>Last Name</FormLabel>
               <InputGroup>
                 <InputLeftAddon pointerEvents="none" color="gray.600">
@@ -101,9 +107,11 @@ const Register = (): JSX.Element => {
                   value={lastname}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
                     setLastname(e.target.value.trim())
+                    setIsLastnameFocused(true)
                   }}
                 />
               </InputGroup>
+              {isLastnameFocused ? <FormErrorMessage>Enter a valid Last Name</FormErrorMessage> : <></>}
             </FormControl>
             <FormControl isInvalid={isEmailError}>
               <FormLabel>Email</FormLabel>

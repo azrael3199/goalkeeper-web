@@ -17,6 +17,7 @@ import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { FiKey, FiMail } from 'react-icons/fi'
 import { MdSend } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
 
 import styles from '../styles/auth_styles'
 
@@ -26,10 +27,16 @@ const Login = (): JSX.Element => {
   const [isEmailFocused, setIsEmailFocused] = useState(false)
   const [isPasswordFocused, setIsPasswordFocused] = useState(false)
 
+  const navigate = useNavigate()
+
   const isEmailError = !/^([a-z0-9_.]{3,})@([a-z0-9-+]{2,})\.([a-z0-9.-]{2,})$/i.test(email) && isEmailFocused
   const isPasswordError =
     !/^(?=(.*[a-z]){3,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/.test(password) &&
     isPasswordFocused
+
+  const handleSubmit = (): void => {
+    navigate('/')
+  }
 
   return (
     <Center bg="midnightGreen.500" style={styles.bg}>
@@ -44,7 +51,7 @@ const Login = (): JSX.Element => {
       <Box position="fixed" bgGradient="linear(to-r, teal, cyan)" style={styles.diamond1 as object} />
 
       <Card bg="white" style={styles.card}>
-        <form className="form-login">
+        <form className="form-login" onSubmit={handleSubmit}>
           <Stack spacing={4} w="md">
             <Button
               aria-label="Sign in using Google Account"
