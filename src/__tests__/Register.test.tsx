@@ -1,14 +1,17 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { fireEvent, render, screen } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
 import Register from '../pages/Register'
 import theme from '../theme'
 
 describe('Register Page', (): void => {
   beforeEach((): void => {
     render(
-      <ChakraProvider theme={extendTheme(theme)}>
-        <Register />
-      </ChakraProvider>
+      <MemoryRouter initialEntries={['/register']}>
+        <ChakraProvider theme={extendTheme(theme)}>
+          <Register />
+        </ChakraProvider>
+      </MemoryRouter>
     )
   })
   test('should render sign up with google', (): void => {
@@ -21,6 +24,16 @@ describe('Register Page', (): void => {
     })
     test('correct input element', (): void => {
       expect(screen.getByPlaceholderText(/Enter First Name/i)).toBeInTheDocument()
+    })
+    test('error if firstname is invalid', (): void => {
+      const firstnameInput = screen.getByPlaceholderText(/Enter First Name/i)
+      fireEvent.change(firstnameInput, { target: { value: '12345' } })
+      expect(screen.getByText(/Enter A valid First Name/i)).toBeInTheDocument()
+    })
+    test('no error if firstname is valid', (): void => {
+      const passwordInput = screen.getByPlaceholderText(/Enter Password/i)
+      fireEvent.change(passwordInput, { target: { value: 'Jacob' } })
+      expect(screen.queryByText(/Enter A valid First Name/i)).not.toBeInTheDocument()
     })
   })
 

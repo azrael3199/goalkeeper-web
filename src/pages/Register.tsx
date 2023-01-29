@@ -20,6 +20,7 @@ import { CgProfile } from 'react-icons/cg'
 import { MdSend } from 'react-icons/md'
 
 import styles from '../styles/auth_styles'
+import { useNavigate } from 'react-router-dom'
 
 const Register = (): JSX.Element => {
   const [firstname, setFirstname] = useState('')
@@ -33,6 +34,8 @@ const Register = (): JSX.Element => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false)
   const [isConfirmPasswordFocused, setIsConfirmPasswordFocused] = useState(false)
 
+  const navigate = useNavigate()
+
   const isFirstnameError = !/^[a-z ,.'-]+$/i.test(firstname) && isFirstnameFocused
   const isLastnameError = !/^[a-z ,.'-]+$/i.test(lastname) && isLastnameFocused
   const isEmailError = !/^([a-z0-9_.]{3,})@([a-z0-9-+]{2,})\.([a-z0-9.-]{2,})$/i.test(email) && isEmailFocused
@@ -44,6 +47,10 @@ const Register = (): JSX.Element => {
     !/^(?=(.*[a-z]){3,})(?=(.*[A-Z]){2,})(?=(.*[0-9]){2,})(?=(.*[!@#$%^&*()\-__+.]){1,}).{8,}$/.test(confirmPassword) &&
     isConfirmPasswordFocused &&
     password !== confirmPassword
+
+  const handleSubmit = (): void => {
+    navigate('/login')
+  }
 
   return (
     <Center bg="midnightGreen.500" style={styles.bg}>
@@ -58,7 +65,7 @@ const Register = (): JSX.Element => {
       <Box position="fixed" bgGradient="linear(to-r, teal, cyan)" style={styles.diamond1 as object} />
 
       <Card bg="white" style={styles.card}>
-        <form className="form-login">
+        <form className="form-login" onSubmit={handleSubmit}>
           <Stack spacing={4} w="md">
             <Button
               aria-label="Sign up using Google Account"
