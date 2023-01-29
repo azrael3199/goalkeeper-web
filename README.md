@@ -13,6 +13,8 @@ $ pnpm dev
 
 # Current Roadmap
 
+The Project is still in its infancy
+
 To see our latest feature list and progress, checkout our [ROADMAP.md](https://github.com/azrael3199/goalkeeper-web/blob/main/docs/ROADMAP.md)
 
 # Contributing
