@@ -14,20 +14,18 @@ function Sample(): JSX.Element {
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={(): void => setCount((count: number): number => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <p>Theme</p>
         <Box padding={30}>
-          <Box bg="malachite" height={50} padding={10}>
+          <Box bg="malachite.500" height={50} padding={10}>
             Malachite
           </Box>
-          <Box bg="midnightGreen" height={50} padding={10}>
+          <Box bg="midnightGreen.500" height={50} padding={10}>
             Midnight Green
           </Box>
-          <Box bg="isabelline" height={50} padding={10}>
+          <Box bg="isabelline.100" height={50} padding={10}>
             Isabelline
           </Box>
-          <Box bg="ripeMango" height={50} padding={10}>
+          <Box bg="ripeMango.500" height={50} padding={10}>
             Ripe Mango
           </Box>
         </Box>

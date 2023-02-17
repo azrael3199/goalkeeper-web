@@ -27,7 +27,8 @@
   "plugins": [
     "react",
     "@typescript-eslint",
-    "prettier"
+    "prettier",
+    "html"
   ],
   "settings": {
     "react": {

@@ -4,7 +4,7 @@
 }
 
 .form-login {
-  height: 80vh;
+  height: 'fit-content';
   /* width: 80vw; */
   display: flex;
   align-items: center;

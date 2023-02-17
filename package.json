@@ -9,8 +9,9 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
+    "test:coverage": "vitest --coverage --reporter=junit --outputFile=coverage/coverage.xml",
     "test:watch": "jest --watchAll --collectCoverage",
-    "lint": "eslint --config .eslintrc.json 'src/**/*.{ts,tsx}'"
+    "lint": "eslint --config .eslintrc.json \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@chakra-ui/react": "^2.4.6",
@@ -42,7 +43,9 @@
     "@typescript-eslint/eslint-plugin": "^5.48.0",
     "@typescript-eslint/parser": "^5.48.0",
     "@vitejs/plugin-react": "^3.0.0",
+    "@vitest/coverage-c8": "^0.28.3",
     "eslint": "^8.31.0",
+    "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.11",
