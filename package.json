@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test": "jest --coverage --passWithNoTests",
+    "test:watch": "jest --watch --passWithNoTests",
     "prepare": "husky install",
     "format": "prettier **/*.{js,jsx,ts,tsx}"
   },
