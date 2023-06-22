@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '@root/context/AuthContext';
 
 interface ProtectedRouteProps {
@@ -12,11 +12,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const router = useRouter();
   const { authState } = useContext(AuthContext);
 
-  if (!authState.isAuthenticated) {
-    // Redirect to login page if the user is not authenticated
-    router.push('/login');
-    return null;
-  }
+  useEffect(() => {
+    if (!authState.isAuthenticated) {
+      // Redirect to login page if the user is not authenticated
+      router.push('/login');
+    }
+  }, [authState.isAuthenticated, router]);
+
+  if (!authState.isAuthenticated) return null; // TODO: Show some loading placeholder?
 
   return children;
 };
