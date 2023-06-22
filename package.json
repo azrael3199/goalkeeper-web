@@ -7,8 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --coverage --watch",
-    "prepare": "husky install"
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "prepare": "husky install",
+    "format": "prettier **/*.{js,jsx,ts,tsx}"
   },
   "jest": {
     "coverageThreshold": {
