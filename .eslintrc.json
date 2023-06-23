@@ -12,6 +12,9 @@
   ],
   "plugins": ["react", "prettier", "jsx-a11y", "import"],
   "rules": {
+    "function-paren-newline": "off",
+    "implicit-arrow-linebreak": "off",
+    "no-confusing-arrow": "off",
     "object-curly-newline": "off",
     "comma-dangle": "off",
     "import/extensions": "off",
@@ -21,6 +24,7 @@
     "import/namespace": 2,
     "import/default": 2,
     "import/export": 2,
+    "react/require-default-props": "off",
     "react/function-component-definition": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-one-expression-per-line": "off",
