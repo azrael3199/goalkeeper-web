@@ -83,7 +83,7 @@ const LandingPage = () => {
               </div>
             ))}
           </div>
-          <div className="absolute bottom-2 md:bottom-6 w-full flex justify-center mt-6">
+          <div className="absolute bottom-1 md:bottom-6 w-full flex justify-center mt-6">
             {slides.map((slide, index) => (
               <div
                 role="tab"
