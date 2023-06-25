@@ -1,4 +1,4 @@
-import ProtectedRoute from '@root/components/client/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from '@root/components/client/ProtectedRoute';
 import React from 'react';
 
 const Dashboard: React.FC = () => (

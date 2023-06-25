@@ -1,13 +1,14 @@
 'use client';
 
 import env from '@root/environment';
+import paths from '@root/routes';
 import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const router = useRouter();
 
   const navigateToLogin = () => {
-    router.push('/login');
+    router.push(paths.auth);
   };
 
   return (

@@ -1,7 +1,7 @@
 'use client';
 
-import Navbar from '@root/components/client/Navbar/Navbar';
-import OnboardingSlide from '@root/components/server/OnboardingSlide/OnboardingSlide';
+import Navbar from '@root/components/client/Navbar';
+import OnboardingSlide from '@root/components/server/OnboardingSlide';
 import React, { useEffect, useState } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../i18n';
@@ -83,7 +83,7 @@ const LandingPage = () => {
               </div>
             ))}
           </div>
-          <div className="absolute sm:bottom-2 md:bottom-6 w-full flex justify-center mt-6">
+          <div className="absolute bottom-2 md:bottom-6 w-full flex justify-center mt-6">
             {slides.map((slide, index) => (
               <div
                 role="tab"
