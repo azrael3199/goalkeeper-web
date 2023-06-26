@@ -16,6 +16,7 @@ i18n.use(initReactI18next).init({
   interpolation: {
     escapeValue: false, // React already escapes strings by default
   },
+  debug: process.env.NODE_ENV === 'development',
 });
 
 export default i18n;

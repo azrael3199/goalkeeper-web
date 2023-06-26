@@ -1,8 +1,29 @@
 {
-    "onbr.slideTitle1": "Your Personal Goal Management Companion",
-    "onbr.slideTitle2": "Map Your Path to Success",
-    "onbr.slideTitle3": "Measure Your Success",
-    "onbr.slideDesc1": "Embark on a transformative journey towards realizing your aspirations and ambitions with Goalkeeper. Our comprehensive goal management app empowers you to set, track, and conquer your goals, both short-term and long-term. Let us guide you towards a path of growth, fulfillment, and personal success.",
-    "onbr.slideDesc2": "Take charge of your destiny by breaking down your long-term vision into tangible short-term goals. With Goalkeeper, you can define SMART objectives that propel you forward. Seamlessly align your daily actions with your grandest aspirations, and witness the power of focused progress.",
-    "onbr.slideDesc3": "Elevate your performance with daily tracking through Goalkeeper. Cultivate a habit of consistent progress as you record your accomplishments, milestones, and milestones on your journey. Our intuitive interface provides insightful visuals and metrics that illuminate your path towards success. Stay motivated, stay accountable, and unlock the limitless potential within you."
+    "slideTitle1": "Your Personal Goal Management Companion",
+    "slideTitle2": "Map Your Path to Success",
+    "slideTitle3": "Measure Your Success",
+    "slideDesc1": "Embark on a transformative journey towards realizing your aspirations and ambitions with Goalkeeper. Our comprehensive goal management app empowers you to set, track, and conquer your goals, both short-term and long-term. Let us guide you towards a path of growth, fulfillment, and personal success.",
+    "slideDesc2": "Take charge of your destiny by breaking down your long-term vision into tangible short-term goals. With Goalkeeper, you can define SMART objectives that propel you forward. Seamlessly align your daily actions with your grandest aspirations, and witness the power of focused progress.",
+    "slideDesc3": "Elevate your performance with daily tracking through Goalkeeper. Cultivate a habit of consistent progress as you record your accomplishments, milestones, and milestones on your journey. Our intuitive interface provides insightful visuals and metrics that illuminate your path towards success. Stay motivated, stay accountable, and unlock the limitless potential within you.",
+    "welcomeBack": "Welcome Back!",
+    "journeyBegin": "Let the journey begin!",
+    "login": "Login",
+    "register": "Register",
+    "loginScreen": {
+        "email": "Email",
+        "password": "Password",
+        "signUp": "Sign Up",
+        "signInWithGoogle": "Sign In with Google",
+        "leadToSignUp": "Don't have an account? <0>Sign Up</0>."
+    },
+    "registerScreen": {
+        "firstname": "First Name",
+        "lastname": "Last Name",
+        "email": "Email",
+        "password": "Password",
+        "confirmPassword": "Confirm Password",
+        "signIn": "Sign In",
+        "signUpWithGoogle": "Sign Up with Google",
+        "leadToSignIn": "Already have an account? <0>Sign In</0>"
+    }
 }
