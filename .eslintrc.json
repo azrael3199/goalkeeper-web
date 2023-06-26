@@ -10,8 +10,14 @@
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "plugins": ["react", "prettier", "jsx-a11y", "import"],
+  "plugins": [
+    "react",
+    "prettier",
+    "jsx-a11y",
+    "import"
+  ],
   "rules": {
+    "operator-linebreak": "off",
     "function-paren-newline": "off",
     "implicit-arrow-linebreak": "off",
     "no-confusing-arrow": "off",
@@ -30,7 +36,36 @@
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-filename-extension": [
       2,
-      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+      {
+        "extensions": [
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ]
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
     ]
   }
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import Navbar from '@root/components/client/Navbar/Navbar';
-import OnboardingSlide from '@root/components/server/OnboardingSlide/OnboardingSlide';
+import Navbar from '@root/components/client/Navbar';
+import OnboardingSlide from '@root/components/server/OnboardingSlide';
 import React, { useEffect, useState } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import i18n from '../i18n';
@@ -10,20 +10,20 @@ const slides = [
   {
     key: 'slide_1',
     imageSrc: '/illustrations/onboarding_slide1.svg',
-    title: 'onbr.slideTitle1',
-    description: 'onbr.slideDesc1',
+    title: 'slideTitle1',
+    description: 'slideDesc1',
   },
   {
     key: 'slide_2',
     imageSrc: '/illustrations/onboarding_slide2.svg',
-    title: 'onbr.slideTitle2',
-    description: 'onbr.slideDesc2',
+    title: 'slideTitle2',
+    description: 'slideDesc2',
   },
   {
     key: 'slide_3',
     imageSrc: '/illustrations/onboarding_slide3.svg',
-    title: 'onbr.slideTitle3',
-    description: 'onbr.slideDesc3',
+    title: 'slideTitle3',
+    description: 'slideDesc3',
   },
 ];
 
@@ -83,14 +83,14 @@ const LandingPage = () => {
               </div>
             ))}
           </div>
-          <div className="absolute sm:bottom-2 md:bottom-6 w-full flex justify-center mt-6">
+          <div className="fixed bottom-6 w-full flex justify-center mt-6">
             {slides.map((slide, index) => (
               <div
                 role="tab"
                 tabIndex={index}
                 key={slide.key}
                 className={`w-4 h-4 mx-2 rounded-full ${
-                  index === activeSlide ? 'bg-gray-200' : 'bg-gray-500'
+                  index === activeSlide ? 'bg-gray-400' : 'bg-gray-700'
                 }`}
                 onClick={() => handleSlideChange(index)}
                 onKeyDown={(e) => handleSlideMove(e)}

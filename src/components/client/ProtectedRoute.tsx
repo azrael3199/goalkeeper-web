@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '@root/context/AuthContext';
+import paths from '@root/routes';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -15,7 +16,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   useEffect(() => {
     if (!authState.isAuthenticated) {
       // Redirect to login page if the user is not authenticated
-      router.push('/login');
+      router.push(paths.login);
     }
   }, [authState.isAuthenticated, router]);
 
