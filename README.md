@@ -2,6 +2,9 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+See this designs:
+https://www.figma.com/file/tCp3GrG497FxcmrUY0tgkB/Task-Management-Web-App-(Community)?type=design&mode=design&t=VY4BsIKQcXHcDU5x-0
+
 First, run the development server:
 
 ```bash
