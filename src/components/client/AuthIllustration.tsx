@@ -21,9 +21,7 @@ const AuthIllustration = ({ register = false }: IAuthIllustrationProps) => (
     <div className="justify-center items-center hidden md:flex md:w-full md:h-5/6">
       <Image
         src={
-          register
-            ? '/illustrations/onboarding_slide2_UNUSED.svg'
-            : '/illustrations/login.svg'
+          register ? '/illustrations/register.svg' : '/illustrations/login.svg'
         }
         alt="Auth"
         style={{
