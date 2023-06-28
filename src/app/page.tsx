@@ -83,11 +83,14 @@ const LandingPage = () => {
               </div>
             ))}
           </div>
-          <div className="fixed bottom-6 w-full flex justify-center mt-6">
+          <div
+            role="tablist"
+            className="fixed bottom-6 w-full flex justify-center mt-6"
+          >
             {slides.map((slide, index) => (
               <div
                 role="tab"
-                tabIndex={index}
+                tabIndex={0}
                 key={slide.key}
                 className={`w-4 h-4 mx-2 rounded-full ${
                   index === activeSlide ? 'bg-gray-400' : 'bg-gray-700'

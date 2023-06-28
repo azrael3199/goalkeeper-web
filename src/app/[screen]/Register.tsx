@@ -12,7 +12,7 @@ const inputClassName =
 const Register = () => {
   const { t } = useTranslation();
   const signInLink = (
-    <a href={paths.login} className="text-primary">
+    <a href={paths.login} className="text-primary-500">
       {t('registerScreen.signIn')}
     </a>
   );
@@ -67,9 +67,9 @@ const Register = () => {
         <div className="text-center mb-4">
           <button
             type="submit"
-            className="bg-primary hover:bg-cyan-500 text-white py-2 px-4 rounded w-full"
+            className="bg-primary-500 hover:bg-primary-600 text-white py-2 px-4 rounded w-full"
           >
-            <b className="uppercase">{t('login')}</b>
+            <b className="uppercase">{t('registerScreen.signUp')}</b>
           </button>
         </div>
         <div className="flex items-center justify-center w-full mb-4">

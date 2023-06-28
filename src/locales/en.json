@@ -12,6 +12,7 @@
     "loginScreen": {
         "email": "Email",
         "password": "Password",
+        "login": "Login",
         "signUp": "Sign Up",
         "signInWithGoogle": "Sign In with Google",
         "leadToSignUp": "Don't have an account? <0>Sign Up</0>."
@@ -23,6 +24,7 @@
         "password": "Password",
         "confirmPassword": "Confirm Password",
         "signIn": "Sign In",
+        "signUp": "Sign Up",
         "signUpWithGoogle": "Sign Up with Google",
         "leadToSignIn": "Already have an account? <0>Sign In</0>"
     }

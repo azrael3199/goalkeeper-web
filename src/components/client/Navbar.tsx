@@ -27,19 +27,20 @@ const Navbar = () => {
           style={{ objectFit: 'contain', objectPosition: 'center' }}
           width={200}
           height={200}
+          priority
         />
       </h1>
       <div className="mr-4 md:mr-8 flex">
         <button
           type="button"
-          className="bg-white text-primary dark:text-primary px-3 py-2 rounded mr-4"
+          className="bg-white text-secondary-500 dark:text-secondary-500 px-3 py-2 rounded mr-4"
           onClick={navigateToLogin}
         >
           {t('login')}
         </button>
         <button
           type="button"
-          className="bg-blue-700 dark:bg-primary text-white px-3 py-2 rounded"
+          className="bg-blue-700 dark:bg-primary-500 text-secondary-900 px-3 py-2 rounded"
           onClick={navigateToRegister}
         >
           {t('register')}

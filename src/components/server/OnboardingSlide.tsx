@@ -41,6 +41,7 @@ const OnboardingSlide: React.FC<OnboardingSlideProps> = ({
               }}
               height={100}
               width={100}
+              priority
             />
           </div>
         </div>

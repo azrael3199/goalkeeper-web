@@ -10,7 +10,7 @@ type IAuthIllustrationProps = {
 };
 
 const AuthIllustration = ({ register = false }: IAuthIllustrationProps) => (
-  <div className="p-8 animate-fade-in text-center">
+  <div className="p-8 animate-fade-in text-center max-h-full h-5/6">
     <h2 className="w-full text-center text-3xl font-bold mb-4 md:mb-12 dark:text-white">
       {' '}
       <Typewriter
@@ -18,7 +18,7 @@ const AuthIllustration = ({ register = false }: IAuthIllustrationProps) => (
         cursor
       />
     </h2>
-    <div className="justify-center items-center hidden md:flex w-full">
+    <div className="justify-center items-center hidden md:flex md:w-full md:h-5/6">
       <Image
         src={
           register ? '/illustrations/register.svg' : '/illustrations/login.svg'
@@ -27,11 +27,12 @@ const AuthIllustration = ({ register = false }: IAuthIllustrationProps) => (
         style={{
           objectFit: 'contain',
           objectPosition: 'center',
-          height: '85%',
-          width: '85%',
+          height: '100%',
+          width: '100%',
         }}
         width={50}
         height={50}
+        priority
       />
     </div>
   </div>

@@ -27,7 +27,7 @@ const SignInWithGoogle = ({ register, onClick }: ISignInWithGoogleProps) => {
         style={{ objectFit: 'contain', objectPosition: 'center' }}
       />
       <p className="ml-3 font-bold dark:text-white">
-        {!register
+        {register
           ? t('registerScreen.signUpWithGoogle')
           : t('loginScreen.signInWithGoogle')}
       </p>

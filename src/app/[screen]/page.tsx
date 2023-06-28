@@ -37,6 +37,7 @@ function AuthPage({ params }: IAuthPageProps) {
                 }}
                 height={10}
                 width={10}
+                priority
               />
             </div>
             <AuthWrapper />
