@@ -23,7 +23,7 @@ const Navbar = () => {
       <h1 className="text-white text-2xl font-bold ml-4 md:ml-8 mr-4">
         <Image
           src="/goalkeeper-main.svg"
-          alt={env.appTitle!}
+          alt={env.appTitle}
           style={{ objectFit: 'contain', objectPosition: 'center' }}
           width={200}
           height={200}

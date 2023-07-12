@@ -1,7 +1,13 @@
+'use client';
+
+import AuthIllustration from '@root/components/client/AuthIllustration';
 import Image from 'next/image';
 import env from '@root/environment';
-import AuthIllustration from '@root/components/client/AuthIllustration';
-import AuthWrapper from './AuthWrapper';
+import { AppContext } from '@root/context/AppContext';
+import { useContext } from 'react';
+import LoadingOverlay from '@root/components/server/LoadingOverlay';
+import Login from './Login';
+import Register from './Register';
 
 type IAuthPageProps = {
   params: {
@@ -11,6 +17,8 @@ type IAuthPageProps = {
 };
 
 function AuthPage({ params }: IAuthPageProps) {
+  const { isLoading } = useContext(AppContext);
+
   return (
     <div className="h-screen">
       <div className="md:flex h-full">
@@ -30,7 +38,7 @@ function AuthPage({ params }: IAuthPageProps) {
             <div className="flex w-full items-center justify-center">
               <Image
                 src="/goalkeeper-main.svg"
-                alt={env.appTitle!}
+                alt={env.appTitle}
                 style={{
                   height: '60%',
                   width: '60%',
@@ -40,10 +48,13 @@ function AuthPage({ params }: IAuthPageProps) {
                 priority
               />
             </div>
-            <AuthWrapper />
+            <div className="py-4 h-full">
+              {params.screen === 'login' ? <Login /> : <Register />}
+            </div>
           </div>
         </div>
       </div>
+      {isLoading && <LoadingOverlay />}
     </div>
   );
 }

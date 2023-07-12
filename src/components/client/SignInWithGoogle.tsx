@@ -7,17 +7,28 @@ import { useTranslation } from 'react-i18next';
 type ISignInWithGoogleProps = {
   register?: boolean;
   onClick: () => void;
+  disabled?: boolean;
 };
 
-const SignInWithGoogle = ({ register, onClick }: ISignInWithGoogleProps) => {
+const SignInWithGoogle = ({
+  register,
+  onClick,
+  disabled = false,
+}: ISignInWithGoogleProps) => {
   const { t } = useTranslation();
   return (
     <div
-      className="flex items-center justify-center py-2 px-2 bg-white dark:bg-slate-700 dark:hover:bg-slate-600 w-fit rounded-md w-full"
+      className={`flex items-center justify-center py-2 px-2 bg-white ${
+        disabled
+          ? 'dark:bg-slate-400 cursor-not-allowed'
+          : 'dark:bg-slate-700 dark:hover:bg-slate-600'
+      } w-fit rounded-md w-full`}
       role="button"
       tabIndex={0}
-      onClick={onClick}
-      onKeyDown={onClick}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      onClick={disabled ? () => {} : onClick}
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      onKeyDown={disabled ? () => {} : onClick}
     >
       <Image
         alt={t('loginScreen.signInWithGoogle')}
