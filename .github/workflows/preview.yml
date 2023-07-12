@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,17 +19,17 @@ jobs:
         run: npm install -g pnpm@^8.0.0
       - name: Install dependencies
         run: pnpm install
-      - name: Build
-        run: pnpm run build
       - name: Lint
         run: pnpm run lint
       - name: Format
         run: pnpm run format
       - name: Test
         run: pnpm test
+      - name: Build
+        run: pnpm run build
 
   Deploy-Preview:
-    needs: build-and-test
+    needs: test-and-build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

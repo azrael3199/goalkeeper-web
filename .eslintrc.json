@@ -19,6 +19,8 @@
     "import"
   ],
   "rules": {
+    "indent": "warn",
+    "brace-style": "warn",
     "operator-linebreak": "off",
     "function-paren-newline": "off",
     "implicit-arrow-linebreak": "off",
