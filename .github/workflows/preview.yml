@@ -32,7 +32,10 @@ jobs:
     needs: test-and-build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install PNPM
+        run: npm install -g pnpm@^8.0.0
       - name: Install Vercel CLI
         run: pnpm install --global vercel@latest
       - name: Pull Vercel Environment Information
