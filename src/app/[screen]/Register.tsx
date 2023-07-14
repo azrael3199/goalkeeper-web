@@ -1,10 +1,11 @@
 'use client';
 
 import SignInWithGoogle from '@root/components/client/SignInWithGoogle';
+import { ErrorContext } from '@root/context/ErrorContext';
 import paths from '@root/routes';
 import { handleInputChange } from '@root/utils/formikInputHandler';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 type Values = {
@@ -21,6 +22,8 @@ const errorClassName = 'text-red-400 text-sm mt-2';
 
 const Register = () => {
   const { t } = useTranslation();
+  const { showError } = useContext(ErrorContext);
+
   const signInLink = (
     <a href={paths.login} className="text-primary-500">
       {t('registerScreen.signIn')}
@@ -73,10 +76,15 @@ const Register = () => {
 
   const onSubmit = (
     values: Values,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) =>
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    {};
+    {
+      setSubmitting,
+      resetForm,
+    }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
+  ) => {
+    // Throw an exception to be caught by the ErrorBoundary
+    showError('Coming soon!');
+    resetForm();
+  };
 
   return (
     <div className="p-3 rounded-md text-left">
@@ -91,7 +99,7 @@ const Register = () => {
         validate={validate}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, setFieldValue, errors }) => (
+        {({ isSubmitting, setFieldValue, errors, submitForm }) => (
           <Form>
             <div className="mb-3">
               <label

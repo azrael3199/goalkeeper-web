@@ -42,5 +42,6 @@
         "passwordSpecial": "Password should contain at least one special character (!@#$%^&*).",
         "confirmPasswordEmpty": "Please confirm your password",
         "confirmPasswordNotEqual": "Passwords don't match"
-    }
+    },
+    "mainErrorNotification": "Error Occured"
 }

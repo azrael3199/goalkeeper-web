@@ -1,8 +1,9 @@
 import SignInWithGoogle from '@root/components/client/SignInWithGoogle';
+import { ErrorContext } from '@root/context/ErrorContext';
 import paths from '@root/routes';
 import { handleInputChange } from '@root/utils/formikInputHandler';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 type Values = {
@@ -16,6 +17,8 @@ const errorClassName = 'text-red-400 text-sm mt-2';
 
 const Login = () => {
   const { t } = useTranslation();
+  const { showError } = useContext(ErrorContext);
+
   const signUpLink = (
     <a href={paths.register} className="text-primary-500">
       {t('loginScreen.signUp')}
@@ -44,10 +47,14 @@ const Login = () => {
 
   const onSubmit = (
     values: Values,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) =>
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    {};
+    {
+      setSubmitting,
+      resetForm,
+    }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
+  ) => {
+    showError('Coming soon!');
+    resetForm();
+  };
 
   return (
     <div className="p-3 rounded-md text-left">
