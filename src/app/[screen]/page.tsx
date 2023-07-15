@@ -23,6 +23,7 @@ function AuthPage({ params }: IAuthPageProps) {
 
   return (
     <I18nextProvider i18n={i18n}>
+      {env.appTitle}
       <div className="h-screen">
         <div className="md:flex h-full">
           {/* Left Side: SVG Image */}
