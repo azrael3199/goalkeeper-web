@@ -1,11 +1,15 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCircleExclamation,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 
 export default function ErrorPopup({
-  message,
+  message = 'Hello',
   reset,
 }: {
   message: string;
@@ -38,15 +42,18 @@ export default function ErrorPopup({
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 mx-4 my-8 p-4 bg-red-500 text-white rounded-lg flex justify-between items-center shadow-lg sm:max-w-md sm:mx-auto ${
+      className={`fixed top-0 left-0 right-0 mx-4 my-8 p-4 bg-red-600 text-white rounded-lg flex w-fit justify-between items-center shadow-lg sm:max-w-[50%] sm:mx-auto ${
         show ? 'show' : 'hide'
       }`}
       onAnimationEnd={handleAnimationEnd}
     >
-      <span>{`${t('mainErrorNotification')}: ${message}`}</span>
+      <FontAwesomeIcon icon={faCircleExclamation} color="white" size="1x" />
+      <span className="pl-2 truncate">{`${t(
+        'mainErrorNotification'
+      )}: ${message}`}</span>
       <div
         role="button"
-        className="text-white"
+        className="pl-8 flex align-center justify-center"
         onClick={() => {
           setShow(false);
         }}
@@ -56,17 +63,7 @@ export default function ErrorPopup({
         tabIndex={0}
         style={{ alignSelf: 'flex-end' }}
       >
-        <Image
-          src="/cross-icon.svg"
-          alt="Close"
-          style={{
-            objectFit: 'contain',
-            objectPosition: 'center',
-            alignSelf: 'flex-end',
-          }}
-          height={24}
-          width={24}
-        />
+        <FontAwesomeIcon icon={faXmark} color="white" size="lg" />
       </div>
     </div>
   );

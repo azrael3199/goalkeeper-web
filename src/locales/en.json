@@ -43,5 +43,10 @@
         "confirmPasswordEmpty": "Please confirm your password",
         "confirmPasswordNotEqual": "Passwords don't match"
     },
-    "mainErrorNotification": "Error Occured"
+    "mainErrorNotification": "Error",
+    "errors": {
+        "noPath": "No redirect path found",
+        "unknownError": "An unknown error occured",
+        "pageNotFound": "Page not found... Check the URL, maybe?"
+    }
 }

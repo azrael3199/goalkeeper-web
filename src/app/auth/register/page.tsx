@@ -1,11 +1,15 @@
 'use client';
 
 import SignInWithGoogle from '@root/components/client/SignInWithGoogle';
+import { AppContext } from '@root/context/AppContext';
 import { ErrorContext } from '@root/context/ErrorContext';
 import paths from '@root/routes';
+import { signUpWithEmailAndPassword } from '@root/utils/firebaseUtils';
 import { handleInputChange } from '@root/utils/formikInputHandler';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React, { ChangeEvent, useContext, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { ChangeEvent, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
 type Values = {
@@ -22,13 +26,26 @@ const errorClassName = 'text-red-400 text-sm mt-2';
 
 const Register = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const { showError } = useContext(ErrorContext);
+  const { redirectRoute, setLoading, setRedirectRoute } =
+    useContext(AppContext);
 
   const signInLink = (
-    <a href={paths.login} className="text-primary-500">
+    <Link href={paths.login} className="text-primary-500">
       {t('registerScreen.signIn')}
-    </a>
+    </Link>
   );
+
+  const redirectToOriginal = () => {
+    const redirectPath = redirectRoute;
+    setRedirectRoute(null);
+    if (redirectPath) {
+      router.replace(redirectPath);
+    } else {
+      router.replace(paths.dashboard);
+    }
+  };
 
   const validate = (values: Values) => {
     const errors: {
@@ -81,9 +98,30 @@ const Register = () => {
       resetForm,
     }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
   ) => {
-    // Throw an exception to be caught by the ErrorBoundary
-    showError('Coming soon!');
-    resetForm();
+    setLoading(true);
+    showError(null);
+    signUpWithEmailAndPassword(
+      values.email,
+      values.password,
+      values.firstname,
+      values.lastname
+    )
+      .then(() => {
+        redirectToOriginal();
+      })
+      .catch((err) => {
+        if (err.message) {
+          showError(err.message);
+        } else {
+          showError(t('unknownError'));
+        }
+        resetForm();
+        setLoading(false);
+        // TODO: Log to a service
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
 
   return (
@@ -99,7 +137,7 @@ const Register = () => {
         validate={validate}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, setFieldValue, errors, submitForm }) => (
+        {({ isSubmitting, setFieldValue, errors }) => (
           <Form>
             <div className="mb-3">
               <label

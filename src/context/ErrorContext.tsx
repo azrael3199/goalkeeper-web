@@ -1,25 +1,25 @@
 'use client';
 
 import ErrorPopup from '@root/components/client/ErrorPopup';
-import React, { ReactElement, createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
 type IErrorContextProps = {
-  showError: (errorMessage: string) => void;
+  showError: (errorMessage: string | null) => void;
   hideError: () => void;
 };
 
 export const ErrorContext = createContext<IErrorContextProps>({
   // eslint-disable-next-line max-len
   // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-unused-vars
-  showError: (errorMessage: string) => {},
+  showError: (errorMessage: string | null) => {},
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   hideError: () => {},
 });
 
-export const ErrorProvider = ({ children }: { children: ReactElement }) => {
+export const ErrorProvider = ({ children }: { children: React.ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
 
-  const showError = (errorMessage: string) => {
+  const showError = (errorMessage: string | null) => {
     setError(errorMessage);
   };
 

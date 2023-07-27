@@ -1,21 +1,28 @@
 'use client';
 
+import { AppContext } from '@root/context/AppContext';
 import env from '@root/environment';
 import paths from '@root/routes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useTranslation } from 'react-i18next';
+import { useContext, useEffect, useState } from 'react';
+import Translator from './Translator';
 
 const Navbar = () => {
   const router = useRouter();
-  const { t } = useTranslation();
+  const { setLoading } = useContext(AppContext);
+  const [path, setPath] = useState<string | null>(null);
 
-  const navigateToLogin = () => {
-    router.push(paths.login);
-  };
+  useEffect(() => {
+    if (path) {
+      router.push(path);
+      setPath(null);
+    }
+  }, [path, router]);
 
-  const navigateToRegister = () => {
-    router.push(paths.register);
+  const navigate = (navPath: string) => {
+    setLoading(true);
+    setPath(navPath);
   };
 
   return (
@@ -34,16 +41,16 @@ const Navbar = () => {
         <button
           type="button"
           className="bg-white text-secondary-500 dark:text-secondary-500 px-3 py-2 rounded mr-4"
-          onClick={navigateToLogin}
+          onClick={() => navigate(paths.login)}
         >
-          {t('login')}
+          <Translator stringToTranslate="login" />
         </button>
         <button
           type="button"
           className="bg-blue-700 dark:bg-primary-500 text-secondary-900 px-3 py-2 rounded"
-          onClick={navigateToRegister}
+          onClick={() => navigate(paths.register)}
         >
-          {t('register')}
+          <Translator stringToTranslate="register" />
         </button>
       </div>
     </nav>

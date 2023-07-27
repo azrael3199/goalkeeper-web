@@ -1,8 +1,14 @@
+'use client';
+
 import SignInWithGoogle from '@root/components/client/SignInWithGoogle';
+import { AppContext } from '@root/context/AppContext';
 import { ErrorContext } from '@root/context/ErrorContext';
 import paths from '@root/routes';
+import { loginWithEmailAndPassword } from '@root/utils/firebaseUtils';
 import { handleInputChange } from '@root/utils/formikInputHandler';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 
@@ -17,13 +23,26 @@ const errorClassName = 'text-red-400 text-sm mt-2';
 
 const Login = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   const { showError } = useContext(ErrorContext);
+  const { redirectRoute, setLoading, setRedirectRoute } =
+    useContext(AppContext);
 
   const signUpLink = (
-    <a href={paths.register} className="text-primary-500">
+    <Link href={paths.register} className="text-primary-500">
       {t('loginScreen.signUp')}
-    </a>
+    </Link>
   );
+
+  const redirectToOriginal = () => {
+    const redirectPath = redirectRoute;
+    setRedirectRoute(null);
+    if (redirectPath) {
+      router.replace(redirectPath);
+    } else {
+      router.replace(paths.dashboard);
+    }
+  };
 
   const validate = (values: Values) => {
     const errors: {
@@ -52,8 +71,25 @@ const Login = () => {
       resetForm,
     }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
   ) => {
-    showError('Coming soon!');
-    resetForm();
+    setLoading(true);
+    showError(null);
+    loginWithEmailAndPassword(values.email, values.password)
+      .then(() => {
+        redirectToOriginal();
+      })
+      .catch((err) => {
+        if (err.message) {
+          showError(err.message);
+        } else {
+          showError(t('unknownError'));
+        }
+        resetForm();
+        setLoading(false);
+        // TODO: Log to a service
+      })
+      .finally(() => {
+        setSubmitting(false);
+      });
   };
 
   return (

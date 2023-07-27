@@ -27,3 +27,10 @@
 .hide {
   animation: slideOut 300ms ease-in-out forwards;
 }
+
+.cross-icon {
+  width: 24px;
+  height: 24px;
+  background-image: url('/cross-icon.svg'); /* Path relative to the public folder */
+  background-repeat: no-repeat;
+}
