@@ -140,12 +140,6 @@ const Register = () => {
         {({ isSubmitting, setFieldValue, errors }) => (
           <Form>
             <div className="mb-3">
-              <label
-                htmlFor="firstname"
-                className="block text-gray-800 dark:text-white"
-              >
-                {t('registerScreen.firstname')}
-              </label>
               <ErrorMessage
                 name="firstname"
                 render={(msg: string) => (
@@ -156,6 +150,7 @@ const Register = () => {
                 type="text"
                 id="firstname"
                 name="firstname"
+                placeholder={`${t('registerScreen.firstname')}*`}
                 className={inputClassName}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleInputChange<Values>('firstname', e, setFieldValue)
@@ -163,12 +158,6 @@ const Register = () => {
               />
             </div>
             <div className="mb-3">
-              <label
-                htmlFor="firstname"
-                className="block text-gray-800 dark:text-white"
-              >
-                {t('registerScreen.lastname')}
-              </label>
               <ErrorMessage
                 name="lastname"
                 render={(msg: string) => (
@@ -179,6 +168,7 @@ const Register = () => {
                 type="text"
                 id="lastname"
                 name="lastname"
+                placeholder={`${t('registerScreen.lastname')}*`}
                 className={inputClassName}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleInputChange<Values>('lastname', e, setFieldValue)
@@ -186,12 +176,6 @@ const Register = () => {
               />
             </div>
             <div className="mb-3">
-              <label
-                htmlFor="email"
-                className="block text-gray-800 dark:text-white"
-              >
-                {t('registerScreen.email')}
-              </label>
               <ErrorMessage
                 name="email"
                 render={(msg: string) => (
@@ -202,6 +186,7 @@ const Register = () => {
                 type="email"
                 id="email"
                 name="email"
+                placeholder={`${t('registerScreen.email')}*`}
                 className={inputClassName}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleInputChange<Values>('email', e, setFieldValue)
@@ -209,12 +194,6 @@ const Register = () => {
               />
             </div>
             <div className="mb-3">
-              <label
-                htmlFor="password"
-                className="block text-gray-800 dark:text-white"
-              >
-                {t('registerScreen.password')}
-              </label>
               <ErrorMessage
                 name="password"
                 render={(msg: string) => (
@@ -225,6 +204,7 @@ const Register = () => {
                 type="password"
                 id="password"
                 name="password"
+                placeholder={`${t('registerScreen.password')}*`}
                 className={inputClassName}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleInputChange<Values>('password', e, setFieldValue)
@@ -232,12 +212,6 @@ const Register = () => {
               />
             </div>
             <div className="mb-8">
-              <label
-                htmlFor="confirmPassword"
-                className="block text-gray-800 dark:text-white"
-              >
-                {t('registerScreen.confirmPassword')}
-              </label>
               <ErrorMessage
                 name="confirmPassword"
                 render={(msg: string) => (
@@ -248,6 +222,7 @@ const Register = () => {
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
+                placeholder={`${t('registerScreen.confirmPassword')}*`}
                 className={inputClassName}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleInputChange<Values>('confirmPassword', e, setFieldValue)
@@ -266,9 +241,8 @@ const Register = () => {
             <div className="flex items-center justify-center w-full mb-4">
               <SignInWithGoogle
                 register
-                // eslint-disable-next-line @typescript-eslint/no-empty-function
-                onClick={() => {}}
                 disabled={isSubmitting}
+                onClick={redirectToOriginal}
               />
             </div>
           </Form>

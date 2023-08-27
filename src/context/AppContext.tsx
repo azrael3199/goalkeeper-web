@@ -26,7 +26,7 @@ export const AppContext = createContext<IAppContextProps>({
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [redirectRoute, setRedirectRoute] = useState<string | null>(null);
 
   return (

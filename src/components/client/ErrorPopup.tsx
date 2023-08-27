@@ -42,7 +42,7 @@ export default function ErrorPopup({
 
   return (
     <div
-      className={`fixed top-0 left-0 right-0 mx-4 my-8 p-4 bg-red-600 text-white rounded-lg flex w-fit justify-between items-center shadow-lg sm:max-w-[50%] sm:mx-auto ${
+      className={`fixed top-0 left-0 right-0 mx-4 my-8 p-4 bg-red-500 text-white rounded-lg flex w-fit justify-between items-center shadow-lg sm:max-w-[50%] sm:mx-auto ${
         show ? 'show' : 'hide'
       }`}
       onAnimationEnd={handleAnimationEnd}

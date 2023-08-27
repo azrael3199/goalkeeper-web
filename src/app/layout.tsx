@@ -1,10 +1,10 @@
 import React from 'react';
 import './globals.css';
-import { Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import { AppProvider } from '@root/context/AppContext';
 import { ErrorProvider } from '@root/context/ErrorContext';
 
-const inter = Inter({ subsets: ['latin'] });
+const roboto = Roboto({ weight: '400', subsets: ['latin'] });
 
 export const metadata = {
   title: 'Goalkeeper | Small steps to success',
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} dark:bg-slate-900`}>
+      <body className={`${roboto.className} dark:bg-slate-900`}>
         <AppProvider>
           <ErrorProvider>{children}</ErrorProvider>
         </AppProvider>

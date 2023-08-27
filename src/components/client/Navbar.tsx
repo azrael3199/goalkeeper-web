@@ -5,24 +5,16 @@ import env from '@root/environment';
 import paths from '@root/routes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import Translator from './Translator';
 
 const Navbar = () => {
   const router = useRouter();
   const { setLoading } = useContext(AppContext);
-  const [path, setPath] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (path) {
-      router.push(path);
-      setPath(null);
-    }
-  }, [path, router]);
 
   const navigate = (navPath: string) => {
     setLoading(true);
-    setPath(navPath);
+    router.replace(navPath);
   };
 
   return (
@@ -41,14 +33,18 @@ const Navbar = () => {
         <button
           type="button"
           className="bg-white text-secondary-500 dark:text-secondary-500 px-3 py-2 rounded mr-4"
-          onClick={() => navigate(paths.login)}
+          onClick={() => {
+            navigate(paths.login);
+          }}
         >
           <Translator stringToTranslate="login" />
         </button>
         <button
           type="button"
           className="bg-blue-700 dark:bg-primary-500 text-secondary-900 px-3 py-2 rounded"
-          onClick={() => navigate(paths.register)}
+          onClick={() => {
+            navigate(paths.register);
+          }}
         >
           <Translator stringToTranslate="register" />
         </button>

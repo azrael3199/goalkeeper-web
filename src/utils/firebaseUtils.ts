@@ -7,14 +7,16 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from 'firebase/auth';
 
 const auth = getAuth(app);
 // setPersistence(auth, browserLocalPersistence);
+auth.useDeviceLanguage();
 
-const provider = new GoogleAuthProvider();
+const googleProvider = new GoogleAuthProvider();
 
 // Auth methods
 export const signUpWithEmailAndPassword = (
@@ -39,8 +41,10 @@ export const signUpWithEmailAndPassword = (
 export const loginWithEmailAndPassword = (
   email: string,
   password: string
-): Promise<void | UserCredential> =>
-  signInWithEmailAndPassword(auth, email, password);
+): Promise<UserCredential> => signInWithEmailAndPassword(auth, email, password);
+
+export const authWithGoogle = (): Promise<UserCredential> =>
+  signInWithPopup(auth, googleProvider);
 
 export const logout = (): Promise<void> => signOut(auth);
 

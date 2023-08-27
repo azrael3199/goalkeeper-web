@@ -6,6 +6,7 @@ import LoadingOverlay from '@root/components/server/LoadingOverlay';
 import OnboardingSlide from '@root/components/server/OnboardingSlide';
 import { AppContext } from '@root/context/AppContext';
 import i18n from '@root/i18n';
+import paths from '@root/routes';
 import { useContext, useEffect, useState } from 'react';
 import { I18nextProvider } from 'react-i18next';
 
@@ -76,7 +77,10 @@ const LandingPage = () => {
   };
 
   return (
-    <ProtectedRoute redirectToDashboardOnSuccess>
+    <ProtectedRoute
+      defaultRedirectRoute={paths.dashboard}
+      preventRedirectOnAuthFail
+    >
       <I18nextProvider i18n={i18n}>
         <div className="flex flex-col h-screen">
           <Navbar />

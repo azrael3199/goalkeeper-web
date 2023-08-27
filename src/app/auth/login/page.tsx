@@ -101,13 +101,7 @@ const Login = () => {
       >
         {({ isSubmitting, setFieldValue, errors }) => (
           <Form>
-            <div className="mb-3">
-              <label
-                htmlFor="email"
-                className="block text-gray-800 dark:text-white"
-              >
-                {t('loginScreen.email')}*
-              </label>
+            <div className="mb-4">
               <ErrorMessage
                 name="email"
                 render={(msg: string) => (
@@ -118,6 +112,7 @@ const Login = () => {
                 type="text"
                 id="email"
                 name="email"
+                placeholder={`${t('loginScreen.email')}*`}
                 className={inputClassName}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleInputChange<Values>('email', e, setFieldValue)
@@ -125,12 +120,6 @@ const Login = () => {
               />
             </div>
             <div className="mb-8">
-              <label
-                htmlFor="password"
-                className="block text-gray-800 dark:text-white"
-              >
-                {t('loginScreen.password')}*
-              </label>
               <ErrorMessage
                 name="password"
                 render={(msg: string) => (
@@ -141,6 +130,7 @@ const Login = () => {
                 type="password"
                 id="password"
                 name="password"
+                placeholder={`${t('loginScreen.password')}*`}
                 className={inputClassName}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
                   handleInputChange<Values>('password', e, setFieldValue)
@@ -157,8 +147,10 @@ const Login = () => {
               </button>
             </div>
             <div className="flex items-center justify-center w-full mb-4">
-              {/* eslint-disable-next-line @typescript-eslint/no-empty-function */}
-              <SignInWithGoogle onClick={() => {}} disabled={isSubmitting} />
+              <SignInWithGoogle
+                disabled={isSubmitting}
+                onClick={redirectToOriginal}
+              />
             </div>
           </Form>
         )}

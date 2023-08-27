@@ -1,7 +1,10 @@
 'use client';
 
+import { AppContext } from '@root/context/AppContext';
+import { ErrorContext } from '@root/context/ErrorContext';
+import { authWithGoogle } from '@root/utils/firebaseUtils';
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ISignInWithGoogleProps = {
@@ -16,6 +19,24 @@ const SignInWithGoogle = ({
   disabled = false,
 }: ISignInWithGoogleProps) => {
   const { t } = useTranslation();
+  const { setLoading } = useContext(AppContext);
+  const { showError } = useContext(ErrorContext);
+
+  const onAuth = () => {
+    authWithGoogle()
+      .then(() => {
+        onClick();
+      })
+      .catch((err) => {
+        if (err.message) {
+          showError(err.message);
+        } else {
+          showError(t('unknownError'));
+        }
+        setLoading(false);
+      });
+  };
+
   return (
     <div
       className={`flex items-center justify-center py-2 px-2 bg-white ${
@@ -26,9 +47,9 @@ const SignInWithGoogle = ({
       role="button"
       tabIndex={0}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      onClick={disabled ? () => {} : onClick}
+      onClick={disabled ? () => {} : onAuth}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      onKeyDown={disabled ? () => {} : onClick}
+      onKeyDown={disabled ? () => {} : onAuth}
     >
       <Image
         alt={t('loginScreen.signInWithGoogle')}

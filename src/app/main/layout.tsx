@@ -1,3 +1,5 @@
+'use client';
+
 import Navbar from '@root/components/client/Navbar';
 import ProtectedRoute from '@root/components/client/ProtectedRoute';
 import LoadingOverlay from '@root/components/server/LoadingOverlay';

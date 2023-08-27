@@ -9,12 +9,14 @@ import { Unsubscribe, User } from 'firebase/auth';
 import LoadingOverlay from '../server/LoadingOverlay';
 
 interface ProtectedRouteProps {
-  redirectToDashboardOnSuccess?: boolean;
+  defaultRedirectRoute?: string;
+  preventRedirectOnAuthFail?: boolean;
   children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
-  redirectToDashboardOnSuccess = false,
+  defaultRedirectRoute = null,
+  preventRedirectOnAuthFail = false,
   children,
 }) => {
   const router = useRouter();
@@ -23,32 +25,28 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     useContext(AppContext);
 
   useEffect(() => {
-    setLoading(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
     let unsubscribe: Unsubscribe | null = null;
-    if (isLoading) {
-      // Firebase listener
-      unsubscribe = onAuthStateChanged((user: User | null) => {
-        if (user) {
-          // User is authenticated, proceed with rendering protected content
-          setUser(user);
-          if (redirectToDashboardOnSuccess) {
-            router.replace(paths.dashboard);
-          } else setLoading(false);
-        } else {
-          // User is not authenticated, redirect to login screen
-          setRedirectRoute(pathname);
-          router.replace(paths.login);
-        }
-      });
-    }
+    // Firebase listener
+    unsubscribe = onAuthStateChanged((user: User | null) => {
+      if (user) {
+        // User is authenticated, proceed with rendering protected content
+        setUser(user);
+
+        if (defaultRedirectRoute) {
+          router.replace(defaultRedirectRoute);
+        } else setLoading(false);
+      } else if (!preventRedirectOnAuthFail) {
+        // User is not authenticated, redirect to login screen
+        setRedirectRoute(pathname);
+        router.replace(paths.login);
+      } else {
+        setLoading(false);
+      }
+    });
     // Unsubscribe from the auth state listener when the component unmounts
     return () => unsubscribe?.();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading]);
+  }, []);
 
   return (
     <>
