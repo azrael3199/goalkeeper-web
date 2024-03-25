@@ -1,4 +1,4 @@
-import Translator from '@root/components/client/Translator';
+import Translator from '@root/components/Translator';
 import Image from 'next/image';
 
 const NotFound = () => (

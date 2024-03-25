@@ -7,8 +7,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import Translator from './Translator';
+import { Button } from './ui/button';
 
-const Navbar = () => {
+const LandingHeader = () => {
   const router = useRouter();
   const { setLoading } = useContext(AppContext);
 
@@ -18,7 +19,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-blue-500 dark:bg-slate-800 py-4 flex justify-between items-center">
+    <header className="grow bg-blue-500 dark:bg-inherit py-4 flex justify-between items-center">
       <h1 className="text-white text-2xl font-bold ml-4 md:ml-8 mr-4">
         <Image
           src="/goalkeeper-main.svg"
@@ -29,28 +30,19 @@ const Navbar = () => {
           priority
         />
       </h1>
-      <div className="mr-4 md:mr-8 flex">
-        <button
-          type="button"
-          className="bg-white text-secondary-500 dark:text-secondary-500 px-3 py-2 rounded mr-4"
+      <nav className="mr-4 md:mr-8 flex">
+        <Button
+          className="uppercase"
+          variant="outline"
           onClick={() => {
             navigate(paths.login);
           }}
         >
-          <Translator stringToTranslate="login" />
-        </button>
-        <button
-          type="button"
-          className="bg-blue-700 dark:bg-primary-500 text-secondary-900 px-3 py-2 rounded"
-          onClick={() => {
-            navigate(paths.register);
-          }}
-        >
-          <Translator stringToTranslate="register" />
-        </button>
-      </div>
-    </nav>
+          <Translator stringToTranslate="signIn" />
+        </Button>
+      </nav>
+    </header>
   );
 };
 
-export default Navbar;
+export default LandingHeader;

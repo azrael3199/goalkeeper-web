@@ -1,6 +1,6 @@
 'use client';
 
-import ErrorPopup from '@root/components/client/ErrorPopup';
+import ErrorPopup from '@root/components/ErrorPopup';
 import React, { createContext, useState } from 'react';
 
 type IErrorContextProps = {

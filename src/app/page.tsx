@@ -1,9 +1,9 @@
 'use client';
 
-import Navbar from '@root/components/client/Navbar';
-import ProtectedRoute from '@root/components/client/ProtectedRoute';
-import LoadingOverlay from '@root/components/server/LoadingOverlay';
-import OnboardingSlide from '@root/components/server/OnboardingSlide';
+import Header from '@root/components/LandingHeader';
+import ProtectedRoute from '@root/components/ProtectedRoute';
+import LoadingOverlay from '@root/components/LoadingOverlay';
+import OnboardingSlide from '@root/components/OnboardingSlide';
 import { AppContext } from '@root/context/AppContext';
 import i18n from '@root/i18n';
 import paths from '@root/routes';
@@ -42,6 +42,7 @@ const LandingPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Change the slides over time
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide((prevSlide: number) =>
@@ -83,8 +84,8 @@ const LandingPage = () => {
     >
       <I18nextProvider i18n={i18n}>
         <div className="flex flex-col h-screen">
-          <Navbar />
-          <main className="relative h-full overflow-x-hidden overflow-y-auto">
+          <Header />
+          <main className="grow h-full overflow-x-hidden overflow-y-auto">
             <div
               className="flex w-full md:h-full transition-transform duration-500 ease-in-out"
               style={{
@@ -112,7 +113,7 @@ const LandingPage = () => {
                   role="tab"
                   tabIndex={0}
                   key={slide.key}
-                  className={`w-4 h-4 mx-2 rounded-full ${
+                  className={`w-8 h-1 mx-2 rounded-full cursor-pointer ${
                     index === activeSlide ? 'bg-gray-400' : 'bg-gray-700'
                   }`}
                   onClick={() => handleSlideChange(index)}

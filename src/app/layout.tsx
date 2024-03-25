@@ -1,10 +1,15 @@
 import React from 'react';
 import './globals.css';
-import { Roboto } from 'next/font/google';
+import { Inter as FontSans } from 'next/font/google';
 import { AppProvider } from '@root/context/AppContext';
 import { ErrorProvider } from '@root/context/ErrorContext';
 
-const roboto = Roboto({ weight: '400', subsets: ['latin'] });
+import { cn } from '@root/lib/utils/utils';
+
+const fontSans = FontSans({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
 
 export const metadata = {
   title: 'Goalkeeper | Small steps to success',
@@ -18,7 +23,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className={`${roboto.className} dark:bg-slate-900`}>
+      <body
+        className={cn(
+          'min-h-screen bg-background font-sans antialiased dark:bg-background',
+          fontSans.variable
+        )}
+      >
         <AppProvider>
           <ErrorProvider>{children}</ErrorProvider>
         </AppProvider>

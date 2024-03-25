@@ -25,11 +25,8 @@ const OnboardingSlide: React.FC<OnboardingSlideProps> = ({
       }`}
     >
       <div className="md:w-1/2 p-12">
-        <div className="relative w-full h-full">
-          <div
-            className="aspect-w-1 aspect-h-1"
-            style={{ height: '100%', width: '100%' }}
-          >
+        <div className="w-full h-full">
+          <div className="aspect-w-1 aspect-h-1 h-[120px] md:h-[240px] xl:h-[480px]">
             <Image
               src={imageSrc}
               alt="Illustration"

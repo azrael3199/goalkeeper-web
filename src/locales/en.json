@@ -8,6 +8,7 @@
     "welcomeBack": "Welcome Back!",
     "journeyBegin": "Let the journey begin!",
     "login": "Login",
+    "signIn": "Sign In",
     "register": "Register",
     "loginScreen": {
         "email": "Email",

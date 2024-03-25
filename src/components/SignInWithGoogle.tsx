@@ -2,10 +2,11 @@
 
 import { AppContext } from '@root/context/AppContext';
 import { ErrorContext } from '@root/context/ErrorContext';
-import { authWithGoogle } from '@root/utils/firebaseUtils';
+import { authWithGoogle } from '@root/lib/utils/firebaseUtils';
 import Image from 'next/image';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Button } from './ui/button';
 
 type ISignInWithGoogleProps = {
   register?: boolean;
@@ -38,7 +39,7 @@ const SignInWithGoogle = ({
   };
 
   return (
-    <div
+    <Button
       className={`flex items-center justify-center py-2 px-2 bg-white ${
         disabled
           ? 'dark:bg-slate-400 cursor-not-allowed'
@@ -53,7 +54,7 @@ const SignInWithGoogle = ({
     >
       <Image
         alt={t('loginScreen.signInWithGoogle')}
-        src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+        src="/google-g.png"
         width={20}
         height={20}
         style={{ objectFit: 'contain', objectPosition: 'center' }}
@@ -63,7 +64,7 @@ const SignInWithGoogle = ({
           ? t('registerScreen.signUpWithGoogle')
           : t('loginScreen.signInWithGoogle')}
       </p>
-    </div>
+    </Button>
   );
 };
 

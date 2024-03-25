@@ -1,11 +1,11 @@
 'use client';
 
-import SignInWithGoogle from '@root/components/client/SignInWithGoogle';
+import SignInWithGoogle from '@root/components/SignInWithGoogle';
 import { AppContext } from '@root/context/AppContext';
 import { ErrorContext } from '@root/context/ErrorContext';
 import paths from '@root/routes';
-import { loginWithEmailAndPassword } from '@root/utils/firebaseUtils';
-import { handleInputChange } from '@root/utils/formikInputHandler';
+import { loginWithEmailAndPassword } from '@root/lib/utils/firebaseUtils';
+import { handleInputChange } from '@root/lib/utils/formikInputHandler';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
