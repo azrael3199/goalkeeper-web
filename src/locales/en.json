@@ -8,13 +8,18 @@
     "welcomeBack": "Welcome Back!",
     "journeyBegin": "Let the journey begin!",
     "login": "Login",
+    "signIn": "Sign In",
     "register": "Register",
     "loginScreen": {
         "email": "Email",
         "password": "Password",
+        "login": "Login",
         "signUp": "Sign Up",
         "signInWithGoogle": "Sign In with Google",
-        "leadToSignUp": "Don't have an account? <0>Sign Up</0>."
+        "leadToSignUp": "Don't have an account? <0>Sign Up</0>.",
+        "emailEmpty": "Please enter your email",
+        "emailIncorrect": "Email is in incorrect format",
+        "passwordEmpty": "Please enter the password"
     },
     "registerScreen": {
         "firstname": "First Name",
@@ -23,7 +28,26 @@
         "password": "Password",
         "confirmPassword": "Confirm Password",
         "signIn": "Sign In",
+        "signUp": "Sign Up",
         "signUpWithGoogle": "Sign Up with Google",
-        "leadToSignIn": "Already have an account? <0>Sign In</0>"
+        "leadToSignIn": "Already have an account? <0>Sign In</0>",
+        "firstnameEmpty": "Please enter your first name",
+        "lastnameEmpty": "Please enter your last name",
+        "emailEmpty": "Please enter your email",
+        "emailIncorrect": "Email is in incorrect format",
+        "passwordEmpty": "Please enter the password",
+        "passwordLength": "Password should be at least 8 characters long.",
+        "passwordUppercase": "Password should contain at least one uppercase letter.",
+        "passwordLowercase": "Password should contain at least one lowercase letter.",
+        "passwordDigit": "Password should contain at least one digit.",
+        "passwordSpecial": "Password should contain at least one special character (!@#$%^&*).",
+        "confirmPasswordEmpty": "Please confirm your password",
+        "confirmPasswordNotEqual": "Passwords don't match"
+    },
+    "mainErrorNotification": "Error",
+    "errors": {
+        "noPath": "No redirect path found",
+        "unknownError": "An unknown error occured",
+        "pageNotFound": "Page not found... Check the URL, maybe?"
     }
 }

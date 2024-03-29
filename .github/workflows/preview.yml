@@ -3,24 +3,39 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 on:
-  workflow_run:
-    workflows: ["CI"]
-    branches-ignore: ["main"]
-    types:
-      - completed
+  push:
+    branches-ignore:
+      - main
 
 jobs:
-  dummy-job:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
-     - name: Dummy Job
-       run: echo "Hello World"
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+      - name: Install PNPM
+        run: npm install -g pnpm@^8.0.0
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint
+        run: pnpm run lint
+      - name: Format
+        run: pnpm run format
+      - name: Test
+        run: pnpm test
+      - name: Build
+        run: pnpm run build
 
   Deploy-Preview:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    needs: test-and-build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - name: Install PNPM
+        run: npm install --global pnpm@^8.0.0
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
