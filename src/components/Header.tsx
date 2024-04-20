@@ -56,21 +56,21 @@ const ProfileIcon: React.FC = () => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="min-w-24 w-fit bg-slate-900 rounded-md p-4">
-        <p className="text-gray-600 font-semibold text-sm">
+      <PopoverContent className="min-w-24 w-fit bg-slate-900 rounded-md p-3 px-2">
+        <p className="text-gray-600 font-semibold text-sm px-2">
           {user.displayName}
         </p>
-        <ul className="py-1 pt-4 flex flex-col items-center gap-4 text-sm">
-          <li className="flex gap-5 items-center cursor-pointer">
+        <ul className="py-1 pt-4 flex flex-col items-center gap-1 text-sm">
+          <li className="flex gap-5 py-2 w-full items-center justify-center cursor-pointer hover:bg-slate-800 rounded-md">
             <CircleUserRoundIcon className="w-5" />
             <p>Account</p>
           </li>
-          <li className="flex gap-5 items-center cursor-pointer">
+          <li className="flex gap-5 py-2 w-full items-center justify-center cursor-pointer hover:bg-slate-800 rounded-md">
             <SettingsIcon className="w-5" />
             <p>Settings</p>
           </li>
           <li
-            className="flex gap-5 items-center cursor-pointer"
+            className="flex gap-5 py-2 w-full items-center justify-center cursor-pointer hover:bg-slate-800 rounded-md"
             onClick={onLogout}
           >
             <LogOutIcon className="w-5" />

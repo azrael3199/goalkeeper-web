@@ -4,10 +4,8 @@ import { cn } from '@root/lib/utils/utils';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-
-import { EarthIcon, HomeIcon } from 'lucide-react';
-import paths from '@root/routes';
-import { Separator } from './ui/separator';
+import { Separator } from '../ui/separator';
+import NAV_ITEMS from './NavItems';
 
 interface SidebarSectionItemProps {
   children: React.ReactNode;
@@ -26,10 +24,10 @@ const SidebarSectionItem: React.FC<
   <div
     {...props}
     className={cn(
-      'flex gap-3 w-full items-center text-gray-400 text-sm p-2 px-4 cursor-pointer rounded-md',
+      'flex gap-3 w-full items-center text-gray-400 text-sm p-2 px-4 cursor-pointer rounded-md hover:bg-slate-900',
       {
-        'bg-gray-300': selected,
-        'text-background': selected,
+        'bg-slate-800 hover:bg-slate-800': selected,
+        'font-semibold text-gray-200': selected,
       },
       // eslint-disable-next-line react/prop-types
       props.className
@@ -52,7 +50,7 @@ const SidebarSection: React.FC<
   </section>
 );
 
-const Sidebar: React.FC = () => {
+const Navbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -65,7 +63,7 @@ const Sidebar: React.FC = () => {
   return (
     <aside className="hidden md:block min-w-[200px] grow min-h-screen border-r border-r-border px-2">
       <section id="logo-space" className="p-4 flex justify-center items-center">
-        <div className="w-36">
+        <div className="w-56">
           <Image
             src="/goalkeeper-main.svg"
             alt="Brand Logo"
@@ -78,23 +76,19 @@ const Sidebar: React.FC = () => {
       </section>
       <Separator />
       <SidebarSection title="Menu">
-        <SidebarSectionItem
-          icon={<HomeIcon className="w-5" />}
-          selected={pathname === paths.dashboard}
-          onClick={() => onNavItemClick(paths.dashboard)}
-        >
-          Home
-        </SidebarSectionItem>
-        <SidebarSectionItem
-          icon={<EarthIcon className="w-5" />}
-          selected={pathname === paths.spaces}
-          onClick={() => onNavItemClick(paths.spaces)}
-        >
-          Spaces
-        </SidebarSectionItem>
+        {NAV_ITEMS.map((item) => (
+          <SidebarSectionItem
+            key={item.title}
+            icon={item.icon}
+            selected={pathname === item.path}
+            onClick={() => onNavItemClick(item.path)}
+          >
+            {item.title}
+          </SidebarSectionItem>
+        ))}
       </SidebarSection>
     </aside>
   );
 };
 
-export default Sidebar;
+export default Navbar;

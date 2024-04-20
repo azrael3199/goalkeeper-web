@@ -6,6 +6,7 @@ import React from 'react';
 
 import { EarthIcon, HomeIcon } from 'lucide-react';
 import paths from '@root/routes';
+import NAV_ITEMS from './NavItems';
 
 interface SidebarSectionItemProps {
   children: React.ReactNode;
@@ -19,10 +20,10 @@ const SidebarSectionItem: React.FC<
   <div
     {...props}
     className={cn(
-      'flex flex-col gap-1 w-full items-center text-gray-400 text-sm p-2 cursor-pointer rounded-full',
+      'flex flex-col gap-1 w-full items-center text-gray-400 text-sm py-2 cursor-pointer rounded-full',
       {
-        'bg-gray-300': selected,
-        'text-background': selected,
+        'bg-slate-800 hover:bg-slate-800': selected,
+        'font-semibold text-gray-200': selected,
       },
       // eslint-disable-next-line react/prop-types
       props.className
@@ -33,7 +34,7 @@ const SidebarSectionItem: React.FC<
   </div>
 );
 
-const MobileSidebar: React.FC = () => {
+const MobileNavbar: React.FC = () => {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -45,22 +46,18 @@ const MobileSidebar: React.FC = () => {
 
   return (
     <aside className="flex gap-1 md:hidden border-t border-t-border p-2">
-      <SidebarSectionItem
-        icon={<HomeIcon className="w-5" />}
-        selected={pathname === paths.dashboard}
-        onClick={() => onNavItemClick(paths.dashboard)}
-      >
-        Home
-      </SidebarSectionItem>
-      <SidebarSectionItem
-        icon={<EarthIcon className="w-5" />}
-        selected={pathname === paths.spaces}
-        onClick={() => onNavItemClick(paths.spaces)}
-      >
-        Spaces
-      </SidebarSectionItem>
+      {NAV_ITEMS.map((item) => (
+        <SidebarSectionItem
+          key={item.title}
+          icon={item.icon}
+          selected={pathname === item.path}
+          onClick={() => onNavItemClick(item.path)}
+        >
+          {item.title}
+        </SidebarSectionItem>
+      ))}
     </aside>
   );
 };
 
-export default MobileSidebar;
+export default MobileNavbar;
