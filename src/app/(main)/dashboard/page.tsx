@@ -10,12 +10,9 @@ interface CountWidgetProps {
   title: string;
 }
 
-const CountWidget: React.FC = ({
-  count,
-  color,
-  title,
-  ...props
-}: CountWidgetProps & React.ComponentPropsWithRef<'div'>) => (
+const CountWidget: React.FC<
+  CountWidgetProps & React.ComponentPropsWithRef<'div'>
+> = ({ count, color, title, ...props }) => (
   <div
     {...props}
     className={cn(
