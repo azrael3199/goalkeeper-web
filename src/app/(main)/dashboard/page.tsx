@@ -16,14 +16,14 @@ const CountWidget: React.FC<
   <div
     {...props}
     className={cn(
-      'p-2 flex items-center gap-2 text-sm text-text-secondary w-fit',
+      'p-1 flex items-center gap-2 w-fit',
       // eslint-disable-next-line react/prop-types
       props.className
     )}
   >
     <div
       className={cn(
-        'rounded-full w-12 h-12 flex items-center justify-center text-normal font-bold text-text-primary'
+        'rounded-full w-11 h-11 flex items-center justify-center text-xs font-bold text-text-primary'
       )}
       style={{
         backgroundColor: color,
@@ -31,7 +31,7 @@ const CountWidget: React.FC<
     >
       {count}
     </div>
-    <p className="lg:max-w-[60px] text-xs">{title}</p>
+    <p className="lg:max-w-[60px] text-xs text-muted-foreground">{title}</p>
   </div>
 );
 
@@ -64,9 +64,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="p-4 pt-8">
-      <p className="text-xl flex items-center gap-2">
+      <div className="text-xl flex items-center gap-2">
         Welcome, {user?.displayName} <p className="text-2xl">👋</p>
-      </p>
+      </div>
       <section className="text-sm flex items-center gap-2 py-3 text-text-secondary">
         This week you have
         {taskCounts.map((task) => (

@@ -2,9 +2,9 @@ import React from 'react';
 import './globals.css';
 import { Inter as FontSans } from 'next/font/google';
 import { AppProvider } from '@root/context/AppContext';
-import { ErrorProvider } from '@root/context/ErrorContext';
 
 import { cn } from '@root/lib/utils/utils';
+import { Toaster } from '@root/components/ui/toaster';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -30,7 +30,8 @@ export default function RootLayout({
         )}
       >
         <AppProvider>
-          <ErrorProvider>{children}</ErrorProvider>
+          {children}
+          <Toaster />
         </AppProvider>
       </body>
     </html>

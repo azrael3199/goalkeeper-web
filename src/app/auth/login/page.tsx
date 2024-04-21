@@ -2,15 +2,17 @@
 
 import SignInWithGoogle from '@root/components/SignInWithGoogle';
 import { AppContext } from '@root/context/AppContext';
-import { ErrorContext } from '@root/context/ErrorContext';
 import paths from '@root/routes';
 import { loginWithEmailAndPassword } from '@root/lib/utils/firebaseUtils';
 import { handleInputChange } from '@root/lib/utils/formikInputHandler';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, useContext } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useToast } from '@root/components/ui/use-toast';
+import { ERRORS } from '@root/config';
+import env from '@root/environment';
 
 type Values = {
   email: string;
@@ -24,9 +26,11 @@ const errorClassName = 'text-red-400 text-sm mt-2';
 const Login = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { showError } = useContext(ErrorContext);
+  const { toast } = useToast();
   const { redirectRoute, setLoading, setRedirectRoute } =
     useContext(AppContext);
+
+  const [isGoogleButtonDisabled, setGoogleButtonDisabled] = useState(false);
 
   const signUpLink = (
     <Link href={paths.register} className="text-primary-500">
@@ -72,16 +76,21 @@ const Login = () => {
     }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
   ) => {
     setLoading(true);
-    showError(null);
     loginWithEmailAndPassword(values.email, values.password)
       .then(() => {
         redirectToOriginal();
       })
       .catch((err) => {
         if (err.message) {
-          showError(err.message);
+          toast({
+            title: env.mode === 'local' ? err.message : ERRORS.GENERIC,
+            variant: 'destructive',
+          });
         } else {
-          showError(t('unknownError'));
+          toast({
+            title: env.mode === 'local' ? t('unknownError') : ERRORS.GENERIC,
+            variant: 'destructive',
+          });
         }
         resetForm();
         setLoading(false);
@@ -99,62 +108,65 @@ const Login = () => {
         validate={validate}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, setFieldValue, errors }) => (
-          <Form>
-            <div className="mb-4">
-              <ErrorMessage
-                name="email"
-                render={(msg: string) => (
-                  <div className={errorClassName}>{msg}</div>
-                )}
-              />
-              <Field
-                type="text"
-                id="email"
-                name="email"
-                placeholder={`${t('loginScreen.email')}*`}
-                className={inputClassName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange<Values>('email', e, setFieldValue)
-                }
-              />
-            </div>
-            <div className="mb-8">
-              <ErrorMessage
-                name="password"
-                render={(msg: string) => (
-                  <div className={errorClassName}>{msg}</div>
-                )}
-              />
-              <Field
-                type="password"
-                id="password"
-                name="password"
-                placeholder={`${t('loginScreen.password')}*`}
-                className={inputClassName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange<Values>('password', e, setFieldValue)
-                }
-              />
-            </div>
-            <div className="text-center mb-4">
-              <button
-                type="submit"
-                className="bg-primary-500 hover:bg-primary-600 disabled:bg-slate-500 text-white py-2 px-4 rounded w-full"
-                disabled={isSubmitting || Object.keys(errors).length > 0}
-              >
-                <b className="uppercase">{t('loginScreen.login')}</b>
-              </button>
-            </div>
-            <div className="flex items-center justify-center w-full mb-4">
-              <SignInWithGoogle
-                disabled={isSubmitting}
-                onClick={redirectToOriginal}
-              />
-            </div>
-          </Form>
-        )}
+        {({ isSubmitting, setFieldValue, errors }) => {
+          setGoogleButtonDisabled(isSubmitting);
+          return (
+            <Form>
+              <div className="mb-4">
+                <ErrorMessage
+                  name="email"
+                  render={(msg: string) => (
+                    <div className={errorClassName}>{msg}</div>
+                  )}
+                />
+                <Field
+                  type="text"
+                  id="email"
+                  name="email"
+                  placeholder={`${t('loginScreen.email')}*`}
+                  className={inputClassName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange<Values>('email', e, setFieldValue)
+                  }
+                />
+              </div>
+              <div className="mb-8">
+                <ErrorMessage
+                  name="password"
+                  render={(msg: string) => (
+                    <div className={errorClassName}>{msg}</div>
+                  )}
+                />
+                <Field
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder={`${t('loginScreen.password')}*`}
+                  className={inputClassName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange<Values>('password', e, setFieldValue)
+                  }
+                />
+              </div>
+              <div className="text-center mb-4">
+                <button
+                  type="submit"
+                  className="bg-primary-500 hover:bg-primary-600 disabled:bg-slate-500 text-white py-2 px-4 rounded w-full"
+                  disabled={isSubmitting || Object.keys(errors).length > 0}
+                >
+                  <b className="uppercase">{t('loginScreen.login')}</b>
+                </button>
+              </div>
+            </Form>
+          );
+        }}
       </Formik>
+      <div className="flex items-center justify-center w-full mb-4">
+        <SignInWithGoogle
+          disabled={isGoogleButtonDisabled}
+          onClick={redirectToOriginal}
+        />
+      </div>
       <div className="mt-4 text-center w-full">
         <p className="mb-4 text-gray-800 dark:text-white">
           <Trans i18nKey="loginScreen.leadToSignUp" t={t}>

@@ -2,15 +2,17 @@
 
 import SignInWithGoogle from '@root/components/SignInWithGoogle';
 import { AppContext } from '@root/context/AppContext';
-import { ErrorContext } from '@root/context/ErrorContext';
 import paths from '@root/routes';
 import { signUpWithEmailAndPassword } from '@root/lib/utils/firebaseUtils';
 import { handleInputChange } from '@root/lib/utils/formikInputHandler';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, useContext } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useToast } from '@root/components/ui/use-toast';
+import env from '@root/environment';
+import { ERRORS } from '@root/config';
 
 type Values = {
   firstname: string;
@@ -27,9 +29,11 @@ const errorClassName = 'text-red-400 text-sm mt-2';
 const Register = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { showError } = useContext(ErrorContext);
+  const { toast } = useToast();
   const { redirectRoute, setLoading, setRedirectRoute } =
     useContext(AppContext);
+
+  const [isGoogleButtonDisabled, setGoogleButtonDisabled] = useState(false);
 
   const signInLink = (
     <Link href={paths.login} className="text-primary-500">
@@ -99,7 +103,6 @@ const Register = () => {
     }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
   ) => {
     setLoading(true);
-    showError(null);
     signUpWithEmailAndPassword(
       values.email,
       values.password,
@@ -111,9 +114,15 @@ const Register = () => {
       })
       .catch((err) => {
         if (err.message) {
-          showError(err.message);
+          toast({
+            title: env.mode === 'local' ? err.message : ERRORS.GENERIC,
+            variant: 'destructive',
+          });
         } else {
-          showError(t('unknownError'));
+          toast({
+            title: env.mode === 'local' ? t('unknownError') : ERRORS.GENERIC,
+            variant: 'destructive',
+          });
         }
         resetForm();
         setLoading(false);
@@ -137,117 +146,124 @@ const Register = () => {
         validate={validate}
         onSubmit={onSubmit}
       >
-        {({ isSubmitting, setFieldValue, errors }) => (
-          <Form>
-            <div className="mb-3">
-              <ErrorMessage
-                name="firstname"
-                render={(msg: string) => (
-                  <div className={errorClassName}>{msg}</div>
-                )}
-              />
-              <Field
-                type="text"
-                id="firstname"
-                name="firstname"
-                placeholder={`${t('registerScreen.firstname')}*`}
-                className={inputClassName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange<Values>('firstname', e, setFieldValue)
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <ErrorMessage
-                name="lastname"
-                render={(msg: string) => (
-                  <div className={errorClassName}>{msg}</div>
-                )}
-              />
-              <Field
-                type="text"
-                id="lastname"
-                name="lastname"
-                placeholder={`${t('registerScreen.lastname')}*`}
-                className={inputClassName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange<Values>('lastname', e, setFieldValue)
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <ErrorMessage
-                name="email"
-                render={(msg: string) => (
-                  <div className={errorClassName}>{msg}</div>
-                )}
-              />
-              <Field
-                type="email"
-                id="email"
-                name="email"
-                placeholder={`${t('registerScreen.email')}*`}
-                className={inputClassName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange<Values>('email', e, setFieldValue)
-                }
-              />
-            </div>
-            <div className="mb-3">
-              <ErrorMessage
-                name="password"
-                render={(msg: string) => (
-                  <div className={errorClassName}>{msg}</div>
-                )}
-              />
-              <Field
-                type="password"
-                id="password"
-                name="password"
-                placeholder={`${t('registerScreen.password')}*`}
-                className={inputClassName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange<Values>('password', e, setFieldValue)
-                }
-              />
-            </div>
-            <div className="mb-8">
-              <ErrorMessage
-                name="confirmPassword"
-                render={(msg: string) => (
-                  <div className={errorClassName}>{msg}</div>
-                )}
-              />
-              <Field
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder={`${t('registerScreen.confirmPassword')}*`}
-                className={inputClassName}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange<Values>('confirmPassword', e, setFieldValue)
-                }
-              />
-            </div>
-            <div className="text-center mb-4">
-              <button
-                type="submit"
-                className="bg-primary-500 hover:bg-primary-600 disabled:bg-slate-500 text-white py-2 px-4 rounded w-full"
-                disabled={isSubmitting || Object.keys(errors).length > 0}
-              >
-                <b className="uppercase">{t('registerScreen.signUp')}</b>
-              </button>
-            </div>
-            <div className="flex items-center justify-center w-full mb-4">
-              <SignInWithGoogle
-                register
-                disabled={isSubmitting}
-                onClick={redirectToOriginal}
-              />
-            </div>
-          </Form>
-        )}
+        {({ isSubmitting, setFieldValue, errors }) => {
+          setGoogleButtonDisabled(isSubmitting);
+          return (
+            <Form>
+              <div className="mb-3">
+                <ErrorMessage
+                  name="firstname"
+                  render={(msg: string) => (
+                    <div className={errorClassName}>{msg}</div>
+                  )}
+                />
+                <Field
+                  type="text"
+                  id="firstname"
+                  name="firstname"
+                  placeholder={`${t('registerScreen.firstname')}*`}
+                  className={inputClassName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange<Values>('firstname', e, setFieldValue)
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <ErrorMessage
+                  name="lastname"
+                  render={(msg: string) => (
+                    <div className={errorClassName}>{msg}</div>
+                  )}
+                />
+                <Field
+                  type="text"
+                  id="lastname"
+                  name="lastname"
+                  placeholder={`${t('registerScreen.lastname')}*`}
+                  className={inputClassName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange<Values>('lastname', e, setFieldValue)
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <ErrorMessage
+                  name="email"
+                  render={(msg: string) => (
+                    <div className={errorClassName}>{msg}</div>
+                  )}
+                />
+                <Field
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder={`${t('registerScreen.email')}*`}
+                  className={inputClassName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange<Values>('email', e, setFieldValue)
+                  }
+                />
+              </div>
+              <div className="mb-3">
+                <ErrorMessage
+                  name="password"
+                  render={(msg: string) => (
+                    <div className={errorClassName}>{msg}</div>
+                  )}
+                />
+                <Field
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder={`${t('registerScreen.password')}*`}
+                  className={inputClassName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange<Values>('password', e, setFieldValue)
+                  }
+                />
+              </div>
+              <div className="mb-8">
+                <ErrorMessage
+                  name="confirmPassword"
+                  render={(msg: string) => (
+                    <div className={errorClassName}>{msg}</div>
+                  )}
+                />
+                <Field
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder={`${t('registerScreen.confirmPassword')}*`}
+                  className={inputClassName}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleInputChange<Values>(
+                      'confirmPassword',
+                      e,
+                      setFieldValue
+                    )
+                  }
+                />
+              </div>
+              <div className="text-center mb-4">
+                <button
+                  type="submit"
+                  className="bg-primary-500 hover:bg-primary-600 disabled:bg-slate-500 text-white py-2 px-4 rounded w-full"
+                  disabled={isSubmitting || Object.keys(errors).length > 0}
+                >
+                  <b className="uppercase">{t('registerScreen.signUp')}</b>
+                </button>
+              </div>
+            </Form>
+          );
+        }}
       </Formik>
+      <div className="flex items-center justify-center w-full mb-4">
+        <SignInWithGoogle
+          register
+          disabled={isGoogleButtonDisabled}
+          onClick={redirectToOriginal}
+        />
+      </div>
       <div className="mt-4 text-center w-full">
         <p className="mb-4 text-gray-800 dark:text-white">
           <Trans i18nKey="registerScreen.leadToSignIn">{signInLink}</Trans>

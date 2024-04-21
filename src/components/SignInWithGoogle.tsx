@@ -1,12 +1,14 @@
 'use client';
 
 import { AppContext } from '@root/context/AppContext';
-import { ErrorContext } from '@root/context/ErrorContext';
 import { authWithGoogle } from '@root/lib/utils/firebaseUtils';
 import Image from 'next/image';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
+import env from '@root/environment';
+import { ERRORS } from '@root/config';
 import { Button } from './ui/button';
+import { useToast } from './ui/use-toast';
 
 type ISignInWithGoogleProps = {
   register?: boolean;
@@ -21,7 +23,7 @@ const SignInWithGoogle = ({
 }: ISignInWithGoogleProps) => {
   const { t } = useTranslation();
   const { setLoading } = useContext(AppContext);
-  const { showError } = useContext(ErrorContext);
+  const { toast } = useToast();
 
   const onAuth = () => {
     authWithGoogle()
@@ -30,9 +32,15 @@ const SignInWithGoogle = ({
       })
       .catch((err) => {
         if (err.message) {
-          showError(err.message);
+          toast({
+            title: env.mode === 'local' ? err.message : ERRORS.GENERIC,
+            variant: 'destructive',
+          });
         } else {
-          showError(t('unknownError'));
+          toast({
+            title: env.mode === 'local' ? t('unknownError') : ERRORS.GENERIC,
+            variant: 'destructive',
+          });
         }
         setLoading(false);
       });
