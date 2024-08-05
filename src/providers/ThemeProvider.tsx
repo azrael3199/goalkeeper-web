@@ -28,37 +28,45 @@ const ThemeProvider = ({
   storageKey = 'next-ui-theme',
   ...props
 }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Theme>(
-    () => (window.localStorage.getItem(storageKey) as Theme) || defaultTheme
-  );
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
+  const isClient = typeof window !== 'undefined';
 
   useEffect(() => {
-    const root = window.document.documentElement;
-
-    root.classList.remove('light', 'dark');
-
-    if (theme === 'system') {
-      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-        .matches
-        ? 'dark'
-        : 'light';
-
-      root.classList.add(systemTheme);
-      return;
+    if (isClient) {
+      const storedTheme = window.localStorage.getItem(storageKey) as Theme;
+      setTheme(storedTheme || defaultTheme);
     }
+  }, [isClient, defaultTheme, storageKey]);
 
-    root.classList.add(theme);
-  }, [theme]);
+  useEffect(() => {
+    if (isClient) {
+      const root = window.document.documentElement;
+      root.classList.remove('light', 'dark');
+
+      if (theme === 'system') {
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+          .matches
+          ? 'dark'
+          : 'light';
+        root.classList.add(systemTheme);
+        return;
+      }
+
+      root.classList.add(theme);
+    }
+  }, [theme, isClient]);
 
   const value = useMemo(
     () => ({
       theme,
       setTheme: (theme: Theme) => {
-        localStorage.setItem(storageKey, theme);
-        setTheme(theme);
+        if (isClient) {
+          localStorage.setItem(storageKey, theme);
+          setTheme(theme);
+        }
       },
     }),
-    [storageKey, theme]
+    [isClient, storageKey, theme]
   );
 
   return (

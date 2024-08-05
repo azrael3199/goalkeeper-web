@@ -11,24 +11,6 @@ interface CountWidgetProps {
   title: string;
 }
 
-const taskCounts = [
-  {
-    count: '5',
-    color: '#4e28ec',
-    title: 'Completed Tasks',
-  },
-  {
-    count: '2',
-    color: '#ff7a00',
-    title: 'Pending Tasks',
-  },
-  {
-    count: '100%',
-    color: '#00b81d',
-    title: 'Productivity',
-  },
-];
-
 const CountWidget: React.FC<
   CountWidgetProps & React.ComponentPropsWithRef<'div'>
 > = ({ count, color, title, ...props }) => (
