@@ -3,9 +3,6 @@
 import { cn } from '@root/lib/utils/utils';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-
-import { EarthIcon, HomeIcon } from 'lucide-react';
-import paths from '@root/routes';
 import NAV_ITEMS from './NavItems';
 
 interface SidebarSectionItemProps {
@@ -20,9 +17,9 @@ const SidebarSectionItem: React.FC<
   <div
     {...props}
     className={cn(
-      'flex flex-col gap-1 w-full items-center text-gray-400 text-sm py-2 cursor-pointer rounded-full',
+      'flex flex-col gap-1 w-full items-center text-gray-400 text-sm p-2 cursor-pointer rounded-lg',
       {
-        'bg-slate-800 hover:bg-slate-800': selected,
+        'bg-slate-800 hover:bg-slate-800 hover:dark:bg-slate-800': selected,
         'font-semibold text-gray-200': selected,
       },
       // eslint-disable-next-line react/prop-types
@@ -45,7 +42,7 @@ const MobileNavbar: React.FC = () => {
   };
 
   return (
-    <aside className="flex gap-1 md:hidden border-t border-t-border p-2">
+    <aside className="flex w-full gap-1 md:hidden border-t border-t-border p-2 bg-background">
       {NAV_ITEMS.map((item) => (
         <SidebarSectionItem
           key={item.title}

@@ -5,19 +5,19 @@
 
 import React, { useContext } from 'react';
 import {
-  BellIcon,
   CircleUserRoundIcon,
   LogOutIcon,
   SearchIcon,
   SettingsIcon,
 } from 'lucide-react';
 import { cn } from '@root/lib/utils/utils';
-import { AppContext } from '@root/context/AppContext';
+import { AppContext } from '@root/providers/AppProvider';
 import Image from 'next/image';
 import { logout } from '@root/lib/utils/firebaseUtils';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import NotificationsMenu from './Notifications/NotificationsMenu';
 
 const ProfileIcon: React.FC = () => {
   const { user } = useContext(AppContext);
@@ -86,7 +86,7 @@ const SearchInput: React.FC<React.ComponentPropsWithRef<'div'>> = (props) => (
   <div
     {...props}
     className={cn(
-      'bg-slate-900 rounded-full px-4 flex items-center',
+      'bg-card border border-border rounded-full px-4 flex items-center',
       // eslint-disable-next-line react/destructuring-assignment, react/prop-types
       props.className
     )}
@@ -105,10 +105,8 @@ const Header: React.FC = () => (
     <div className="grow w-full">
       <SearchInput className="w-full md:w-1/2" />
     </div>
-    <div className="px-2">
-      <Button variant="ghost" className="p-2 rounded-full w-9.5 h-9.5">
-        <BellIcon className="w-full h-full" />
-      </Button>
+    <div className="px-2 pr-0.5 md:pr-1 flex justify-center">
+      <NotificationsMenu />
     </div>
     <div className="px-2">
       <ProfileIcon />

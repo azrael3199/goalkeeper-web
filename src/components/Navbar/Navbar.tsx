@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { Separator } from '../ui/separator';
 import NAV_ITEMS from './NavItems';
+import DarkThemeToggle from '../DarkThemeToggle';
 
 interface SidebarSectionItemProps {
   children: React.ReactNode;
@@ -24,9 +25,9 @@ const SidebarSectionItem: React.FC<
   <div
     {...props}
     className={cn(
-      'flex gap-3 w-full items-center text-gray-400 text-sm p-2 px-4 cursor-pointer rounded-md hover:bg-slate-900',
+      'flex gap-3 w-full items-center text-gray-400 text-sm p-2 px-4 cursor-pointer rounded-md hover:bg-slate-800 hover:dark:bg-slate-900',
       {
-        'bg-slate-800 hover:bg-slate-800': selected,
+        'bg-slate-800 hover:bg-slate-800 hover:dark:bg-slate-800': selected,
         'font-semibold text-gray-200': selected,
       },
       // eslint-disable-next-line react/prop-types
@@ -61,32 +62,40 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <aside className="hidden md:block min-w-[200px] grow min-h-screen border-r border-r-border px-2">
-      <section id="logo-space" className="p-4 flex justify-center items-center">
-        <div className="w-56">
-          <Image
-            src="/goalkeeper-main.svg"
-            alt="Brand Logo"
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{ width: '100%', height: 'auto' }}
-          />
-        </div>
-      </section>
-      <Separator />
-      <SidebarSection title="Menu">
-        {NAV_ITEMS.map((item) => (
-          <SidebarSectionItem
-            key={item.title}
-            icon={item.icon}
-            selected={pathname === item.path}
-            onClick={() => onNavItemClick(item.path)}
-          >
-            {item.title}
-          </SidebarSectionItem>
-        ))}
-      </SidebarSection>
+    <aside className="hidden md:flex min-w-[200px] grow min-h-screen border-r border-r-border px-2 flex-col gap-2 justify-between">
+      <div>
+        <section
+          id="logo-space"
+          className="p-4 flex justify-center items-center"
+        >
+          <div className="w-56">
+            <Image
+              src="/goalkeeper-main.svg"
+              alt="Brand Logo"
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{ width: '100%', height: 'auto' }}
+            />
+          </div>
+        </section>
+        <Separator />
+        <SidebarSection title="Menu">
+          {NAV_ITEMS.map((item) => (
+            <SidebarSectionItem
+              key={item.title}
+              icon={item.icon}
+              selected={pathname === item.path}
+              onClick={() => onNavItemClick(item.path)}
+            >
+              {item.title}
+            </SidebarSectionItem>
+          ))}
+        </SidebarSection>
+      </div>
+      <div className="p-4 flex items-center">
+        <DarkThemeToggle />
+      </div>
     </aside>
   );
 };

@@ -1,8 +1,9 @@
 'use client';
 
-import { AppContext } from '@root/context/AppContext';
+import { AppContext } from '@root/providers/AppProvider';
 import { cn } from '@root/lib/utils/utils';
 import React, { useContext, useEffect } from 'react';
+import SwimlaneSection from '@root/components/SwimlaneSection/SwimlaneSection';
 
 interface CountWidgetProps {
   count: string;
@@ -10,20 +11,38 @@ interface CountWidgetProps {
   title: string;
 }
 
+const taskCounts = [
+  {
+    count: '5',
+    color: '#4e28ec',
+    title: 'Completed Tasks',
+  },
+  {
+    count: '2',
+    color: '#ff7a00',
+    title: 'Pending Tasks',
+  },
+  {
+    count: '100%',
+    color: '#00b81d',
+    title: 'Productivity',
+  },
+];
+
 const CountWidget: React.FC<
   CountWidgetProps & React.ComponentPropsWithRef<'div'>
 > = ({ count, color, title, ...props }) => (
   <div
     {...props}
     className={cn(
-      'p-2 flex items-center gap-2 text-sm text-text-secondary w-fit',
+      'p-1 flex items-center gap-2 w-fit',
       // eslint-disable-next-line react/prop-types
       props.className
     )}
   >
     <div
       className={cn(
-        'rounded-full w-12 h-12 flex items-center justify-center text-normal font-bold text-text-primary'
+        'rounded-full w-[44px] h-[44px] flex items-center justify-center text-xs font-bold text-text-primary opacity-90'
       )}
       style={{
         backgroundColor: color,
@@ -31,7 +50,7 @@ const CountWidget: React.FC<
     >
       {count}
     </div>
-    <p className="lg:max-w-[60px] text-xs">{title}</p>
+    <p className="lg:max-w-[60px] text-xs text-muted-foreground">{title}</p>
   </div>
 );
 
@@ -63,16 +82,19 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-4 pt-8">
-      <p className="text-xl flex items-center gap-2">
+    <div className="p-4 pt-8 overflow-y-scroll md:overflow-hidden">
+      <div className="text-xl flex items-center gap-2">
         Welcome, {user?.displayName} <p className="text-2xl">👋</p>
-      </p>
-      <section className="text-sm flex items-center gap-2 py-3 text-text-secondary">
-        This week you have
-        {taskCounts.map((task) => (
-          <CountWidget key={task.title} {...task} />
-        ))}
+      </div>
+      <section className="text-sm flex flex-col md:flex-row md:items-center gap-2 py-3 text-text-secondary">
+        This week, you have
+        <div className="flex gap-2 flex-wrap">
+          {taskCounts.map((task) => (
+            <CountWidget key={task.title} {...task} />
+          ))}
+        </div>
       </section>
+      <SwimlaneSection />
     </div>
   );
 };

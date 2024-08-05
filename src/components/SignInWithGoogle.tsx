@@ -1,12 +1,12 @@
 'use client';
 
-import { AppContext } from '@root/context/AppContext';
-import { ErrorContext } from '@root/context/ErrorContext';
+import { AppContext } from '@root/providers/AppProvider';
 import { authWithGoogle } from '@root/lib/utils/firebaseUtils';
 import Image from 'next/image';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from './ui/button';
+import { useToast } from './ui/use-toast';
 
 type ISignInWithGoogleProps = {
   register?: boolean;
@@ -21,7 +21,7 @@ const SignInWithGoogle = ({
 }: ISignInWithGoogleProps) => {
   const { t } = useTranslation();
   const { setLoading } = useContext(AppContext);
-  const { showError } = useContext(ErrorContext);
+  const { toast } = useToast();
 
   const onAuth = () => {
     authWithGoogle()
@@ -30,9 +30,15 @@ const SignInWithGoogle = ({
       })
       .catch((err) => {
         if (err.message) {
-          showError(err.message);
+          toast({
+            description: err.message,
+            variant: 'destructive',
+          });
         } else {
-          showError(t('unknownError'));
+          toast({
+            description: t('loginScreen.unknownError'),
+            variant: 'destructive',
+          });
         }
         setLoading(false);
       });
@@ -40,11 +46,9 @@ const SignInWithGoogle = ({
 
   return (
     <Button
-      className={`flex items-center justify-center py-2 px-2 bg-white ${
-        disabled
-          ? 'dark:bg-slate-400 cursor-not-allowed'
-          : 'dark:bg-slate-700 dark:hover:bg-slate-600'
-      } w-fit rounded-md w-full`}
+      className="flex items-center justify-center py-2 px-2 w-fit rounded-md w-full"
+      variant={disabled ? 'outline' : 'secondary'}
+      disabled={disabled}
       role="button"
       tabIndex={0}
       // eslint-disable-next-line @typescript-eslint/no-empty-function
