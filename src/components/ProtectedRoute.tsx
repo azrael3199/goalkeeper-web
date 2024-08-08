@@ -4,7 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import React, { useContext, useEffect } from 'react';
 import paths from '@root/routes';
 import { onAuthStateChanged } from '@root/lib/utils/firebaseUtils';
-import { AppContext } from '@root/context/AppContext';
+import { AppContext } from '@root/providers/AppProvider';
 import { Unsubscribe, User } from 'firebase/auth';
 import LoadingOverlay from './LoadingOverlay';
 

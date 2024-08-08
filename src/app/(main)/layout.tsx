@@ -3,8 +3,8 @@
 import Header from '@root/components/Header';
 import ProtectedRoute from '@root/components/ProtectedRoute';
 import LoadingOverlay from '@root/components/LoadingOverlay';
-import Sidebar from '@root/components/Sidebar';
-import MobileSidebar from '@root/components/MobileSidebar';
+import Navbar from '@root/components/Navbar/Navbar';
+import MobileNavbar from '@root/components/Navbar/MobileNavbar';
 
 export default function MainLayout({
   children,
@@ -13,14 +13,14 @@ export default function MainLayout({
 }) {
   return (
     <ProtectedRoute>
-      <div className="min-h-screen flex flex-col md:flex-row">
-        <Sidebar />
-        <main className="h-full w-full grow md:grow-0">
+      <div className="h-screen max-h-screen flex flex-col md:flex-row">
+        <Navbar />
+        <main className="overflow-hidden w-full flex flex-col">
           <Header />
           {children}
           <LoadingOverlay />
         </main>
-        <MobileSidebar />
+        <MobileNavbar />
       </div>
     </ProtectedRoute>
   );

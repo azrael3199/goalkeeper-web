@@ -1,4 +1,3 @@
-import { fontFamily } from 'tailwindcss/defaultTheme';
 import type { Config } from 'tailwindcss';
 
 const config = {
@@ -25,27 +24,17 @@ const config = {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        text: {
+          primary: '#f3fbfc',
+          secondary: '#babbff',
+        },
         primary: {
-          100: '#cef2f9',
-          200: '#9ee6f2',
-          300: '#6dd9ec',
-          400: '#3dcde5',
-          500: '#0cc0df',
-          600: '#0a9ab2',
-          700: '#077386',
-          800: '#054d59',
-          900: '#02262d',
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
         },
         secondary: {
-          100: '#ccdee9',
-          200: '#99bdd3',
-          300: '#669dbd',
-          400: '#337ca7',
-          500: '#005b91',
-          600: '#004974',
-          700: '#003757',
-          800: '#00243a',
-          900: '#00121d',
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
           DEFAULT: 'hsl(var(--destructive))',
@@ -73,11 +62,6 @@ const config = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -87,21 +71,14 @@ const config = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
-        'fade-in': {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 2s ease-out',
-      },
-      fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans],
       },
     },
   },
+
   // eslint-disable-next-line global-require
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;

@@ -20,6 +20,7 @@
   ],
   "rules": {
     "indent": "warn",
+    "no-shadow": "off",
     "brace-style": "warn",
     "operator-linebreak": "off",
     "function-paren-newline": "off",

@@ -1,8 +1,7 @@
 'use client';
 
 import SignInWithGoogle from '@root/components/SignInWithGoogle';
-import { AppContext } from '@root/context/AppContext';
-import { ErrorContext } from '@root/context/ErrorContext';
+import { AppContext } from '@root/providers/AppProvider';
 import paths from '@root/routes';
 import { signUpWithEmailAndPassword } from '@root/lib/utils/firebaseUtils';
 import { handleInputChange } from '@root/lib/utils/formikInputHandler';
@@ -11,6 +10,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useToast } from '@root/components/ui/use-toast';
+import { Button } from '@root/components/ui/button';
 
 type Values = {
   firstname: string;
@@ -27,12 +28,13 @@ const errorClassName = 'text-red-400 text-sm mt-2';
 const Register = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { showError } = useContext(ErrorContext);
   const { redirectRoute, setLoading, setRedirectRoute } =
     useContext(AppContext);
 
+  const { toast } = useToast();
+
   const signInLink = (
-    <Link href={paths.login} className="text-primary-500">
+    <Link href={paths.login} className="text-primary underline">
       {t('registerScreen.signIn')}
     </Link>
   );
@@ -99,7 +101,6 @@ const Register = () => {
     }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
   ) => {
     setLoading(true);
-    showError(null);
     signUpWithEmailAndPassword(
       values.email,
       values.password,
@@ -111,9 +112,15 @@ const Register = () => {
       })
       .catch((err) => {
         if (err.message) {
-          showError(err.message);
+          toast({
+            title: err.message,
+            variant: 'destructive',
+          });
         } else {
-          showError(t('unknownError'));
+          toast({
+            title: t('unknownError'),
+            variant: 'destructive',
+          });
         }
         resetForm();
         setLoading(false);
@@ -230,13 +237,13 @@ const Register = () => {
               />
             </div>
             <div className="text-center mb-4">
-              <button
+              <Button
                 type="submit"
                 className="bg-primary-500 hover:bg-primary-600 disabled:bg-slate-500 text-white py-2 px-4 rounded w-full"
                 disabled={isSubmitting || Object.keys(errors).length > 0}
               >
                 <b className="uppercase">{t('registerScreen.signUp')}</b>
-              </button>
+              </Button>
             </div>
             <div className="flex items-center justify-center w-full mb-4">
               <SignInWithGoogle

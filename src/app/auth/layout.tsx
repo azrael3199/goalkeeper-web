@@ -5,7 +5,7 @@ import env from '@root/environment';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import i18n from '@root/i18n';
 import LoadingOverlay from '@root/components/LoadingOverlay';
-import { AppContext } from '@root/context/AppContext';
+import { AppContext } from '@root/providers/AppProvider';
 import { useContext, useEffect } from 'react';
 import { Typewriter } from 'react-simple-typewriter';
 

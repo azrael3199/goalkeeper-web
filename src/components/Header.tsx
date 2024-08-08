@@ -5,19 +5,19 @@
 
 import React, { useContext } from 'react';
 import {
-  BellIcon,
   CircleUserRoundIcon,
   LogOutIcon,
   SearchIcon,
   SettingsIcon,
 } from 'lucide-react';
 import { cn } from '@root/lib/utils/utils';
-import { AppContext } from '@root/context/AppContext';
+import { AppContext } from '@root/providers/AppProvider';
 import Image from 'next/image';
 import { logout } from '@root/lib/utils/firebaseUtils';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import NotificationsMenu from './Notifications/NotificationsMenu';
 
 const ProfileIcon: React.FC = () => {
   const { user } = useContext(AppContext);
@@ -29,6 +29,22 @@ const ProfileIcon: React.FC = () => {
   const onLogout = () => {
     logout();
   };
+
+  const userDropdownItems = [
+    {
+      title: 'Profile',
+      icon: <CircleUserRoundIcon className="w-5" />,
+    },
+    {
+      title: 'Settings',
+      icon: <SettingsIcon className="w-5" />,
+    },
+    {
+      title: 'Logout',
+      icon: <LogOutIcon className="w-5" />,
+      action: () => onLogout(),
+    },
+  ];
 
   // eslint-disable-next-line consistent-return
   return (
@@ -56,26 +72,23 @@ const ProfileIcon: React.FC = () => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="min-w-24 w-fit bg-slate-900 rounded-md p-4">
-        <p className="text-gray-600 font-semibold text-sm">
+      <PopoverContent className="min-w-24 w-fit bg-slate-900 rounded-md p-3 px-2">
+        <p className="text-gray-600 font-semibold text-sm px-2">
           {user.displayName}
         </p>
-        <ul className="py-1 pt-4 flex flex-col items-center gap-4 text-sm">
-          <li className="flex gap-5 items-center cursor-pointer">
-            <CircleUserRoundIcon className="w-5" />
-            <p>Account</p>
-          </li>
-          <li className="flex gap-5 items-center cursor-pointer">
-            <SettingsIcon className="w-5" />
-            <p>Settings</p>
-          </li>
-          <li
-            className="flex gap-5 items-center cursor-pointer"
-            onClick={onLogout}
-          >
-            <LogOutIcon className="w-5" />
-            <p>Sign Out</p>
-          </li>
+        <ul className="py-1 pt-4 flex flex-col items-center gap-1 text-sm">
+          {userDropdownItems.map((dropdownItem) => (
+            <li
+              key={dropdownItem.title}
+              className="grid grid-cols-3 gap-2 py-2 w-full cursor-pointer hover:bg-slate-800 rounded-md"
+              onClick={() => dropdownItem.action?.()}
+            >
+              <div className="flex items-center justify-center px-2 col-span-1">
+                {dropdownItem.icon}
+              </div>
+              <p className="col-span-2">{dropdownItem.title}</p>
+            </li>
+          ))}
         </ul>
       </PopoverContent>
     </Popover>
@@ -86,7 +99,7 @@ const SearchInput: React.FC<React.ComponentPropsWithRef<'div'>> = (props) => (
   <div
     {...props}
     className={cn(
-      'bg-slate-900 rounded-full px-4 flex items-center',
+      'bg-card border border-border rounded-full px-4 flex items-center',
       // eslint-disable-next-line react/destructuring-assignment, react/prop-types
       props.className
     )}
@@ -105,10 +118,8 @@ const Header: React.FC = () => (
     <div className="grow w-full">
       <SearchInput className="w-full md:w-1/2" />
     </div>
-    <div className="px-2">
-      <Button variant="ghost" className="p-2 rounded-full w-9.5 h-9.5">
-        <BellIcon className="w-full h-full" />
-      </Button>
+    <div className="px-2 pr-0.5 md:pr-1 flex justify-center">
+      <NotificationsMenu />
     </div>
     <div className="px-2">
       <ProfileIcon />
