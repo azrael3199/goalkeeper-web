@@ -55,7 +55,7 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
       ],
     },
     {
-      title: 'In Review',
+      title: 'Done',
       tasks: [
         {
           taskId: '4',
@@ -67,10 +67,6 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
           hoursSpent: 2,
         },
       ],
-    },
-    {
-      title: 'Done',
-      tasks: [],
     },
   ];
 

@@ -30,7 +30,7 @@ const Login = () => {
     useContext(AppContext);
 
   const signUpLink = (
-    <Link href={paths.register} className="text-primary-500">
+    <Link href={paths.register} className="text-primary underline">
       {t('loginScreen.signUp')}
     </Link>
   );

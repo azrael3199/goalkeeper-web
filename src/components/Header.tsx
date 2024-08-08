@@ -30,6 +30,22 @@ const ProfileIcon: React.FC = () => {
     logout();
   };
 
+  const userDropdownItems = [
+    {
+      title: 'Profile',
+      icon: <CircleUserRoundIcon className="w-5" />,
+    },
+    {
+      title: 'Settings',
+      icon: <SettingsIcon className="w-5" />,
+    },
+    {
+      title: 'Logout',
+      icon: <LogOutIcon className="w-5" />,
+      action: () => onLogout(),
+    },
+  ];
+
   // eslint-disable-next-line consistent-return
   return (
     <Popover>
@@ -61,21 +77,18 @@ const ProfileIcon: React.FC = () => {
           {user.displayName}
         </p>
         <ul className="py-1 pt-4 flex flex-col items-center gap-1 text-sm">
-          <li className="flex gap-5 py-2 w-full items-center justify-center cursor-pointer hover:bg-slate-800 rounded-md">
-            <CircleUserRoundIcon className="w-5" />
-            <p>Account</p>
-          </li>
-          <li className="flex gap-5 py-2 w-full items-center justify-center cursor-pointer hover:bg-slate-800 rounded-md">
-            <SettingsIcon className="w-5" />
-            <p>Settings</p>
-          </li>
-          <li
-            className="flex gap-5 py-2 w-full items-center justify-center cursor-pointer hover:bg-slate-800 rounded-md"
-            onClick={onLogout}
-          >
-            <LogOutIcon className="w-5" />
-            <p>Sign Out</p>
-          </li>
+          {userDropdownItems.map((dropdownItem) => (
+            <li
+              key={dropdownItem.title}
+              className="grid grid-cols-3 gap-2 py-2 w-full cursor-pointer hover:bg-slate-800 rounded-md"
+              onClick={() => dropdownItem.action?.()}
+            >
+              <div className="flex items-center justify-center px-2 col-span-1">
+                {dropdownItem.icon}
+              </div>
+              <p className="col-span-2">{dropdownItem.title}</p>
+            </li>
+          ))}
         </ul>
       </PopoverContent>
     </Popover>

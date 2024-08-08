@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import React, { ChangeEvent, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useToast } from '@root/components/ui/use-toast';
+import { Button } from '@root/components/ui/button';
 
 type Values = {
   firstname: string;
@@ -33,7 +34,7 @@ const Register = () => {
   const { toast } = useToast();
 
   const signInLink = (
-    <Link href={paths.login} className="text-primary-500">
+    <Link href={paths.login} className="text-primary underline">
       {t('registerScreen.signIn')}
     </Link>
   );
@@ -236,13 +237,13 @@ const Register = () => {
               />
             </div>
             <div className="text-center mb-4">
-              <button
+              <Button
                 type="submit"
                 className="bg-primary-500 hover:bg-primary-600 disabled:bg-slate-500 text-white py-2 px-4 rounded w-full"
                 disabled={isSubmitting || Object.keys(errors).length > 0}
               >
                 <b className="uppercase">{t('registerScreen.signUp')}</b>
-              </button>
+              </Button>
             </div>
             <div className="flex items-center justify-center w-full mb-4">
               <SignInWithGoogle
