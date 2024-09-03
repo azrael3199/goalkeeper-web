@@ -41,7 +41,7 @@ export const signUp: RequestHandler = async (req: Request, res: Response) => {
     await userRef.set(user);
     return res.status(201).json({ message: 'User created successfully' });
   } catch (err) {
-    if (process.env.NODE_ENV === 'local') console.error(err);
+    if (process.env.NODE_ENV === 'development') console.error(err);
     return res.status(500).json({ error: 'Failed to create user' });
   }
 };

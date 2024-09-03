@@ -25,7 +25,7 @@ const httpServer = http.createServer(app);
 
 // CORS Settings
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'local' ? '*' : '',
+  origin: process.env.NODE_ENV === 'development' ? '*' : '',
   credentials: true,
 };
 

@@ -39,5 +39,5 @@ const authMiddleware = async (
   }
 };
 
-export { RequestWithContext };
+export { type RequestWithContext };
 export default authMiddleware;
