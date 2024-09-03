@@ -15,7 +15,7 @@ type ISignInWithGoogleProps = {
 };
 
 const SignInWithGoogle = ({
-  register,
+  register = false,
   onClick,
   disabled = false,
 }: ISignInWithGoogleProps) => {
@@ -24,7 +24,7 @@ const SignInWithGoogle = ({
   const { toast } = useToast();
 
   const onAuth = () => {
-    authWithGoogle()
+    authWithGoogle(register)
       .then(() => {
         onClick();
       })

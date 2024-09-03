@@ -24,7 +24,11 @@ export const AppContext = createContext<IAppContextProps>({
   setRedirectRoute: () => {},
 });
 
-export function AppProvider({ children }: { children: React.ReactNode }) {
+export function AppProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.ReactNode {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [redirectRoute, setRedirectRoute] = useState<string | null>(null);
