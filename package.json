@@ -39,7 +39,7 @@
     "axios": "^1.7.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "firebase": "^9.22.2",
+    "firebase": "^10.14.1",
     "formik": "^2.4.2",
     "graphql": "^16.9.0",
     "i18next": "^23.2.3",
