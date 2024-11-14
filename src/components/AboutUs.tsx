@@ -1,5 +1,6 @@
 import React from 'react';
 import { Target, Users, Heart, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 
 const values = [
   {
@@ -30,7 +31,7 @@ const values = [
 
 export default function AboutUs() {
   return (
-    <section id="about" className="py-20 px-6 relative">
+    <section id="about_us" className="py-20 px-6 relative">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-purple-900/10 to-gray-900" />
       <div className="container mx-auto relative">
         <div className="max-w-6xl mx-auto">
@@ -64,10 +65,13 @@ export default function AboutUs() {
               </div>
             </div>
             <div className="relative">
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80"
                 alt="Team Collaboration"
                 className="rounded-2xl shadow-2xl shadow-primary/10 border border-gray-800/50"
+                width={2400}
+                height={800}
+                priority
               />
             </div>
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { ChevronRight, Play } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -45,10 +46,13 @@ export default function Hero() {
           <div className="mt-20 relative fade-in-up-slow">
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10" />
             <div className="absolute -inset-px bg-gradient-to-r from-primary/20 to-primary-dark/20 rounded-t-2xl" />
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=2400&q=80"
               alt="Dashboard Preview"
               className="rounded-t-2xl shadow-2xl shadow-primary/10 border border-gray-800/50"
+              width={2400}
+              height={800}
+              priority
             />
           </div>
         </div>

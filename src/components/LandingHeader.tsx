@@ -79,6 +79,12 @@ function LandingHeader() {
           >
             Pricing
           </a>
+          <a
+            href="#about_us"
+            className="text-gray-300 hover:text-primary transition-colors"
+          >
+            About Us
+          </a>
         </nav>
 
         <div className="hidden md:flex items-center space-x-4">
@@ -95,6 +101,7 @@ function LandingHeader() {
 
         <Button
           type="button"
+          variant="link"
           className="md:hidden text-gray-300 hover:text-white"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
@@ -123,6 +130,12 @@ function LandingHeader() {
               className="text-gray-300 hover:text-primary transition-colors"
             >
               Pricing
+            </a>
+            <a
+              href="#about_us"
+              className="text-gray-300 hover:text-primary transition-colors"
+            >
+              About Us
             </a>
             <hr className="border-gray-800" />
             <Button

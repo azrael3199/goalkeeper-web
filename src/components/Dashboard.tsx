@@ -1,5 +1,6 @@
 import React from 'react';
 import { LineChart, BarChart, Activity } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Dashboard() {
   return (
@@ -59,10 +60,13 @@ export default function Dashboard() {
 
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10" />
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1800&q=80"
               alt="Dashboard Interface"
               className="rounded-2xl shadow-2xl shadow-blue-500/10 border border-gray-800/50"
+              width={2400}
+              height={800}
+              priority
             />
           </div>
         </div>
