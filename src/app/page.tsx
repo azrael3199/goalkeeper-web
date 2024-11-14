@@ -4,7 +4,7 @@ import Header from '@root/components/LandingHeader';
 import ProtectedRoute from '@root/components/ProtectedRoute';
 import LoadingOverlay from '@root/components/LoadingOverlay';
 import OnboardingSlide from '@root/components/OnboardingSlide';
-import { AppContext } from '@root/context/AppContext';
+import { AppContext } from '@root/providers/AppProvider';
 import i18n from '@root/i18n';
 import paths from '@root/routes';
 import { useContext, useEffect, useState } from 'react';

@@ -13,9 +13,9 @@ export default function MainLayout({
 }) {
   return (
     <ProtectedRoute>
-      <div className="min-h-screen h-screen flex flex-col md:flex-row">
+      <div className="h-screen max-h-screen flex flex-col md:flex-row">
         <Navbar />
-        <main className="h-full w-full grow md:grow-0 flex flex-col">
+        <main className="overflow-hidden w-full flex flex-col">
           <Header />
           {children}
           <LoadingOverlay />

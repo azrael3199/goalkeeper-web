@@ -9,6 +9,9 @@ const env = {
     .NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID as string,
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID as string,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID as string,
+  darkModeToggle: process.env.NEXT_PUBLIC_DARK_MODE_TOGGLE as string,
+  httpBackendHost: process.env.NEXT_PUBLIC_BACKEND_HTTP as string,
+  graphqlBackendHost: process.env.NEXT_PUBLIC_BACKEND_GRAPHQL as string,
 };
 
 export default env;

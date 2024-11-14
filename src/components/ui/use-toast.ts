@@ -1,4 +1,8 @@
+/* eslint-disable consistent-return */
+/* eslint-disable object-shorthand */
+/* eslint-disable no-use-before-define */
 /* eslint-disable default-case */
+/* eslint-disable indent */
 
 'use client';
 
@@ -64,17 +68,15 @@ const addToRemoveQueue = (toastId: string) => {
 
   const timeout = setTimeout(() => {
     toastTimeouts.delete(toastId);
-    // eslint-disable-next-line no-use-before-define
     dispatch({
       type: 'REMOVE_TOAST',
-      toastId,
+      toastId: toastId,
     });
   }, TOAST_REMOVE_DELAY);
 
   toastTimeouts.set(toastId, timeout);
 };
 
-// eslint-disable-next-line consistent-return
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case 'ADD_TOAST':
@@ -99,7 +101,6 @@ export const reducer = (state: State, action: Action): State => {
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {
-        // eslint-disable-next-line no-shadow
         state.toasts.forEach((toast) => {
           addToRemoveQueue(toast.id);
         });
@@ -147,7 +148,6 @@ type Toast = Omit<ToasterToast, 'id'>;
 function toast({ ...props }: Toast) {
   const id = genId();
 
-  // eslint-disable-next-line no-shadow
   const update = (props: ToasterToast) =>
     dispatch({
       type: 'UPDATE_TOAST',
@@ -161,15 +161,14 @@ function toast({ ...props }: Toast) {
       ...props,
       id,
       open: true,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      onOpenChange: (open: any) => {
+      onOpenChange: (open) => {
         if (!open) dismiss();
       },
     },
   });
 
   return {
-    id,
+    id: id,
     dismiss,
     update,
   };
