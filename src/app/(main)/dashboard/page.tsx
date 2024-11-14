@@ -64,9 +64,9 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-4 pt-8 overflow-y-scroll md:overflow-hidden">
-      <div className="text-xl flex items-center gap-2">
-        Welcome, {user?.displayName} <p className="text-2xl">👋</p>
+    <div className="p-4 pt-8 overflow-y-scroll">
+      <div className="text-xl">
+        Welcome, {user?.displayName} <b className="text-2xl">👋</b>
       </div>
       <section className="text-sm flex flex-col md:flex-row md:items-center gap-2 py-3 text-text-secondary">
         This week, you have

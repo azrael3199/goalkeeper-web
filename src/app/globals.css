@@ -12,6 +12,8 @@
   --popover: 239 100% 95%;
   --popover-foreground: 239 100% 0%;
   --primary: 239 100% 66.3%;
+  --primary-dark: #4244cc;
+  --primary-light: #7879ff;
   --primary-foreground: 210 20% 98%;
   --secondary: 239 30% 70%;
   --secondary-foreground: 0 0% 0%;
@@ -25,7 +27,9 @@
   --input: 239 30% 18%;
   --ring: 239 100% 66.3%;
   --radius: 0.5rem;
+  --font-league-spartan: 'League Spartan', sans-serif;
 }
+
 .dark  {
   --background: 239 50% 5%;
   --foreground: 239 5% 90%;
@@ -58,6 +62,10 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #111827;
+    color: #fff;
   }
 }
 
@@ -79,4 +87,181 @@
 /* Changes the thumb color on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #333; /* Darker color on hover */
+}
+
+/* Grid Pattern */
+.hero-section {
+  background-color: #111828;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='%235355ff' fill-opacity='0.02'%3E%3Cpolygon fill-rule='evenodd' points='8 4 12 6 8 8 6 12 4 8 0 6 4 4 6 0 8 4'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* Hero Section with Lighting and Line Effect */
+.hero-section::before,
+.hero-section::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* First Radial Glow */
+.hero-section::before {
+  width: 600px;
+  height: 600px;
+  top: 20%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(83, 85, 255, 0.2), transparent 60%);
+  z-index: 1; /* Place above pattern */
+}
+
+/* Second Radial Glow */
+.hero-section::after {
+  width: 800px;
+  height: 800px;
+  bottom: 10%;
+  right: 15%;
+  background: radial-gradient(circle, rgba(120, 121, 255, 0.15), transparent 70%);
+  z-index: 1; /* Place above pattern */
+}
+
+/* Animated Gradient */
+.animated-gradient {
+  background: linear-gradient(
+    45deg,
+    rgba(83, 85, 255, 0.02) 0%, /* Lowered opacity for subtler colors */
+    rgba(83, 85, 255, 0.05) 25%,
+    rgba(120, 121, 255, 0.08) 50%,
+    rgba(83, 85, 255, 0.05) 75%,
+    rgba(83, 85, 255, 0.02) 100%
+  );
+  background-size: 300% 300%; /* Slightly reduced size for softer transitions */
+  animation: gradient 20s ease infinite; /* Slower animation for subtlety */
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.fade-in-up {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 0.6s;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.scale-in {
+  opacity: 0;
+  animation: scaleIn 1s ease forwards;
+  animation-delay: 0.9s;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in-left {
+  opacity: 0;
+  animation: fadeInLeft 1s ease forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeInUpSlow {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up-slow {
+  opacity: 0;
+  animation: fadeInUpSlow 1.5s ease forwards;
+  animation-delay: 1.2s;
+}
+
+@keyframes slide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 60px 60px;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+  }
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
 }

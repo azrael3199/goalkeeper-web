@@ -5,14 +5,25 @@ import env from '@root/environment';
 import paths from '@root/routes';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
-import Translator from './Translator';
+import { useContext, useEffect, useState } from 'react';
+import { fontLeagueSpartan } from '@root/app/fonts';
+import { cn } from '@root/lib/utils/utils';
+import { Menu, X } from 'lucide-react';
 import { Button } from './ui/button';
-import DarkThemeToggle from './DarkThemeToggle';
 
-const LandingHeader = () => {
+function LandingHeader() {
   const router = useRouter();
   const { setLoading } = useContext(AppContext);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const navigate = (navPath: string) => {
     setLoading(true);
@@ -20,33 +31,111 @@ const LandingHeader = () => {
   };
 
   return (
-    <header className="grow bg-background dark:bg-inherit py-4 flex justify-between items-center">
-      <div className="flex justify-center items-center gap-3">
-        <DarkThemeToggle />
-        <h1 className="text-white text-2xl font-bold ml-4 md:ml-8 mr-4">
+    <header
+      className={cn(
+        'fixed w-full z-50 transition-all duration-300',
+        fontLeagueSpartan.variable,
+        {
+          'bg-gray-900/95 backdrop-blur-md py-4': isScrolled,
+          'bg-transparent py-6': !isScrolled,
+        }
+      )}
+    >
+      <div className="container mx-auto px-6 flex items-center justify-between">
+        {/* <div className="flex items-center space-x-2"> */}
+        {/* <DarkThemeToggle /> */}
+        <div className="flex items-center justify-center text-white text-2xl font-bold inline">
           <Image
             src="/goalkeeper-main.svg"
             alt={env.appTitle}
             style={{ objectFit: 'contain', objectPosition: 'center' }}
-            width={200}
-            height={200}
+            width={50}
+            height={50}
             priority
           />
-        </h1>
-      </div>
-      <nav className="mr-4 md:mr-8 flex">
+          <span className="hidden md:flex justify-center items-center mt-2">
+            <h1 className="text-white mr-0.5 ml-1">Goal</h1>
+            <h1 className="text-primary">Keeper.</h1>
+          </span>
+        </div>
+        {/* </div> */}
+
+        <nav className="hidden lg:flex items-center space-x-8 -ml-16">
+          <a
+            href="#features"
+            className="text-gray-300 hover:text-primary transition-colors"
+          >
+            Features
+          </a>
+          <a
+            href="#dashboard"
+            className="text-gray-300 hover:text-primary transition-colors"
+          >
+            Dashboard
+          </a>
+          <a
+            href="#pricing"
+            className="text-gray-300 hover:text-primary transition-colors"
+          >
+            Pricing
+          </a>
+        </nav>
+
+        <div className="hidden md:flex items-center space-x-4">
+          <Button
+            type="button"
+            className="bg-primary/10 hover:bg-primary/20 text-primary px-6 py-2 rounded-full transition-all duration-300"
+            onClick={() => {
+              navigate(paths.login);
+            }}
+          >
+            Join Waitlist
+          </Button>
+        </div>
+
         <Button
-          className="uppercase"
-          variant="secondary"
-          onClick={() => {
-            navigate(paths.login);
-          }}
+          type="button"
+          className="md:hidden text-gray-300 hover:text-white"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          <Translator stringToTranslate="signIn" />
+          {isMobileMenuOpen ? <X /> : <Menu />}
         </Button>
-      </nav>
+      </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-gray-900/95 backdrop-blur-md py-4">
+          <div className="container mx-auto px-6 flex flex-col space-y-4">
+            <a
+              href="#features"
+              className="text-gray-300 hover:text-primary transition-colors"
+            >
+              Features
+            </a>
+            <a
+              href="#dashboard"
+              className="text-gray-300 hover:text-primary transition-colors"
+            >
+              Dashboard
+            </a>
+            <a
+              href="#pricing"
+              className="text-gray-300 hover:text-primary transition-colors"
+            >
+              Pricing
+            </a>
+            <hr className="border-gray-800" />
+            <Button
+              type="button"
+              className="bg-primary/10 hover:bg-primary/20 text-primary px-6 py-2 rounded-full transition-all duration-300"
+            >
+              Join Waitlist
+            </Button>
+          </div>
+        </div>
+      )}
     </header>
   );
-};
+}
 
 export default LandingHeader;

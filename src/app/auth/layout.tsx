@@ -36,7 +36,7 @@ function AuthLayout({ children }: IAuthPageProps) {
                 </h2>
                 <div className="justify-center items-center hidden md:flex md:w-full md:h-5/6">
                   <Image
-                    src="/illustrations/login.svg"
+                    src="/illustrations/register.svg"
                     alt="Auth"
                     style={{
                       objectFit: 'contain',
@@ -59,18 +59,19 @@ function AuthLayout({ children }: IAuthPageProps) {
             style={{ boxShadow: '-1px 1px 5px rgba(255, 255, 255, 0.8)' }}
           >
             <div className="w-full py-5 px-10 md:w-3/4 animate-fade-in max-h-full overflow-y-auto">
-              <div className="flex w-full items-center justify-center">
+              <div className="flex items-center justify-center text-white text-2xl font-bold mr-4 inline">
                 <Image
                   src="/goalkeeper-main.svg"
                   alt={env.appTitle}
-                  style={{
-                    height: '60%',
-                    width: '60%',
-                  }}
-                  height={10}
-                  width={10}
+                  style={{ objectFit: 'contain', objectPosition: 'center' }}
+                  width={50}
+                  height={50}
                   priority
                 />
+                <span className="hidden md:flex justify-center items-center mt-2">
+                  <h1 className="text-white mr-0.5 ml-1">Goal</h1>
+                  <h1 className="text-primary">Keeper.</h1>
+                </span>
               </div>
               <div className="py-4 h-full">{children}</div>
             </div>

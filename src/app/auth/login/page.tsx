@@ -8,7 +8,7 @@ import { handleInputChange } from '@root/lib/utils/formikInputHandler';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { ChangeEvent, useContext, useState } from 'react';
+import React, { ChangeEvent, useContext } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useToast } from '@root/components/ui/use-toast';
 import { Button } from '@root/components/ui/button';
@@ -28,8 +28,6 @@ const Login = () => {
   const { toast } = useToast();
   const { redirectRoute, setLoading, setRedirectRoute } =
     useContext(AppContext);
-
-  const [isGoogleButtonDisabled, setGoogleButtonDisabled] = useState(false);
 
   const signUpLink = (
     <Link href={paths.register} className="text-primary underline">
@@ -163,12 +161,6 @@ const Login = () => {
           </Form>
         )}
       </Formik>
-      <div className="flex items-center justify-center w-full mb-4">
-        <SignInWithGoogle
-          disabled={isGoogleButtonDisabled}
-          onClick={redirectToOriginal}
-        />
-      </div>
       <div className="mt-4 text-center w-full">
         <p className="mb-4 text-gray-800 dark:text-white">
           <Trans i18nKey="loginScreen.leadToSignUp" t={t}>

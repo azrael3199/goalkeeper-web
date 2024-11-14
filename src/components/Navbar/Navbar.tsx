@@ -4,6 +4,7 @@ import { cn } from '@root/lib/utils/utils';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
+import env from '@root/environment';
 import { Separator } from '../ui/separator';
 import NAV_ITEMS from './NavItems';
 import DarkThemeToggle from '../DarkThemeToggle';
@@ -68,15 +69,19 @@ const Navbar: React.FC = () => {
           id="logo-space"
           className="p-4 flex justify-center items-center"
         >
-          <div className="w-56">
+          <div className="flex items-center justify-center text-white text-2xl font-bold mr-4 inline">
             <Image
               src="/goalkeeper-main.svg"
-              alt="Brand Logo"
-              width={0}
-              height={0}
-              sizes="100vw"
-              style={{ width: '100%', height: 'auto' }}
+              alt={env.appTitle}
+              style={{ objectFit: 'contain', objectPosition: 'center' }}
+              width={50}
+              height={50}
+              priority
             />
+            <span className="hidden md:flex justify-center items-center mt-2">
+              <h1 className="text-white mr-0.5 ml-1">Goal</h1>
+              <h1 className="text-primary">Keeper.</h1>
+            </span>
           </div>
         </section>
         <Separator />

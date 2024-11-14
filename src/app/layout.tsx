@@ -2,9 +2,9 @@
 
 import React from 'react';
 import './globals.css';
-import { Inter as FontSans } from 'next/font/google';
 import { Provider } from 'react-redux';
 import { AppProvider } from '@root/providers/AppProvider';
+import Head from 'next/head';
 
 import { cn } from '@root/lib/utils/utils';
 import { Toaster } from '@root/components/ui/toaster';
@@ -14,11 +14,7 @@ import { ApolloProvider } from '@apollo/client';
 import apolloClient from '@root/lib/services/graphql/config';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@root/lib/services/apis/config';
-
-const fontSans = FontSans({
-  subsets: ['latin'],
-  variable: '--font-sans',
-});
+import { fontSans } from './fonts';
 
 const metadata = {
   title: 'Goalkeeper | Small steps to success',
@@ -32,10 +28,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <head>
+      <Head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/android/mipmap-mdpi/icon.png" sizes="48x48" />
+        <link rel="icon" href="/android/mipmap-hdpi/icon.png" sizes="72x72" />
+        <link rel="icon" href="/android/mipmap-xhdpi/icon.png" sizes="96x96" />
+        <link
+          rel="icon"
+          href="/android/mipmap-xxhdpi/icon.png"
+          sizes="144x144"
+        />
+        <link
+          rel="icon"
+          href="/android/mipmap-xxxhdpi/icon.png"
+          sizes="192x192"
+        />
+        <meta name="theme-color" content="#ffffff" />
         <title>{metadata.title}</title>
         <meta name="description" content={metadata.description} />
-      </head>
+      </Head>
       <body
         className={cn(
           'min-h-screen bg-background font-sans antialiased dark:bg-background',
