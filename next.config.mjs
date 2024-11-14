@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import PWA from 'next-pwa';
+
 const nextConfig = {
   transpilePackages: ['!server'],
   images: {
@@ -21,4 +23,8 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+const withPWA = PWA({
+  dest: 'public',
+});
+
+export default withPWA(nextConfig);

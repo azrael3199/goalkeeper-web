@@ -30,17 +30,29 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <Head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" href="/android/mipmap-mdpi/icon.png" sizes="48x48" />
-        <link rel="icon" href="/android/mipmap-hdpi/icon.png" sizes="72x72" />
-        <link rel="icon" href="/android/mipmap-xhdpi/icon.png" sizes="96x96" />
         <link
           rel="icon"
-          href="/android/mipmap-xxhdpi/icon.png"
+          href="/android/mipmap-mdpi/ic_launcher.png"
+          sizes="48x48"
+        />
+        <link
+          rel="icon"
+          href="/android/mipmap-hdpi/ic_launcher.png"
+          sizes="72x72"
+        />
+        <link
+          rel="icon"
+          href="/android/mipmap-xhdpi/ic_launcher.png"
+          sizes="96x96"
+        />
+        <link
+          rel="icon"
+          href="/android/mipmap-xxhdpi/ic_launcher.png"
           sizes="144x144"
         />
         <link
           rel="icon"
-          href="/android/mipmap-xxxhdpi/icon.png"
+          href="/android/mipmap-xxxhdpi/ic_launcher.png"
           sizes="192x192"
         />
         <meta name="theme-color" content="#ffffff" />
