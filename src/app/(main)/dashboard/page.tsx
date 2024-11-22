@@ -17,14 +17,14 @@ const CountWidget: React.FC<
   <div
     {...props}
     className={cn(
-      'p-1 flex items-center gap-2 w-fit',
+      'p-2 flex items-center gap-2 text-sm text-text-secondary w-fit',
       // eslint-disable-next-line react/prop-types
       props.className
     )}
   >
     <div
       className={cn(
-        'rounded-full w-[44px] h-[44px] flex items-center justify-center text-xs font-bold text-text-primary opacity-90'
+        'rounded-full w-12 h-12 flex items-center justify-center text-normal font-bold text-text-primary'
       )}
       style={{
         backgroundColor: color,
@@ -32,7 +32,7 @@ const CountWidget: React.FC<
     >
       {count}
     </div>
-    <p className="lg:max-w-[60px] text-xs text-muted-foreground">{title}</p>
+    <p className="lg:max-w-[60px] text-xs">{title}</p>
   </div>
 );
 
@@ -64,10 +64,8 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-4 pt-8 overflow-y-scroll">
-      <div className="text-xl flex items-center gap-2">
-        Welcome, {user?.displayName} <p className="text-2xl">👋</p>
-      </div>
+    <>
+      <div className="text-xl">Welcome, {user?.displayName} 👋</div>
       <section className="text-sm flex flex-col md:flex-row md:items-center gap-2 py-3 text-text-secondary">
         This week, you have
         <div className="flex gap-2 flex-wrap">
@@ -77,7 +75,7 @@ const Dashboard: React.FC = () => {
         </div>
       </section>
       <SwimlaneSection />
-    </div>
+    </>
   );
 };
 export default Dashboard;

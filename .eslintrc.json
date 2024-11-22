@@ -18,6 +18,7 @@
     "jsx-a11y",
     "import"
   ],
+  "ignorePatterns": ["**/*/node_modules/", "public/**/*"],
   "rules": {
     "indent": "warn",
     "no-shadow": "off",

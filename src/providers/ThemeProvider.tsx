@@ -29,44 +29,39 @@ const ThemeProvider = ({
   ...props
 }: ThemeProviderProps) => {
   const [theme, setTheme] = useState<Theme>(defaultTheme);
-  const isClient = typeof window !== 'undefined';
 
   useEffect(() => {
-    if (isClient) {
-      const storedTheme = window.localStorage.getItem(storageKey) as Theme;
-      setTheme(storedTheme || defaultTheme);
-    }
-  }, [isClient, defaultTheme, storageKey]);
+    const storedTheme = window.localStorage.getItem(storageKey) as Theme;
+    setTheme(storedTheme || defaultTheme);
+  }, [defaultTheme, storageKey]);
 
   useEffect(() => {
-    if (isClient) {
-      const root = window.document.documentElement;
-      root.classList.remove('light', 'dark');
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
 
-      if (theme === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
-          .matches
-          ? 'dark'
-          : 'light';
-        root.classList.add(systemTheme);
-        return;
-      }
-
-      root.classList.add(theme);
+    if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+        .matches
+        ? 'dark'
+        : 'light';
+      root.classList.add(systemTheme);
+      return;
     }
-  }, [theme, isClient]);
+
+    root.classList.add(theme);
+  }, [theme]);
 
   const value = useMemo(
     () => ({
       theme,
       setTheme: (theme: Theme) => {
-        if (isClient) {
+        if (localStorage) {
           localStorage.setItem(storageKey, theme);
           setTheme(theme);
         }
       },
     }),
-    [isClient, storageKey, theme]
+    [storageKey, theme]
   );
 
   return (

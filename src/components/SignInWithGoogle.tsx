@@ -1,9 +1,8 @@
 'use client';
 
-import { AppContext } from '@root/providers/AppProvider';
 import { authWithGoogle } from '@root/lib/utils/firebaseUtils';
 import Image from 'next/image';
-import React, { useContext } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from './ui/button';
 import { useToast } from './ui/use-toast';
@@ -20,7 +19,6 @@ const SignInWithGoogle = ({
   disabled = false,
 }: ISignInWithGoogleProps) => {
   const { t } = useTranslation();
-  const { setLoading } = useContext(AppContext);
   const { toast } = useToast();
 
   const onAuth = () => {
@@ -40,7 +38,6 @@ const SignInWithGoogle = ({
             variant: 'destructive',
           });
         }
-        setLoading(false);
       });
   };
 
