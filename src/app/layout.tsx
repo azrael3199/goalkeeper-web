@@ -1,5 +1,6 @@
 import React from 'react';
 import './globals.css';
+import Providers from '@root/providers';
 import { cn } from '@root/lib/utils/utils';
 import { fontSans } from './fonts';
 
@@ -7,11 +8,17 @@ export const metadata = {
   title: 'GoalKeeper',
   description: 'An app for you to achieve your dreams',
   manifest: '/manifest.json',
+  keywords: ['goal', 'keeper', 'goalkeeper', 'goal keeper'],
+};
+
+export const viewport = {
+  minimumScale: 1,
+  initialScale: 1,
+  width: 'device-width',
+  shrinkToFit: 'no',
+  viewportFit: 'cover',
   themeColor: '#060713',
   backgroundColor: '#060713',
-  keywords: ['goal', 'keeper', 'goalkeeper', 'goal keeper'],
-  viewport:
-    'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover',
 };
 
 export default function RootLayout({
@@ -27,7 +34,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

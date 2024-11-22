@@ -6,7 +6,6 @@ import paths from '@root/routes';
 import { onAuthStateChanged } from '@root/lib/utils/firebaseUtils';
 import { AppContext } from '@root/providers/AppProvider';
 import { Unsubscribe, User } from 'firebase/auth';
-import LoadingOverlay from './LoadingOverlay';
 
 interface ProtectedRouteProps {
   defaultRedirectRoute?: string;
@@ -48,12 +47,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <>
-      {!isLoading && children}
-      <LoadingOverlay />
-    </>
-  );
+  return !isLoading && children;
 };
 
 export default ProtectedRoute;

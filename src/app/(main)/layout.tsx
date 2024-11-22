@@ -2,7 +2,6 @@
 
 import Header from '@root/components/Header';
 import ProtectedRoute from '@root/components/ProtectedRoute';
-import LoadingOverlay from '@root/components/LoadingOverlay';
 import Navbar from '@root/components/Navbar/Navbar';
 import MobileNavbar from '@root/components/Navbar/MobileNavbar';
 
@@ -15,11 +14,10 @@ export default function MainLayout({
     <ProtectedRoute>
       <div className="h-screen max-h-screen flex flex-col md:flex-row">
         <Navbar />
-        <main className="overflow-hidden w-full flex flex-col">
+        <div className="overflow-hidden w-full flex flex-col grow">
           <Header />
-          {children}
-          <LoadingOverlay />
-        </main>
+          <main className="p-4 pt-2 md:pt-8 overflow-y-scroll">{children}</main>
+        </div>
         <MobileNavbar />
       </div>
     </ProtectedRoute>
