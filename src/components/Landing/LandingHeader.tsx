@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 import { fontLeagueSpartan } from '@root/app/fonts';
 import { cn } from '@root/lib/utils/utils';
 import { Menu, X } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 function LandingHeader() {
   const router = useRouter();

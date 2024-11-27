@@ -16,7 +16,7 @@ export default function MainLayout({
         <Navbar />
         <div className="overflow-hidden w-full flex flex-col grow">
           <Header />
-          <main className="p-4 pt-2 md:pt-8 overflow-y-scroll">{children}</main>
+          <main className="p-4 pt-2 md:pt-4 overflow-y-scroll">{children}</main>
         </div>
         <MobileNavbar />
       </div>

@@ -65,7 +65,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <div className="text-xl">Welcome, {user?.displayName} 👋</div>
+      <div className="text-xl">
+        Welcome, {user?.displayName} <span className="text-2xl">👋</span>
+      </div>
       <section className="text-sm flex flex-col md:flex-row md:items-center gap-2 py-3 text-text-secondary">
         This week, you have
         <div className="flex gap-2 flex-wrap">
