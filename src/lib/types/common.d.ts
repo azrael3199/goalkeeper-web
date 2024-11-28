@@ -5,7 +5,7 @@ export interface Goal {
   description?: string;
   bgImageUrl?: string;
   overlayColor?: string;
-  status?: string;
+  status?: 'IN_PROGRESS' | 'NOT_STARTED' | 'COMPLETED';
   expectedCompletionDate?: string;
   createdAt?: string;
   updatedAt?: string;
