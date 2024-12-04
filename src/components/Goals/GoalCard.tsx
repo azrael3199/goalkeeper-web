@@ -44,7 +44,7 @@ const GoalCard: React.FC<{ goal: GoalType }> = ({ goal: goalProp }) => {
       : 0;
 
   return (
-    <Card className="relative h-full w-full rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <Card className="cursor-pointer relative h-full w-full rounded-lg overflow-hidden shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl hover:scale-[102%]">
       {/* Background Image */}
       {goal.bgImageUrl && (
         <Image

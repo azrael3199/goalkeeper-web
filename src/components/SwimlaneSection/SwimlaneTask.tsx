@@ -6,7 +6,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@root/components/ui/card';
-import { cn } from '@root/lib/utils/utils';
+import { cn, getContrastForColorInBW } from '@root/lib/utils/utils';
+import { goalData } from '@root/lib/utils/dummies';
 import { Ellipsis, Trash } from 'lucide-react';
 import { Task } from '@root/lib/redux/reducers/tasksReducer';
 import { Badge } from '../ui/badge';
@@ -82,9 +83,9 @@ const SwimlaneTask: React.FC<
       <CardHeader className="p-2 pb-0">
         <section className="flex justify-between items-start gap-2">
           {/* Task title, id and actions */}
-          <CardTitle className="text-sm text-white font-normal flex items-center gap-1.5">
+          <CardTitle className="text-sm text-white font-normal">
             {newMask.title && data.title}
-            <em className="text-[14px] text-muted-foreground pr-2">{`#${
+            <em className="text-[14px] text-muted-foreground px-2">{`#${
               newMask.taskId && data.id
             }`}</em>
           </CardTitle>
@@ -94,45 +95,56 @@ const SwimlaneTask: React.FC<
           </div>
         </section>
       </CardHeader>
-      <CardContent className="flex justify-between items-stretch gap-2 p-2 pt-1">
-        <div className="h-full items-start">
-          {/* Description */}
-          {data.description && newMask.description ? (
-            <CardDescription>{data.description}</CardDescription>
-          ) : null}
-        </div>
-        <div className="flex gap-2 justify-center items-center md:flex-col md:items-end text-xs">
-          {/* Effort estimation and tracking */}
-          <h1 className="bg-slate-800 rounded-full p-1 px-2 text-center">
-            {newMask.hoursSpent && data.hoursSpent
-              ? `${data.hoursSpent} / ${data.hoursRequired} hrs`
-              : null}
-          </h1>
-          {/* Priority */}
-          {data.priority && newMask.priority ? (
-            <Badge
-              className={`${
-                PRIORITY_VALUES[data.priority - 1].background
-              } hover:${PRIORITY_VALUES[data.priority - 1].background} ${
-                PRIORITY_VALUES[data.priority - 1].text
-              } min-h-6 text-center`}
-            >
-              {PRIORITY_VALUES[data.priority - 1].value}
-            </Badge>
-          ) : null}
-          {/* Status */}
-          {data.status && newMask.status ? (
-            <Badge
-              className={`${STATUS_VALUES[data.status].background} hover:${
-                STATUS_VALUES[data.status].background
-              } ${
-                STATUS_VALUES[data.status].text
-              } min-h-6 uppercase text-center`}
-            >
-              {STATUS_VALUES[data.status].value}
-            </Badge>
-          ) : null}
-        </div>
+      <CardContent className="grid grid-cols-2 gap-2 p-2 pt-1 items-start justify-items-start">
+        {/* Description */}
+        {data.description && newMask.description ? (
+          <CardDescription>{data.description}</CardDescription>
+        ) : null}
+        {/* Effort estimation and tracking */}
+        <Badge className="bg-slate-800 hover:bg-slate-800 rounded-full min-h-6 px-2 text-center text-xs justify-self-end">
+          {newMask.hoursSpent && data.hoursSpent
+            ? `${data.hoursSpent} / ${data.hoursRequired} hrs`
+            : null}
+        </Badge>
+        {/* Parent goal name */}
+        {data.parentId && newMask.parentId ? (
+          <Badge
+            className="min-h-6 text-center overflow-hidden text-ellipsis whitespace-nowrap px-2"
+            style={{
+              backgroundColor: goalData.find(
+                (goal) => goal.id === data.parentId
+              )?.overlayColor,
+              color: getContrastForColorInBW(
+                goalData.find((goal) => goal.id === data.parentId)
+                  ?.overlayColor || '#FFFFFF'
+              ),
+            }}
+          >
+            {goalData.find((goal) => goal.id === data.parentId)?.title}
+          </Badge>
+        ) : null}
+        {/* Priority */}
+        {data.priority && newMask.priority ? (
+          <Badge
+            className={`${
+              PRIORITY_VALUES[data.priority - 1].background
+            } hover:${PRIORITY_VALUES[data.priority - 1].background} ${
+              PRIORITY_VALUES[data.priority - 1].text
+            } min-h-6 text-center justify-self-end`}
+          >
+            {PRIORITY_VALUES[data.priority - 1].value}
+          </Badge>
+        ) : null}
+        {/* Status */}
+        {data.status && newMask.status ? (
+          <Badge
+            className={`${STATUS_VALUES[data.status].background} hover:${
+              STATUS_VALUES[data.status].background
+            } ${STATUS_VALUES[data.status].text} min-h-6 uppercase text-center`}
+          >
+            {STATUS_VALUES[data.status].value}
+          </Badge>
+        ) : null}
       </CardContent>
     </Card>
   );

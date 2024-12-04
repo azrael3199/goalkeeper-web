@@ -8,6 +8,7 @@ import {
   transformTasksByStatus,
 } from '@root/lib/utils/transforms';
 import { Task } from '@root/lib/redux/reducers/tasksReducer';
+import { taskData } from '@root/lib/utils/dummies';
 import Swimlane from './Swimlane';
 import SwimlaneTask from './SwimlaneTask';
 import SectionWrapper from '../SectionWrapper';
@@ -16,59 +17,6 @@ import PriorityList from './PriorityList';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface SwimlaneSectionProps {}
-
-const taskData: Task[] = [
-  {
-    id: '1',
-    title: 'Run 5 miles',
-    description: 'Go out to run 5 miles',
-    // parentId?: string;
-    priority: 1,
-    hoursRequired: 3,
-    hoursSpent: 2,
-    status: 'TODO',
-  },
-  {
-    id: '2',
-    title: 'Clean 10 dishes',
-    description: 'Clean 10 dishes',
-    // parentId?: string;
-    priority: 4,
-    hoursRequired: 3,
-    hoursSpent: 2,
-    status: 'TODO',
-  },
-  {
-    id: '5',
-    title: 'Do the laundry',
-    description: 'Do the laundry',
-    // parentId?: string;
-    priority: 5,
-    hoursRequired: 3,
-    hoursSpent: 2,
-    status: 'TODO',
-  },
-  {
-    id: '3',
-    title: 'Read a book',
-    description: 'Read 15 pages',
-    // parentId?: string;
-    priority: 3,
-    hoursRequired: 3,
-    hoursSpent: 2,
-    status: 'IN_PROGRESS',
-  },
-  {
-    id: '4',
-    title: 'Meditate',
-    description: 'Meditate for 10 minutes',
-    // parentId?: string;
-    priority: 2,
-    hoursRequired: 3,
-    hoursSpent: 2,
-    status: 'DONE',
-  },
-];
 
 const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
   const [selectedLayout, setSelectedLayout] = useState<number>(1);
