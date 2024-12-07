@@ -3,7 +3,7 @@ import { Task } from '@root/lib/redux/reducers/tasksReducer';
 import SwimlaneTask from './SwimlaneTask';
 
 type PriorityGroupingProps = {
-  title: 'Highest' | 'High' | 'Medium' | 'Low' | 'Lowest';
+  title: 'High' | 'Medium' | 'Low';
   data: Task[];
 };
 

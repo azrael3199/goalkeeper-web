@@ -3,7 +3,7 @@ import PriorityGrouping from './PriorityGrouping';
 
 type PriorityListProps = {
   data: {
-    title: 'Highest' | 'High' | 'Medium' | 'Low' | 'Lowest';
+    title: 'High' | 'Medium' | 'Low';
     tasks: Task[];
   }[];
 };

@@ -6,9 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from '@root/components/ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@root/components/ui/tooltip';
 import { cn, getContrastForColorInBW } from '@root/lib/utils/utils';
 import { goalData } from '@root/lib/utils/dummies';
-import { Ellipsis, Trash } from 'lucide-react';
+import { Ellipsis, Check, Trash } from 'lucide-react';
 import { Task } from '@root/lib/redux/reducers/tasksReducer';
 import { Badge } from '../ui/badge';
 
@@ -29,11 +34,9 @@ interface SwimlaneTaskProps {
 }
 
 const PRIORITY_VALUES = [
-  { background: 'bg-red-800', text: 'text-white', value: 'Highest' },
-  { background: 'bg-orange-500', text: 'text-black', value: 'High' },
+  { background: 'bg-red-800', text: 'text-black', value: 'High' },
   { background: 'bg-yellow-500', text: 'text-black', value: 'Medium' },
-  { background: 'bg-lime-500', text: 'text-black', value: 'Low' },
-  { background: 'bg-green-500', text: 'text-black', value: 'Lowest' },
+  { background: 'bg-green-500', text: 'text-black', value: 'Low' },
 ];
 
 const STATUS_VALUES = {
@@ -64,7 +67,6 @@ const SwimlaneTask: React.FC<
     parentId: true,
     priority: true,
     hoursRequired: true,
-    hoursSpent: true,
     status: true,
   };
 
@@ -75,53 +77,74 @@ const SwimlaneTask: React.FC<
     <Card
       {...props}
       className={cn(
-        'group bg-secondary w-full hover:cursor-pointer',
+        'group relative bg-secondary w-full hover:cursor-pointer',
+        { 'border-0': data.status === 'DONE' },
         // eslint-disable-next-line react/prop-types
         props.className
       )}
     >
+      {data.status === 'DONE' && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-80 flex items-center justify-center">
+          <Check className="text-green-500" size={32} />
+        </div>
+      )}
       <CardHeader className="p-2 pb-0">
-        <section className="flex justify-between items-start gap-2">
+        <section className="grid grid-cols-2 items-start gap-2">
           {/* Task title, id and actions */}
-          <CardTitle className="text-sm text-white font-normal">
+          <CardTitle className="text-xs text-white font-normal">
             {newMask.title && data.title}
-            <em className="text-[14px] text-muted-foreground px-2">{`#${
+            <em className="text-[12px] text-muted-foreground px-2">{`#${
               newMask.taskId && data.id
             }`}</em>
           </CardTitle>
-          <div className="flex md:hidden md:group-hover:flex items-center justify-center gap-2 ">
-            <Ellipsis className="hover:cursor-pointer" size={18} />
-            <Trash className="text-red-500 hover:cursor-pointer" size={18} />
-          </div>
+          {data.status !== 'DONE' && (
+            <div className="text-xs flex md:invisible md:group-hover: md:group-hover:visible items-center justify-self-end justify-center gap-2">
+              <Ellipsis className="hover:cursor-pointer" size={18} />
+              <Trash className="text-red-500 hover:cursor-pointer" size={18} />
+            </div>
+          )}
         </section>
       </CardHeader>
-      <CardContent className="grid grid-cols-2 gap-2 p-2 pt-1 items-start justify-items-start">
+      <CardContent className="!text-xs grid grid-cols-2 gap-2 p-2 pt-1 items-start justify-items-start">
         {/* Description */}
         {data.description && newMask.description ? (
-          <CardDescription>{data.description}</CardDescription>
+          <CardDescription className="!text-xs">
+            {data.description}
+          </CardDescription>
         ) : null}
         {/* Effort estimation and tracking */}
         <Badge className="bg-slate-800 hover:bg-slate-800 rounded-full min-h-6 px-2 text-center text-xs justify-self-end">
-          {newMask.hoursSpent && data.hoursSpent
-            ? `${data.hoursSpent} / ${data.hoursRequired} hrs`
+          {data.hoursRequired && newMask.hoursRequired
+            ? `${data.hoursRequired} hrs`
             : null}
         </Badge>
         {/* Parent goal name */}
         {data.parentId && newMask.parentId ? (
-          <Badge
-            className="min-h-6 text-center overflow-hidden text-ellipsis whitespace-nowrap px-2"
-            style={{
-              backgroundColor: goalData.find(
-                (goal) => goal.id === data.parentId
-              )?.overlayColor,
-              color: getContrastForColorInBW(
-                goalData.find((goal) => goal.id === data.parentId)
-                  ?.overlayColor || '#FFFFFF'
-              ),
-            }}
-          >
-            {goalData.find((goal) => goal.id === data.parentId)?.title}
-          </Badge>
+          <Tooltip>
+            <TooltipTrigger className="max-w-full">
+              <Badge
+                className="min-h-6 max-w-full px-2"
+                style={{
+                  backgroundColor: goalData.find(
+                    (goal) => goal.id === data.parentId
+                  )?.overlayColor,
+                  color: getContrastForColorInBW(
+                    goalData.find((goal) => goal.id === data.parentId)
+                      ?.overlayColor || '#FFFFFF'
+                  ),
+                }}
+              >
+                <div className="!truncate">
+                  {goalData.find((goal) => goal.id === data.parentId)?.title}
+                </div>
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>
+              <div className="bg-background rounded-md shadow-md">
+                {goalData.find((goal) => goal.id === data.parentId)?.title}
+              </div>
+            </TooltipContent>
+          </Tooltip>
         ) : null}
         {/* Priority */}
         {data.priority && newMask.priority ? (
@@ -140,7 +163,9 @@ const SwimlaneTask: React.FC<
           <Badge
             className={`${STATUS_VALUES[data.status].background} hover:${
               STATUS_VALUES[data.status].background
-            } ${STATUS_VALUES[data.status].text} min-h-6 uppercase text-center`}
+            } ${
+              STATUS_VALUES[data.status].text
+            } min-h-6 uppercase text-center justify-self-end`}
           >
             {STATUS_VALUES[data.status].value}
           </Badge>

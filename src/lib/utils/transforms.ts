@@ -3,27 +3,40 @@ import { Task } from '../redux/reducers/tasksReducer';
 export const transformTasksByStatus = (tasks: Task[]) => {
   const groupedTasks: { title: string; tasks: Task[] }[] = [
     {
-      title: 'To Do',
+      title: 'Sunday',
       tasks: [],
     },
     {
-      title: 'In Progress',
+      title: 'Monday',
       tasks: [],
     },
     {
-      title: 'Done',
+      title: 'Tuesday',
+      tasks: [],
+    },
+    {
+      title: 'Wednesday',
+      tasks: [],
+    },
+    {
+      title: 'Thursday',
+      tasks: [],
+    },
+    {
+      title: 'Friday',
+      tasks: [],
+    },
+    {
+      title: 'Saturday',
       tasks: [],
     },
   ];
 
   tasks.forEach((task) => {
-    if (task.status === 'TODO') {
-      groupedTasks[0].tasks.push(task);
-    } else if (task.status === 'IN_PROGRESS') {
-      groupedTasks[1].tasks.push(task);
-    } else if (task.status === 'DONE') {
-      groupedTasks[2].tasks.push(task);
-    }
+    const dayIndex = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].indexOf(
+      task.dayOfTheWeek
+    );
+    groupedTasks[dayIndex].tasks.push(task);
   });
 
   return groupedTasks;

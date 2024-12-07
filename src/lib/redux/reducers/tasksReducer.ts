@@ -8,8 +8,8 @@ export type Task = {
   parentId?: string;
   priority?: number;
   hoursRequired?: number;
-  hoursSpent?: number;
   status: 'TODO' | 'IN_PROGRESS' | 'DONE';
+  dayOfTheWeek: 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
 };
 interface TasksState {
   tasks: Task[];
