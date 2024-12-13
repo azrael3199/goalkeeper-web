@@ -1,4 +1,4 @@
-import { Task } from '../redux/reducers/tasksReducer';
+import { Task } from '@root/lib/types/common';
 
 export const transformTasksByStatus = (tasks: Task[]) => {
   const groupedTasks: { title: string; tasks: Task[] }[] = [
@@ -45,10 +45,6 @@ export const transformTasksByStatus = (tasks: Task[]) => {
 export const transformTasksByPriority = (tasks: Task[]) => {
   const groupedTasks: { title: string; tasks: Task[] }[] = [
     {
-      title: 'Highest',
-      tasks: [],
-    },
-    {
       title: 'High',
       tasks: [],
     },
@@ -60,10 +56,6 @@ export const transformTasksByPriority = (tasks: Task[]) => {
       title: 'Low',
       tasks: [],
     },
-    {
-      title: 'Lowest',
-      tasks: [],
-    },
   ];
 
   tasks.forEach((task) => {
@@ -73,10 +65,6 @@ export const transformTasksByPriority = (tasks: Task[]) => {
       groupedTasks[1].tasks.push(task);
     } else if (task.priority === 3) {
       groupedTasks[2].tasks.push(task);
-    } else if (task.priority === 4) {
-      groupedTasks[3].tasks.push(task);
-    } else if (task.priority === 5) {
-      groupedTasks[4].tasks.push(task);
     }
   });
 

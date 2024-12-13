@@ -1,4 +1,4 @@
-import { Task } from '@root/lib/redux/reducers/tasksReducer';
+import { Task } from '@root/lib/types/common';
 import PriorityGrouping from './PriorityGrouping';
 
 type PriorityListProps = {

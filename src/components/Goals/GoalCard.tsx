@@ -21,7 +21,12 @@ const STATUS_COLORS = {
   COMPLETED: '#00800099', // Green
 };
 
-const GoalCard: React.FC<{ goal: GoalType }> = ({ goal: goalProp }) => {
+interface GoalCardProps {
+  goal: GoalType;
+  onClick?: () => void;
+}
+
+const GoalCard: React.FC<GoalCardProps> = ({ goal: goalProp, onClick }) => {
   const goal = goalProp;
   const overlayColor = goal.overlayColor || '#000000';
 
@@ -44,7 +49,10 @@ const GoalCard: React.FC<{ goal: GoalType }> = ({ goal: goalProp }) => {
       : 0;
 
   return (
-    <Card className="cursor-pointer relative h-full w-full rounded-lg overflow-hidden shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl hover:scale-[102%]">
+    <Card
+      onClick={onClick}
+      className="cursor-pointer relative h-full w-full rounded-lg overflow-hidden shadow-lg transition-transform duration-300 ease-in-out hover:shadow-xl hover:scale-[102%]"
+    >
       {/* Background Image */}
       {goal.bgImageUrl && (
         <Image

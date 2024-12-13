@@ -1,16 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Task } from '@root/lib/types/common';
 
-export type Task = {
-  id: string;
-  title?: string;
-  description?: string;
-  parentId?: string;
-  priority?: number;
-  hoursRequired?: number;
-  status: 'TODO' | 'IN_PROGRESS' | 'DONE';
-  dayOfTheWeek: 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
-};
 interface TasksState {
   tasks: Task[];
 }

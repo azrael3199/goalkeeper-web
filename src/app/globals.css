@@ -80,6 +80,7 @@
 
 ::-webkit-scrollbar {
     width: 6px; /* Width of the scrollbar */
+    height: 6px; /* Height of the horizontal scrollbar */
 }
 
 /* Customizes the track of the scrollbar */
@@ -90,12 +91,14 @@
 /* Customizes the thumb of the scrollbar */
 ::-webkit-scrollbar-thumb {
     border-radius: 16px;
-    background: #444; 
+    background: #444;
+    height: 6px; /* Height of the horizontal scrollbar's thumb */
 }
 
-/* Changes the thumb color on hover */
+/* Changes the thumb color and cursor on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #333; /* Darker color on hover */
+    cursor: grab; /* Grabbing cursor on hover */
 }
 
 /* Grid Pattern */

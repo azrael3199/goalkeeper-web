@@ -1,5 +1,5 @@
 import React from 'react';
-import { Task } from '@root/lib/redux/reducers/tasksReducer';
+import { Task } from '@root/lib/types/common';
 import SwimlaneTask from './SwimlaneTask';
 
 type PriorityGroupingProps = {
@@ -14,7 +14,11 @@ const PriorityGrouping = ({ title, data }: PriorityGroupingProps) => (
     </h3>
     <div className="p-2 flex flex-col gap-2">
       {data.map((task) => (
-        <SwimlaneTask key={task.id} data={task} mask={{ priority: false }} />
+        <SwimlaneTask
+          key={task.id}
+          data={task}
+          mask={{ priority: false, status: false }}
+        />
       ))}
     </div>
   </div>

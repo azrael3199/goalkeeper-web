@@ -1,6 +1,5 @@
 import { IdTokenResult, User } from 'firebase/auth';
-import { Task } from '../redux/reducers/tasksReducer';
-import { Goal } from '../types/common';
+import { Task, Goal } from '../types/common';
 
 // TODO: Use later
 // eslint-disable-next-line import/prefer-default-export
@@ -47,7 +46,7 @@ export const taskData: Task[] = [
     parentId: '3',
     priority: 2,
     hoursRequired: 3,
-    status: 'TODO',
+    status: 'NOT_STARTED',
     dayOfTheWeek: 'THU',
   },
   {
@@ -57,7 +56,7 @@ export const taskData: Task[] = [
     parentId: '4',
     priority: 3,
     hoursRequired: 3,
-    status: 'TODO',
+    status: 'NOT_STARTED',
     dayOfTheWeek: 'MON',
   },
   {
@@ -67,7 +66,7 @@ export const taskData: Task[] = [
     parentId: '2',
     priority: 1,
     hoursRequired: 3,
-    status: 'TODO',
+    status: 'NOT_STARTED',
     dayOfTheWeek: 'SAT',
   },
   {
@@ -97,7 +96,7 @@ export const taskData: Task[] = [
     parentId: '2',
     priority: 2,
     hoursRequired: 2,
-    status: 'TODO',
+    status: 'NOT_STARTED',
     dayOfTheWeek: 'SUN',
   },
   {
@@ -107,7 +106,7 @@ export const taskData: Task[] = [
     parentId: '3',
     priority: 1,
     hoursRequired: 1,
-    status: 'TODO',
+    status: 'NOT_STARTED',
     dayOfTheWeek: 'TUE',
   },
 ];

@@ -14,7 +14,7 @@ import {
 import { cn, getContrastForColorInBW } from '@root/lib/utils/utils';
 import { goalData } from '@root/lib/utils/dummies';
 import { Ellipsis, Check, Trash } from 'lucide-react';
-import { Task } from '@root/lib/redux/reducers/tasksReducer';
+import { Task } from '@root/lib/types/common';
 import { Badge } from '../ui/badge';
 
 export type Mask = {
@@ -26,6 +26,7 @@ export type Mask = {
   hoursRequired?: boolean;
   hoursSpent?: boolean;
   status?: boolean;
+  dayOfTheWeek?: boolean;
 };
 
 interface SwimlaneTaskProps {
@@ -34,27 +35,37 @@ interface SwimlaneTaskProps {
 }
 
 const PRIORITY_VALUES = [
-  { background: 'bg-red-800', text: 'text-black', value: 'High' },
+  { background: 'bg-red-800', text: 'text-white', value: 'High' },
   { background: 'bg-yellow-500', text: 'text-black', value: 'Medium' },
   { background: 'bg-green-500', text: 'text-black', value: 'Low' },
 ];
 
-const STATUS_VALUES = {
-  TODO: {
-    background: 'bg-orange-400',
-    text: 'text-orange-900',
-    value: 'To Do',
-  },
-  IN_PROGRESS: {
-    background: 'bg-blue-400',
-    text: 'text-blue-900',
-    value: 'In Progress',
-  },
-  DONE: {
-    background: 'bg-green-400',
-    text: 'text-green-900',
-    value: 'Done',
-  },
+// const STATUS_VALUES = {
+//   NOT_STARTED: {
+//     background: 'bg-orange-400',
+//     text: 'text-orange-900',
+//     value: 'To Do',
+//   },
+//   IN_PROGRESS: {
+//     background: 'bg-blue-400',
+//     text: 'text-blue-900',
+//     value: 'In Progress',
+//   },
+//   DONE: {
+//     background: 'bg-green-400',
+//     text: 'text-green-900',
+//     value: 'Done',
+//   },
+// };
+
+const DAY_OF_THE_WEEK_VALUES = {
+  MON: 'Monday',
+  TUE: 'Tuesday',
+  WED: 'Wednesday',
+  THU: 'Thursday',
+  FRI: 'Friday',
+  SAT: 'Saturday',
+  SUN: 'Sunday',
 };
 
 const SwimlaneTask: React.FC<
@@ -68,6 +79,7 @@ const SwimlaneTask: React.FC<
     priority: true,
     hoursRequired: true,
     status: true,
+    dayOfTheWeek: true,
   };
 
   // To replace the default mask with values from mask
@@ -159,15 +171,9 @@ const SwimlaneTask: React.FC<
           </Badge>
         ) : null}
         {/* Status */}
-        {data.status && newMask.status ? (
-          <Badge
-            className={`${STATUS_VALUES[data.status].background} hover:${
-              STATUS_VALUES[data.status].background
-            } ${
-              STATUS_VALUES[data.status].text
-            } min-h-6 uppercase text-center justify-self-end`}
-          >
-            {STATUS_VALUES[data.status].value}
+        {data.dayOfTheWeek && newMask.dayOfTheWeek ? (
+          <Badge className="bg-slate-800 hover:bg-slate-800 text-white min-h-6 text-center justify-self-end">
+            {DAY_OF_THE_WEEK_VALUES[data.dayOfTheWeek]}
           </Badge>
         ) : null}
       </CardContent>

@@ -24,3 +24,30 @@ export function getContrastForColorInBW(color: string) {
   const contrastColor = luminance > 128 ? '#000000' : '#FFFFFF';
   return contrastColor;
 }
+
+export function getStatusText(status: string, type: 'goal' | 'task') {
+  switch (type) {
+    case 'goal':
+      switch (status) {
+        case 'IN_PROGRESS':
+          return 'In progress';
+        case 'NOT_STARTED':
+          return 'Not started';
+        case 'COMPLETED':
+          return 'Completed';
+        default:
+          return 'Unknown';
+      }
+    case 'task':
+      switch (status) {
+        case 'NOT_STARTED':
+          return 'Not started';
+        case 'DONE':
+          return 'Done';
+        default:
+          return 'Unknown';
+      }
+    default:
+      return 'Unknown';
+  }
+}

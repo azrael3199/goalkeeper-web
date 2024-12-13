@@ -1,7 +1,8 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import env from '@root/environment';
 
 const apolloClient = new ApolloClient({
-  uri: 'https://flyby-router-demo.herokuapp.com/',
+  uri: env.graphqlBackendHost,
   cache: new InMemoryCache(),
 });
 
