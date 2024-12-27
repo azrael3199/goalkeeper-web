@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Columns, List } from 'lucide-react';
 import clsx from 'clsx';
 import {
@@ -9,6 +9,13 @@ import {
 } from '@root/lib/utils/transforms';
 import { Task } from '@root/lib/types/common';
 import { taskData } from '@root/lib/utils/dummies';
+import {
+  endOfWeek,
+  format,
+  isThisMonth,
+  isThisWeek,
+  startOfWeek,
+} from 'date-fns';
 import Swimlane from './Swimlane';
 import SectionWrapper from '../SectionWrapper';
 import { Button } from '../ui/button';
@@ -19,24 +26,26 @@ interface SwimlaneSectionProps {}
 
 const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
   const [selectedLayout, setSelectedLayout] = useState<number>(1);
+  const [isMonthly] = useState<boolean>(false);
+  const [weekStart, setWeekStart] = useState<Date>(startOfWeek(new Date()));
   const [data, setData] = useState<{ title: string; tasks: Task[] }[]>(() => {
     if (selectedLayout === 0) {
-      return transformTasksByPriority(taskData);
+      return transformTasksByPriority(taskData, weekStart);
     }
-    return transformTasksByStatus(taskData);
+    return transformTasksByStatus(taskData, weekStart);
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const [scrollPosition, setScrollPosition] = useState<number>(0);
+  const [scrollPosition, setScrollPosition] = useState<number>(1);
 
-  const swimlaneData = transformTasksByStatus(taskData);
+  const swimlaneData = transformTasksByStatus(taskData, weekStart);
 
   const onViewToggle = (selectedIndex: number) => {
     setSelectedLayout(selectedIndex);
     if (selectedIndex === 0) {
-      setData(transformTasksByPriority(taskData));
+      setData(transformTasksByPriority(taskData, weekStart));
     } else {
-      setData(transformTasksByStatus(taskData));
+      setData(transformTasksByStatus(taskData, weekStart));
     }
   };
 
@@ -45,21 +54,89 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
     setScrollPosition(target.scrollLeft);
   };
 
+  const handlePreviousWeekChange = () => {
+    const newDate = new Date(weekStart);
+    newDate.setDate(newDate.getDate() - 7);
+    setWeekStart(newDate);
+    if (selectedLayout === 0) {
+      setData(transformTasksByPriority(taskData, newDate));
+    } else {
+      setData(transformTasksByStatus(taskData, newDate));
+    }
+  };
+
+  const handleNextWeekChange = () => {
+    const newDate = new Date(weekStart);
+    newDate.setDate(newDate.getDate() + 7);
+    setWeekStart(newDate);
+    if (selectedLayout === 0) {
+      setData(transformTasksByPriority(taskData, newDate));
+    } else {
+      setData(transformTasksByStatus(taskData, newDate));
+    }
+  };
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setScrollPosition(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [containerRef.current]);
+
+  const getSectionTitle = (date: Date) => {
+    if (isMonthly) {
+      if (isThisMonth(date)) {
+        return `This Month (${format(date, 'MMMM yyyy')})`;
+      }
+      return format(date, 'MMMM yyyy');
+    }
+    if (isThisWeek(date)) {
+      return `This Week (${format(date, 'dd MMM')} - ${format(
+        endOfWeek(date),
+        'dd MMM'
+      )})`;
+    }
+    return `${format(date, 'dd MMM')} - ${format(endOfWeek(date), 'dd MMM')}`;
+  };
+
   return (
     <SectionWrapper
-      title="This Week"
+      title={getSectionTitle(weekStart)}
+      titleComponent={
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            className="p-2"
+            onClick={handlePreviousWeekChange}
+          >
+            <ChevronLeft className="w-5 w-aspect-1 h-aspect-1" />
+          </Button>
+          <h2 className="text-center">{getSectionTitle(weekStart)}</h2>
+          <Button
+            variant="ghost"
+            className="p-2"
+            onClick={handleNextWeekChange}
+          >
+            <ChevronRight className="w-5 w-aspect-1 h-aspect-1" />
+          </Button>
+        </div>
+      }
       actions={
         <>
           <Button
             variant="outline"
-            className={clsx('p-2', { 'bg-slate-800': selectedLayout === 0 })}
+            className={clsx('p-2', {
+              'bg-accent hover:bg-accent': selectedLayout === 0,
+            })}
             onClick={() => onViewToggle(0)}
           >
             <List className="w-5 w-aspect-1 h-aspect-1" />
           </Button>
           <Button
             variant="outline"
-            className={clsx('p-2', { 'bg-slate-800': selectedLayout === 1 })}
+            className={clsx('p-2', {
+              'bg-accent hover:bg-accent': selectedLayout === 1,
+            })}
             onClick={() => onViewToggle(1)}
           >
             <Columns className="w-5 w-aspect-1 h-aspect-1" />
@@ -73,13 +150,13 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
       ) : (
         <section className="lg:relative">
           <div
-            className="py-1 rounded-lg z-10 hidden lg:flex items-center justify-center lg:absolute w-10 lg:-left-4 lg:hover:cursor-pointer lg:top-1/2 lg:-translate-y-1/2 h-full bg-gradient-to-r from-black to-transparent flex items-center transition-opacity duration-200"
+            className="py-1 rounded-lg z-10 hidden lg:flex items-center justify-center lg:absolute w-10 lg:-left-4 lg:hover:cursor-pointer lg:top-1/2 lg:-translate-y-1/2 h-full bg-gradient-to-r from-card to-transparent flex items-center transition-opacity duration-200"
             style={{
               visibility: scrollPosition === 0 ? 'hidden' : 'visible',
             }}
           >
             <ChevronLeft
-              className="text-3xl text-slate-200 w-6 h-6"
+              className="text-3xl text-foreground w-6 h-6"
               onClick={() => {
                 containerRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
                 setScrollPosition(containerRef.current?.scrollLeft ?? 0);
@@ -96,13 +173,13 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
               <Swimlane
                 key={swimlane.title}
                 title={swimlane.title}
-                className="lg:min-h-[375px] lg:min-w-[350px] lg:max-w-[350px]"
+                className="lg:min-h-[375px] lg:min-w-[350px]"
                 data={swimlane.tasks}
               />
             ))}
           </div>
           <div
-            className="rounded-lg z-10 hidden lg:flex items-center justify-center lg:absolute w-10 lg:-right-4 lg:hover:cursor-pointer lg:top-1/2 lg:-translate-y-1/2 h-full bg-gradient-to-l from-black to-transparent flex items-center transition-opacity duration-200"
+            className="rounded-lg z-10 hidden lg:flex items-center justify-center lg:absolute w-10 lg:-right-4 lg:hover:cursor-pointer lg:top-1/2 lg:-translate-y-1/2 h-full bg-gradient-to-l from-card to-transparent flex items-center transition-opacity duration-200"
             style={{
               visibility:
                 scrollPosition >=
@@ -114,7 +191,7 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
             }}
           >
             <ChevronRight
-              className="text-3xl text-slate-200 w-6 h-6"
+              className="text-3xl text-foreground w-6 h-6"
               onClick={() => {
                 containerRef.current?.scrollTo({
                   left: containerRef.current?.scrollWidth ?? 0,

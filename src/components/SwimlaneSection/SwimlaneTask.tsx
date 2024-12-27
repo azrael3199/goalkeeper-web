@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import {
   Card,
@@ -13,9 +15,12 @@ import {
 } from '@root/components/ui/tooltip';
 import { cn, getContrastForColorInBW } from '@root/lib/utils/utils';
 import { goalData } from '@root/lib/utils/dummies';
-import { Ellipsis, Check, Trash } from 'lucide-react';
-import { Task } from '@root/lib/types/common';
+import { Ellipsis, Check, Trash, Edit2 } from 'lucide-react';
+import { useDialog } from '@root/providers/DialogProvider';
+import { Task, Weekday } from '@root/lib/types/common';
 import { Badge } from '../ui/badge';
+import TaskDialog from '../Tasks/TaskDialog';
+import { Button } from '../ui/button';
 
 export type Mask = {
   taskId?: boolean;
@@ -68,22 +73,28 @@ const DAY_OF_THE_WEEK_VALUES = {
   SUN: 'Sunday',
 };
 
+const DEFAULT_MASK: Mask = {
+  taskId: true,
+  title: true,
+  description: true,
+  parentId: true,
+  priority: true,
+  hoursRequired: true,
+  status: true,
+  dayOfTheWeek: true,
+};
+
 const SwimlaneTask: React.FC<
   SwimlaneTaskProps & React.ComponentPropsWithRef<'div'>
 > = ({ data, mask, ...props }) => {
-  const DEFAULT_MASK: Mask = {
-    taskId: true,
-    title: true,
-    description: true,
-    parentId: true,
-    priority: true,
-    hoursRequired: true,
-    status: true,
-    dayOfTheWeek: true,
-  };
+  const { openDialog } = useDialog();
 
   // To replace the default mask with values from mask
   const newMask = { ...DEFAULT_MASK, ...mask };
+
+  const weekday = new Date(data.dateAndTime)
+    .toLocaleDateString('en-US', { weekday: 'short' })
+    .toUpperCase();
 
   return (
     <Card
@@ -100,7 +111,7 @@ const SwimlaneTask: React.FC<
           <Check className="text-green-500" size={32} />
         </div>
       )}
-      <CardHeader className="p-2 pb-0">
+      <CardHeader className="p-2 pb-1">
         <section className="grid grid-cols-2 items-start gap-2">
           {/* Task title, id and actions */}
           <CardTitle className="text-xs text-white font-normal">
@@ -110,9 +121,34 @@ const SwimlaneTask: React.FC<
             }`}</em>
           </CardTitle>
           {data.status !== 'DONE' && (
-            <div className="text-xs flex md:invisible md:group-hover: md:group-hover:visible items-center justify-self-end justify-center gap-2">
-              <Ellipsis className="hover:cursor-pointer" size={18} />
-              <Trash className="text-red-500 hover:cursor-pointer" size={18} />
+            <div className="text-xs flex md:invisible md:group-hover: md:group-hover:visible items-center justify-self-end justify-center gap-1">
+              <Button
+                variant="ghost"
+                className="p-0 hover:bg-transparent h-fit w-fit"
+              >
+                <Ellipsis className="hover:cursor-pointer" size={14} />
+              </Button>
+              <Button
+                variant="ghost"
+                className="p-0 hover:bg-transparent h-fit w-fit"
+              >
+                <Edit2
+                  className="hover:cursor-pointer"
+                  size={14}
+                  onClick={() =>
+                    openDialog(<TaskDialog id={data.id} data={data} />)
+                  }
+                />
+              </Button>
+              <Button
+                variant="ghost"
+                className="p-0 hover:bg-transparent h-fit w-fit"
+              >
+                <Trash
+                  className="text-destructive hover:cursor-pointer"
+                  size={14}
+                />
+              </Button>
             </div>
           )}
         </section>
@@ -125,7 +161,7 @@ const SwimlaneTask: React.FC<
           </CardDescription>
         ) : null}
         {/* Effort estimation and tracking */}
-        <Badge className="bg-slate-800 hover:bg-slate-800 rounded-full min-h-6 px-2 text-center text-xs justify-self-end">
+        <Badge className="bg-accent hover:bg-accent rounded-full min-h-6 px-2 text-center text-xs justify-self-end">
           {data.hoursRequired && newMask.hoursRequired
             ? `${data.hoursRequired} hrs`
             : null}
@@ -171,9 +207,9 @@ const SwimlaneTask: React.FC<
           </Badge>
         ) : null}
         {/* Status */}
-        {data.dayOfTheWeek && newMask.dayOfTheWeek ? (
-          <Badge className="bg-slate-800 hover:bg-slate-800 text-white min-h-6 text-center justify-self-end">
-            {DAY_OF_THE_WEEK_VALUES[data.dayOfTheWeek]}
+        {data.dateAndTime && newMask.dayOfTheWeek ? (
+          <Badge className="bg-accent hover:bg-accent text-white min-h-6 text-center justify-self-end">
+            {DAY_OF_THE_WEEK_VALUES[weekday as Weekday]}
           </Badge>
         ) : null}
       </CardContent>

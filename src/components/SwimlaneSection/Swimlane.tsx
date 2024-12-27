@@ -28,7 +28,7 @@ const Swimlane: React.FC<
     )}
   >
     <CardHeader className="p-2 px-2.5 flex flex-row gap-2 items-center justify-between">
-      <CardTitle className="text-slate-500 text-xs font-semibold">
+      <CardTitle className="text-foreground text-xs font-semibold">
         {title.toLocaleUpperCase()}
       </CardTitle>
       <div className="flex gap-2 items-center !m-0">
@@ -47,7 +47,7 @@ const Swimlane: React.FC<
           />
         ))
       ) : (
-        <div className="p-4 text-slate-500">No Tasks.</div>
+        <div className="p-4 text-muted-foreground">No Tasks.</div>
       )}
     </CardContent>
   </Card>

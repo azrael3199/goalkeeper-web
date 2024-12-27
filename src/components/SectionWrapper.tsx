@@ -2,12 +2,19 @@ import { cn } from '@root/lib/utils/utils';
 
 type Props = {
   title: string;
+  titleComponent?: React.ReactNode;
   actions?: React.ReactNode;
   children: React.ReactNode;
   className?: string;
 };
 
-const SectionWrapper = ({ title, actions, children, className }: Props) => (
+const SectionWrapper = ({
+  title,
+  titleComponent,
+  actions,
+  children,
+  className,
+}: Props) => (
   <div>
     <div
       className={cn(
@@ -15,7 +22,7 @@ const SectionWrapper = ({ title, actions, children, className }: Props) => (
         className
       )}
     >
-      <h2>{title}</h2>
+      {titleComponent ?? <h2>{title}</h2>}
       <div className="flex justifty-center items-center p-1 gap-2">
         {actions}
       </div>

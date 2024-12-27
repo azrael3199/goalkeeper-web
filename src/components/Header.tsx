@@ -18,6 +18,7 @@ import { Input } from './ui/input';
 import { Button } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import NotificationsMenu from './Notifications/NotificationsMenu';
+import DarkThemeToggle from './DarkThemeToggle';
 
 const ProfileIcon: React.FC = () => {
   const { user } = useContext(AppContext);
@@ -72,7 +73,7 @@ const ProfileIcon: React.FC = () => {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="min-w-24 w-fit bg-slate-900 rounded-md p-3 px-2">
+      <PopoverContent className="min-w-24 w-fit rounded-md p-3 px-2">
         <p className="text-gray-600 font-semibold text-sm px-2">
           {user.displayName}
         </p>
@@ -80,7 +81,7 @@ const ProfileIcon: React.FC = () => {
           {userDropdownItems.map((dropdownItem) => (
             <li
               key={dropdownItem.title}
-              className="grid grid-cols-3 gap-2 py-2 w-full cursor-pointer hover:bg-slate-800 rounded-md"
+              className="grid grid-cols-3 gap-2 py-2 w-full cursor-pointer hover:bg-secondary rounded-md"
               onClick={() => dropdownItem.action?.()}
             >
               <div className="flex items-center justify-center px-2 col-span-1">
@@ -118,10 +119,9 @@ const Header: React.FC = () => (
     <div className="grow w-full">
       <SearchInput className="w-full md:w-1/2" />
     </div>
-    <div className="px-2 pr-0.5 md:pr-1 flex justify-center">
+    <div className="px-2 pr-0.5 md:pr-1 gap-2 flex justify-center">
+      <DarkThemeToggle />
       <NotificationsMenu />
-    </div>
-    <div className="px-2">
       <ProfileIcon />
     </div>
   </header>

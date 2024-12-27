@@ -52,7 +52,7 @@ function AuthLayout({ children }: IAuthPageProps) {
 
         {/* Right Side: Login Panel | SignUp Panel */}
         <div
-          className="pt-5 md:w-1/3 md:h-full w-full h-4/5 md:flex md:items-center md:justify-center dark:bg-gray-900 rounded-t-xl md:rounded-l-xl"
+          className="pt-5 md:w-1/3 md:h-full w-full h-4/5 md:flex md:items-center md:justify-center dark:bg-card rounded-t-xl md:rounded-l-xl"
           style={{ boxShadow: '-1px 1px 5px rgba(255, 255, 255, 0.8)' }}
         >
           <div className="w-full py-5 px-10 md:w-3/4 animate-fade-in max-h-full overflow-y-auto">

@@ -19,7 +19,7 @@ const SidebarSectionItem: React.FC<
     className={cn(
       'flex flex-col gap-1 w-full items-center text-gray-400 text-sm p-2 cursor-pointer rounded-lg',
       {
-        'bg-slate-800 hover:bg-slate-800 hover:dark:bg-slate-800': selected,
+        'bg-accent hover:bg-secondary': selected,
         'font-semibold text-gray-200': selected,
       },
       // eslint-disable-next-line react/prop-types

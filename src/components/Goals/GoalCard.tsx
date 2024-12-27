@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Goal as GoalType } from '@root/lib/types/common';
 import {
@@ -120,7 +122,7 @@ const GoalCard: React.FC<GoalCardProps> = ({ goal: goalProp, onClick }) => {
                   <i className="fas fa-calendar-alt text-purple-500" /> Expected
                   Completion:
                 </span>
-                <span className="flex items-center ml-auto rounded-full cursor-default bg-slate-700 bg-opacity-60 px-3 py-1 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 transition-colors">
+                <span className="flex items-center ml-auto rounded-full cursor-default bg-secondary bg-opacity-60 px-3 py-1 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 transition-colors">
                   {goal.expectedCompletionDate
                     ? new Date(goal.expectedCompletionDate).toLocaleDateString(
                         'en-US',
@@ -140,7 +142,7 @@ const GoalCard: React.FC<GoalCardProps> = ({ goal: goalProp, onClick }) => {
                   <i className="fas fa-calendar-plus text-yellow-600" /> Created
                   On:
                 </span>
-                <span className="flex items-center ml-auto cursor-default rounded-full bg-slate-700 bg-opacity-60 px-3 py-1 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 transition-colors">
+                <span className="flex items-center ml-auto cursor-default rounded-full bg-secondary bg-opacity-60 px-3 py-1 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 transition-colors">
                   {goal.createdAt
                     ? new Date(goal.createdAt).toLocaleDateString('en-US', {
                         day: '2-digit',
@@ -154,9 +156,10 @@ const GoalCard: React.FC<GoalCardProps> = ({ goal: goalProp, onClick }) => {
               {/* Last Updated */}
               <p className="flex items-center gap-2 grow">
                 <span className="font-medium text-gray-300 flex items-center gap-1">
-                  <i className="fas fa-sync-alt text-red-600" /> Last Updated:
+                  <i className="fas fa-sync-alt text-destructive" /> Last
+                  Updated:
                 </span>
-                <span className="flex items-center ml-auto rounded-full cursor-default bg-slate-700 bg-opacity-60 px-3 py-1 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 transition-colors">
+                <span className="flex items-center ml-auto rounded-full cursor-default bg-secondary bg-opacity-60 px-3 py-1 text-xs font-medium text-white shadow-sm hover:bg-indigo-600 transition-colors">
                   {goal.updatedAt
                     ? new Date(goal.updatedAt).toLocaleDateString('en-US', {
                         day: '2-digit',

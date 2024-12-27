@@ -1,12 +1,21 @@
+type TaskMetadata = {
+  [key: string]: unknown;
+};
+
+export type Weekday = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
+
 export type Task = {
   id: string;
   title?: string;
   description?: string;
   parentId?: string;
-  priority?: number;
+  priority: number;
   hoursRequired?: number;
   status: 'NOT_STARTED' | 'IN_PROGRESS' | 'DONE';
-  dayOfTheWeek: 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
+  dateAndTime: string;
+  createdAt: string;
+  updatedAt: string;
+  metadata?: TaskMetadata;
 };
 
 export interface Goal {

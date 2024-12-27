@@ -22,8 +22,8 @@ type Values = {
 };
 
 const inputClassName =
-  'w-full border-gray-300 dark:border-gray-600 dark:bg-slate-700 dark:text-white p-2 rounded mt-2';
-const errorClassName = 'text-red-400 text-sm mt-2';
+  'w-full w-full flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50';
+const errorClassName = 'text-destructive text-sm mt-2';
 
 const Register = () => {
   const { t } = useTranslation();
@@ -239,7 +239,7 @@ const Register = () => {
             <div className="text-center mb-4">
               <Button
                 type="submit"
-                className="bg-primary-500 hover:bg-primary-600 disabled:bg-slate-500 text-white py-2 px-4 rounded w-full"
+                className="text-white py-2 px-4 rounded w-full"
                 disabled={isSubmitting || Object.keys(errors).length > 0}
               >
                 <b className="uppercase">{t('registerScreen.signUp')}</b>

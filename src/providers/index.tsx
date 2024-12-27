@@ -17,7 +17,12 @@ import ThemeProvider from './ThemeProvider';
 
 const Providers = ({ children }: { children: React.ReactNode }) => (
   <AppProvider>
-    <ThemeProvider>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
       <I18nextProvider i18n={i18n}>
         <QueryClientProvider client={queryClient}>
           <ApolloProvider client={apolloClient}>

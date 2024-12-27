@@ -35,6 +35,34 @@
   --font-league-spartan: 'League Spartan', sans-serif;
 }
 
+.light {
+  --background: 0 0% 100%; /* Pure white background */
+  --foreground: 239 10% 20%; /* Dark gray text for high contrast */
+  --card: 0 0% 95%; /* Light gray card background */
+  --card-foreground: 239 10% 20%; /* Same as foreground */
+  --popover: 0 0% 98%; /* Slightly off-white for popovers */
+  --popover-foreground: 239 10% 20%; /* Dark text for popovers */
+  --primary: 239 100% 50%; /* Vibrant blue for primary actions */
+  --primary-foreground: 0 0% 100%; /* White text for contrast */
+  --secondary: 239 20% 90%; /* Soft blue-gray for secondary actions */
+  --secondary-foreground: 239 10% 20%; /* Dark text for contrast */
+  --muted: 239 20% 85%; /* Subtle muted tone */
+  --muted-foreground: 239 10% 40%; /* Softer gray text for muted elements */
+  --accent: 201 70% 40%; /* Stronger teal for accents */
+  --accent-foreground: 0 0% 100%; /* White text for accents */
+  --destructive: 0 70% 50%; /* Softer red for destructive actions */
+  --destructive-foreground: 0 0% 100%; /* White text for destructive actions */
+  --border: 0 0% 90%; /* Light gray borders */
+  --input: 0 0% 95%; /* Light gray input background */
+  --ring: 239 100% 50%; /* Vibrant blue for focus rings */
+  --radius: 0.5rem; /* Keep the same border radius */
+  --chart-1: 220 70% 60%; /* Vibrant blue for chart accents */
+  --chart-2: 160 60% 55%; /* Soft green for chart accents */
+  --chart-3: 30 80% 65%; /* Warm orange for chart accents */
+  --chart-4: 280 65% 70%; /* Soft purple for chart accents */
+  --chart-5: 340 75% 65%; /* Vibrant pink for chart accents */
+}
+
 .dark  {
   --background: 239 50% 5%;
   --foreground: 239 5% 90%;
