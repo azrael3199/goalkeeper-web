@@ -256,7 +256,7 @@ const Register = () => {
         )}
       </Formik>
       <div className="mt-4 text-center w-full">
-        <p className="mb-4 text-gray-800 dark:text-white">
+        <p className="mb-4 text-gray-800 text-white">
           <Trans i18nKey="registerScreen.leadToSignIn">{signInLink}</Trans>
         </p>
       </div>

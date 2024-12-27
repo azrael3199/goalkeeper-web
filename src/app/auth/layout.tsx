@@ -27,7 +27,7 @@ function AuthLayout({ children }: IAuthPageProps) {
         <div className="md:w-2/3 md:h-full w-full h-1/5">
           <div className="flex items-center justify-center h-full">
             <div className="p-8 animate-fade-in text-center max-h-full h-5/6">
-              <h2 className="w-full text-center text-3xl font-bold mb-4 md:mb-12 dark:text-white">
+              <h2 className="w-full text-center text-3xl font-bold mb-4 md:mb-12 text-white">
                 {' '}
                 <Typewriter words={[t('journeyBegin')]} cursor />
               </h2>
@@ -52,7 +52,7 @@ function AuthLayout({ children }: IAuthPageProps) {
 
         {/* Right Side: Login Panel | SignUp Panel */}
         <div
-          className="pt-5 md:w-1/3 md:h-full w-full h-4/5 md:flex md:items-center md:justify-center dark:bg-card rounded-t-xl md:rounded-l-xl"
+          className="pt-5 md:w-1/3 md:h-full w-full h-4/5 md:flex md:items-center md:justify-center bg-card rounded-t-xl md:rounded-l-xl"
           style={{ boxShadow: '-1px 1px 5px rgba(255, 255, 255, 0.8)' }}
         >
           <div className="w-full py-5 px-10 md:w-3/4 animate-fade-in max-h-full overflow-y-auto">

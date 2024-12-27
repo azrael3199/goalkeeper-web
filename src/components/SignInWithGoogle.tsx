@@ -60,7 +60,7 @@ const SignInWithGoogle = ({
         height={20}
         style={{ objectFit: 'contain', objectPosition: 'center' }}
       />
-      <p className="ml-3 font-bold dark:text-white">
+      <p className="ml-3 font-bold text-white">
         {register
           ? t('registerScreen.signUpWithGoogle')
           : t('loginScreen.signInWithGoogle')}

@@ -26,7 +26,7 @@ const OnboardingSlide: React.FC<OnboardingSlideProps> = ({
     >
       <div className="md:w-1/2 p-12">
         <div className="w-full h-full">
-          <div className="aspect-w-1 aspect-h-1 h-[140px] md:h-[270px] xl:h-[520px] bg-gray-700 dark:bg-inherit rounded-xl lg:p-12">
+          <div className="aspect-w-1 aspect-h-1 h-[140px] md:h-[270px] xl:h-[520px] bg-gray-700 bg-inherit rounded-xl lg:p-12">
             <Image
               src={imageSrc}
               alt="Illustration"
@@ -44,9 +44,9 @@ const OnboardingSlide: React.FC<OnboardingSlideProps> = ({
         </div>
       </div>
       <div className="md:w-1/2 mt-6 md:mt-0 lg:px-32">
-        <h2 className="text-3xl font-bold mb-4 dark:text-white">{t(title)}</h2>
+        <h2 className="text-3xl font-bold mb-4 text-white">{t(title)}</h2>
         <p
-          className={`text-lg text-gray-700 dark:foreground ${
+          className={`text-lg text-gray-700 foreground ${
             active ? 'opacity-100 animate-fade-in' : 'opacity-0'
           } transition-opacity duration-500`}
         >
