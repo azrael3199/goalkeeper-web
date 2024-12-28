@@ -111,7 +111,7 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
           >
             <ChevronLeft className="w-5 w-aspect-1 h-aspect-1" />
           </Button>
-          <h2 className="text-center">{getSectionTitle(weekStart)}</h2>
+          <h2 className="text-center grow">{getSectionTitle(weekStart)}</h2>
           <Button
             variant="ghost"
             className="p-2"

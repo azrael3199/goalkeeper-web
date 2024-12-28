@@ -4,7 +4,7 @@ import { createContext, useContext, useState } from 'react';
 // eslint-disable-next-line no-spaced-func
 const DialogContext = createContext<{
   // eslint-disable-next-line func-call-spacing
-  openDialog: (content: React.ReactNode) => void;
+  openDialog: (content: React.ReactNode, id?: string) => void;
   closeDialog: () => void;
 } | null>(null);
 
@@ -13,9 +13,11 @@ export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
   const [dialogContent, setDialogContent] = useState<React.ReactNode | null>(
     null
   );
+  const [dialogId, setDialogId] = useState<string>('');
 
-  const openDialog = (content: React.ReactNode) => {
+  const openDialog = (content: React.ReactNode, id?: string) => {
     setDialogContent(content);
+    setDialogId(id ?? '');
     setIsOpen(true);
   };
 
@@ -29,7 +31,7 @@ export const DialogProvider = ({ children }: { children: React.ReactNode }) => {
     <DialogContext.Provider value={{ openDialog, closeDialog }}>
       {children}
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent>{dialogContent}</DialogContent>
+        <DialogContent id={dialogId}>{dialogContent}</DialogContent>
       </Dialog>
     </DialogContext.Provider>
   );

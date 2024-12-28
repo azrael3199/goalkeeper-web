@@ -23,3 +23,9 @@ export const isTaskWithinYear = (task: Task, yearStart: Date): boolean => {
   const taskDate = new Date(task.dateAndTime);
   return taskDate.getFullYear() === yearStart.getFullYear();
 };
+
+export const mergeDateAndTime = (date: string, time: string): string => {
+  const [year, month, day] = date.split('-');
+  const [hours, minutes, seconds] = time.split(':');
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
+};

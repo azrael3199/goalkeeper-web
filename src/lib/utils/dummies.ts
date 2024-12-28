@@ -3,6 +3,12 @@
 import { IdTokenResult, User } from 'firebase/auth';
 import { Task, Goal } from '../types/common';
 
+export const PRIORITY_VALUES = [
+  { background: 'bg-red-800', text: 'text-white', value: 'High' },
+  { background: 'bg-yellow-500', text: 'text-black', value: 'Medium' },
+  { background: 'bg-green-500', text: 'text-black', value: 'Low' },
+];
+
 // TODO: Use later
 // eslint-disable-next-line import/prefer-default-export
 export const dummyUser: User = {

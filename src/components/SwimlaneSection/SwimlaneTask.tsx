@@ -14,7 +14,7 @@ import {
   TooltipTrigger,
 } from '@root/components/ui/tooltip';
 import { cn, getContrastForColorInBW } from '@root/lib/utils/utils';
-import { goalData } from '@root/lib/utils/dummies';
+import { goalData, PRIORITY_VALUES } from '@root/lib/utils/dummies';
 import { Ellipsis, Check, Trash, Edit2 } from 'lucide-react';
 import { useDialog } from '@root/providers/DialogProvider';
 import { Task, Weekday } from '@root/lib/types/common';
@@ -38,12 +38,6 @@ interface SwimlaneTaskProps {
   data: Task;
   mask?: Mask;
 }
-
-const PRIORITY_VALUES = [
-  { background: 'bg-red-800', text: 'text-white', value: 'High' },
-  { background: 'bg-yellow-500', text: 'text-black', value: 'Medium' },
-  { background: 'bg-green-500', text: 'text-black', value: 'Low' },
-];
 
 // const STATUS_VALUES = {
 //   NOT_STARTED: {
@@ -136,7 +130,10 @@ const SwimlaneTask: React.FC<
                   className="hover:cursor-pointer"
                   size={14}
                   onClick={() =>
-                    openDialog(<TaskDialog id={data.id} data={data} />)
+                    openDialog(
+                      <TaskDialog id={data.id} data={data} />,
+                      `task-form-${data.id}`
+                    )
                   }
                 />
               </Button>
