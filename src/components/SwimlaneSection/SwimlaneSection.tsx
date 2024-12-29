@@ -8,7 +8,7 @@ import {
   transformTasksByStatus,
 } from '@root/lib/utils/transforms';
 import { Task } from '@root/lib/types/common';
-import { taskData } from '@root/lib/utils/dummies';
+import { useAppSelector } from '@root/lib/redux/store';
 import {
   endOfWeek,
   format,
@@ -28,24 +28,27 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
   const [selectedLayout, setSelectedLayout] = useState<number>(1);
   const [isMonthly] = useState<boolean>(false);
   const [weekStart, setWeekStart] = useState<Date>(startOfWeek(new Date()));
+
+  const tasks = useAppSelector((state) => state.tasks.tasks);
+
   const [data, setData] = useState<{ title: string; tasks: Task[] }[]>(() => {
     if (selectedLayout === 0) {
-      return transformTasksByPriority(taskData, weekStart);
+      return transformTasksByPriority(tasks, weekStart);
     }
-    return transformTasksByStatus(taskData, weekStart);
+    return transformTasksByStatus(tasks, weekStart);
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState<number>(1);
 
-  const swimlaneData = transformTasksByStatus(taskData, weekStart);
+  const swimlaneData = transformTasksByStatus(tasks, weekStart);
 
   const onViewToggle = (selectedIndex: number) => {
     setSelectedLayout(selectedIndex);
     if (selectedIndex === 0) {
-      setData(transformTasksByPriority(taskData, weekStart));
+      setData(transformTasksByPriority(tasks, weekStart));
     } else {
-      setData(transformTasksByStatus(taskData, weekStart));
+      setData(transformTasksByStatus(tasks, weekStart));
     }
   };
 
@@ -59,9 +62,9 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
     newDate.setDate(newDate.getDate() - 7);
     setWeekStart(newDate);
     if (selectedLayout === 0) {
-      setData(transformTasksByPriority(taskData, newDate));
+      setData(transformTasksByPriority(tasks, newDate));
     } else {
-      setData(transformTasksByStatus(taskData, newDate));
+      setData(transformTasksByStatus(tasks, newDate));
     }
   };
 
@@ -70,9 +73,9 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
     newDate.setDate(newDate.getDate() + 7);
     setWeekStart(newDate);
     if (selectedLayout === 0) {
-      setData(transformTasksByPriority(taskData, newDate));
+      setData(transformTasksByPriority(tasks, newDate));
     } else {
-      setData(transformTasksByStatus(taskData, newDate));
+      setData(transformTasksByStatus(tasks, newDate));
     }
   };
 
@@ -173,6 +176,7 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
               <Swimlane
                 key={swimlane.title}
                 title={swimlane.title}
+                date={swimlane.date}
                 className="lg:min-h-[375px] lg:min-w-[350px]"
                 data={swimlane.tasks}
               />

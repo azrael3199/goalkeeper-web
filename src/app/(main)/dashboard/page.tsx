@@ -3,7 +3,10 @@
 import { AppContext } from '@root/providers/AppProvider';
 import { cn } from '@root/lib/utils/utils';
 import React, { useContext, useEffect } from 'react';
+import { setTasks } from '@root/lib/redux/reducers/tasksReducer';
+import { taskData } from '@root/lib/utils/dummies';
 import SwimlaneSection from '@root/components/SwimlaneSection/SwimlaneSection';
+import { useAppDispatch } from '@root/lib/redux/store';
 
 interface CountWidgetProps {
   count: string;
@@ -39,6 +42,8 @@ const CountWidget: React.FC<
 const Dashboard: React.FC = () => {
   const { user, isLoading, setLoading } = useContext(AppContext);
 
+  const dispatch = useAppDispatch();
+
   // TODO: Replace with actual data
   const taskCounts = [
     {
@@ -60,6 +65,12 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     if (isLoading) setLoading(false); // Workaround till Next introduces interceptors
+
+    // Set dummy data for development purposes
+    // TODO: Replace with actual data from server
+    if (process.env.NODE_ENV === 'development') {
+      dispatch(setTasks(taskData));
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

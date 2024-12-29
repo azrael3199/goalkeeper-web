@@ -5,9 +5,15 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import { cn } from '@root/lib/utils/utils';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './tooltip';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
@@ -52,6 +58,7 @@ export interface ButtonProps
     | 'link'
     | null;
   size?: 'default' | 'icon' | 'sm' | 'lg' | null;
+  tooltip?: string;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -64,6 +71,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       size,
       children,
       asChild = false,
+      tooltip,
       ...props
     },
     ref
@@ -78,7 +86,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       );
     }
 
-    return (
+    const button = (
       <button
         type="button"
         className={cn(buttonVariants({ variant, size, className }))}
@@ -95,6 +103,21 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {children}
       </button>
+    );
+
+    if (!tooltip) {
+      return button;
+    }
+
+    return (
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div>{button}</div>
+          </TooltipTrigger>
+          <TooltipContent>{tooltip}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     );
   }
 );

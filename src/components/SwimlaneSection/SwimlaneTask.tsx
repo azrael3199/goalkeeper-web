@@ -15,12 +15,15 @@ import {
 } from '@root/components/ui/tooltip';
 import { cn, getContrastForColorInBW } from '@root/lib/utils/utils';
 import { goalData, PRIORITY_VALUES } from '@root/lib/utils/dummies';
+import { useAppDispatch } from '@root/lib/redux/store';
+import { deleteTask, updateTask } from '@root/lib/redux/reducers/tasksReducer';
 import { Ellipsis, Check, Trash, Edit2 } from 'lucide-react';
 import { useDialog } from '@root/providers/DialogProvider';
 import { Task, Weekday } from '@root/lib/types/common';
 import { Badge } from '../ui/badge';
 import TaskDialog from '../Tasks/TaskDialog';
 import { Button } from '../ui/button';
+import ConfirmationDialog from '../Tasks/ConfirmationDialog';
 
 export type Mask = {
   taskId?: boolean;
@@ -38,24 +41,6 @@ interface SwimlaneTaskProps {
   data: Task;
   mask?: Mask;
 }
-
-// const STATUS_VALUES = {
-//   NOT_STARTED: {
-//     background: 'bg-orange-400',
-//     text: 'text-orange-900',
-//     value: 'To Do',
-//   },
-//   IN_PROGRESS: {
-//     background: 'bg-blue-400',
-//     text: 'text-blue-900',
-//     value: 'In Progress',
-//   },
-//   DONE: {
-//     background: 'bg-green-400',
-//     text: 'text-green-900',
-//     value: 'Done',
-//   },
-// };
 
 const DAY_OF_THE_WEEK_VALUES = {
   MON: 'Monday',
@@ -83,12 +68,22 @@ const SwimlaneTask: React.FC<
 > = ({ data, mask, ...props }) => {
   const { openDialog } = useDialog();
 
+  const dispatch = useAppDispatch();
+
   // To replace the default mask with values from mask
   const newMask = { ...DEFAULT_MASK, ...mask };
 
   const weekday = new Date(data.dateAndTime)
     .toLocaleDateString('en-US', { weekday: 'short' })
     .toUpperCase();
+
+  const markAsDone = () => {
+    dispatch(updateTask({ ...data, status: 'DONE' }));
+  };
+
+  const deleteCurrentTask = () => {
+    dispatch(deleteTask(data.id));
+  };
 
   return (
     <Card
@@ -119,27 +114,44 @@ const SwimlaneTask: React.FC<
               <Button
                 variant="ghost"
                 className="p-0 hover:bg-transparent h-fit w-fit"
+                tooltip="More Actions"
               >
                 <Ellipsis className="hover:cursor-pointer" size={14} />
               </Button>
               <Button
                 variant="ghost"
                 className="p-0 hover:bg-transparent h-fit w-fit"
+                tooltip="Mark as Done"
+                onClick={markAsDone}
               >
-                <Edit2
-                  className="hover:cursor-pointer"
+                <Check
+                  className="hover:cursor-pointer text-green-500"
                   size={14}
-                  onClick={() =>
-                    openDialog(
-                      <TaskDialog id={data.id} data={data} />,
-                      `task-form-${data.id}`
-                    )
-                  }
                 />
               </Button>
               <Button
                 variant="ghost"
                 className="p-0 hover:bg-transparent h-fit w-fit"
+                tooltip="Edit Task"
+                onClick={() =>
+                  openDialog(
+                    <TaskDialog id={data.id} data={data} />,
+                    `task-form-${data.id}`
+                  )
+                }
+              >
+                <Edit2 className="hover:cursor-pointer" size={14} />
+              </Button>
+              <Button
+                variant="ghost"
+                className="p-0 hover:bg-transparent h-fit w-fit"
+                tooltip="Delete Task"
+                onClick={() =>
+                  openDialog(
+                    <ConfirmationDialog onDelete={deleteCurrentTask} />,
+                    `task-delete-${data.id}`
+                  )
+                }
               >
                 <Trash
                   className="text-destructive hover:cursor-pointer"

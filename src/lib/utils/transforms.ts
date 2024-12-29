@@ -4,33 +4,50 @@ import { Task } from '@root/lib/types/common';
 import { isTaskInTheWeek } from './date-utils';
 
 export const transformTasksByStatus = (tasks: Task[], weekStart: Date) => {
-  const groupedTasks: { title: string; tasks: Task[] }[] = [
+  const groupedTasks: { title: string; date: string; tasks: Task[] }[] = [
     {
       title: 'Sunday',
+      date: new Date(weekStart).toISOString(),
       tasks: [],
     },
     {
       title: 'Monday',
+      date: new Date(weekStart.getTime() + 24 * 60 * 60 * 1000).toISOString(),
       tasks: [],
     },
     {
       title: 'Tuesday',
+      date: new Date(
+        weekStart.getTime() + 2 * 24 * 60 * 60 * 1000
+      ).toISOString(),
       tasks: [],
     },
     {
       title: 'Wednesday',
+      date: new Date(
+        weekStart.getTime() + 3 * 24 * 60 * 60 * 1000
+      ).toISOString(),
       tasks: [],
     },
     {
       title: 'Thursday',
+      date: new Date(
+        weekStart.getTime() + 4 * 24 * 60 * 60 * 1000
+      ).toISOString(),
       tasks: [],
     },
     {
       title: 'Friday',
+      date: new Date(
+        weekStart.getTime() + 5 * 24 * 60 * 60 * 1000
+      ).toISOString(),
       tasks: [],
     },
     {
       title: 'Saturday',
+      date: new Date(
+        weekStart.getTime() + 6 * 24 * 60 * 60 * 1000
+      ).toISOString(),
       tasks: [],
     },
   ];

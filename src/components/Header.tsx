@@ -15,7 +15,6 @@ import { AppContext } from '@root/providers/AppProvider';
 import Image from 'next/image';
 import { logout } from '@root/lib/utils/firebaseUtils';
 import { Input } from './ui/input';
-import { Button } from './ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import NotificationsMenu from './Notifications/NotificationsMenu';
 import DarkThemeToggle from './DarkThemeToggle';
@@ -50,11 +49,8 @@ const ProfileIcon: React.FC = () => {
   // eslint-disable-next-line consistent-return
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          className="border-border p-0 w-9 h-9 rounded-full"
-        >
+      <PopoverTrigger>
+        <div className="border-border p-0 w-9 h-9 rounded-full">
           {user.photoURL ? (
             <Image
               src={user.photoURL}
@@ -71,7 +67,7 @@ const ProfileIcon: React.FC = () => {
               {user.displayName?.[0]}
             </div>
           )}
-        </Button>
+        </div>
       </PopoverTrigger>
       <PopoverContent className="min-w-24 w-fit rounded-md p-3 px-2">
         <p className="text-gray-600 font-semibold text-sm px-2">
