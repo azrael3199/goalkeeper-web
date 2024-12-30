@@ -57,13 +57,19 @@ const Swimlane: React.FC<
       </CardHeader>
       <CardContent className="p-2 pr-2 flex flex-col items-center gap-2 h-full pb-8">
         {data?.length ? (
-          data.map((task) => (
-            <SwimlaneTask
-              key={task.id}
-              data={task}
-              mask={{ status: false, dayOfTheWeek: false }}
-            />
-          ))
+          data
+            .sort(
+              (a, b) =>
+                new Date(a.dateAndTime).getTime() -
+                new Date(b.dateAndTime).getTime()
+            )
+            .map((task) => (
+              <SwimlaneTask
+                key={task.id}
+                data={task}
+                mask={{ status: false, dayOfTheWeek: false }}
+              />
+            ))
         ) : (
           <div className="p-4 text-muted-foreground">No Tasks.</div>
         )}

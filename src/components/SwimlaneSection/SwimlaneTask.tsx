@@ -11,6 +11,7 @@ import {
 import {
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from '@root/components/ui/tooltip';
 import { cn, getContrastForColorInBW } from '@root/lib/utils/utils';
@@ -24,6 +25,8 @@ import { Badge } from '../ui/badge';
 import TaskDialog from '../Tasks/TaskDialog';
 import { Button } from '../ui/button';
 import ConfirmationDialog from '../Tasks/ConfirmationDialog';
+import { Popover, PopoverTrigger } from '../ui/popover';
+import CardActions from './CardActions';
 
 export type Mask = {
   taskId?: boolean;
@@ -111,13 +114,19 @@ const SwimlaneTask: React.FC<
           </CardTitle>
           {data.status !== 'DONE' && (
             <div className="text-xs flex md:invisible md:group-hover: md:group-hover:visible items-center justify-self-end justify-center gap-1">
-              <Button
-                variant="ghost"
-                className="p-0 hover:bg-transparent h-fit w-fit"
-                tooltip="More Actions"
-              >
-                <Ellipsis className="hover:cursor-pointer" size={14} />
-              </Button>
+              <Popover>
+                <PopoverTrigger className="p-0 hover:bg-transparent h-fit w-fit border-0 hover:cursor-pointer">
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Ellipsis className="hover:cursor-pointer" size={14} />
+                      </TooltipTrigger>
+                      <TooltipContent>More Actions</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </PopoverTrigger>
+                <CardActions data={data} />
+              </Popover>
               <Button
                 variant="ghost"
                 className="p-0 hover:bg-transparent h-fit w-fit"
@@ -164,9 +173,9 @@ const SwimlaneTask: React.FC<
       </CardHeader>
       <CardContent className="!text-xs grid grid-cols-2 gap-2 p-2 pt-1 items-start justify-items-start">
         {/* Description */}
-        {data.description && newMask.description ? (
+        {data.description != null && newMask.description ? (
           <CardDescription className="!text-xs">
-            {data.description}
+            {data.description ? data.description : 'No description'}
           </CardDescription>
         ) : null}
         {/* Effort estimation and tracking */}
@@ -176,29 +185,37 @@ const SwimlaneTask: React.FC<
             : null}
         </Badge>
         {/* Parent goal name */}
-        {data.parentId && newMask.parentId ? (
+        {data.parentId != null && newMask.parentId ? (
           <Tooltip>
             <TooltipTrigger className="max-w-full">
-              <Badge
-                className="min-h-6 max-w-full px-2"
-                style={{
-                  backgroundColor: goalData.find(
-                    (goal) => goal.id === data.parentId
-                  )?.overlayColor,
-                  color: getContrastForColorInBW(
-                    goalData.find((goal) => goal.id === data.parentId)
-                      ?.overlayColor || '#FFFFFF'
-                  ),
-                }}
-              >
-                <div className="!truncate">
-                  {goalData.find((goal) => goal.id === data.parentId)?.title}
-                </div>
-              </Badge>
+              {data.parentId.length !== 0 ? (
+                <Badge
+                  className="min-h-6 max-w-full px-2"
+                  style={{
+                    backgroundColor: goalData.find(
+                      (goal) => goal.id === data.parentId
+                    )?.overlayColor,
+                    color: getContrastForColorInBW(
+                      goalData.find((goal) => goal.id === data.parentId)
+                        ?.overlayColor || '#FFFFFF'
+                    ),
+                  }}
+                >
+                  <div className="!truncate">
+                    {goalData.find((goal) => goal.id === data.parentId)?.title}
+                  </div>
+                </Badge>
+              ) : (
+                <Badge className="min-h-6 max-w-full px-2 bg-accent text-foreground hover:bg-accent">
+                  <div className="!truncate">None</div>
+                </Badge>
+              )}
             </TooltipTrigger>
             <TooltipContent>
               <div className="bg-background rounded-md shadow-md">
-                {goalData.find((goal) => goal.id === data.parentId)?.title}
+                {data.parentId.length !== 0
+                  ? goalData.find((goal) => goal.id === data.parentId)?.title
+                  : 'None'}
               </div>
             </TooltipContent>
           </Tooltip>

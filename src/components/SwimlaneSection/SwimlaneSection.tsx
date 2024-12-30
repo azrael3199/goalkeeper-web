@@ -4,10 +4,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Columns, List } from 'lucide-react';
 import clsx from 'clsx';
 import {
+  generateInstances,
   transformTasksByPriority,
   transformTasksByStatus,
 } from '@root/lib/utils/transforms';
-import { Task } from '@root/lib/types/common';
+import { Task, TaskInstance } from '@root/lib/types/common';
 import { useAppSelector } from '@root/lib/redux/store';
 import {
   endOfWeek,
@@ -30,25 +31,52 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
   const [weekStart, setWeekStart] = useState<Date>(startOfWeek(new Date()));
 
   const tasks = useAppSelector((state) => state.tasks.tasks);
+  const weekEnd = new Date(weekStart.getTime() + 6 * 24 * 60 * 60 * 1000);
+
+  // Data with generated instances
+  const d: (Task | TaskInstance)[] = [
+    ...tasks.map((t) => [t, ...generateInstances(t, weekStart, weekEnd)]),
+  ].flat();
+
+  // Data with expanded instances
+  const newData = d
+    .map((task) => {
+      let d: Task | null = null;
+
+      if ('isInstance' in task) {
+        const parentTask = tasks.find((d) => d.id === task.id);
+        if (!parentTask) return null;
+        d = {
+          ...parentTask,
+          ...task,
+          metadata: { cloneOf: parentTask.id },
+        };
+      } else {
+        d = task;
+      }
+
+      return d;
+    })
+    .filter((d): d is Task => d !== null);
 
   const [data, setData] = useState<{ title: string; tasks: Task[] }[]>(() => {
     if (selectedLayout === 0) {
-      return transformTasksByPriority(tasks, weekStart);
+      return transformTasksByPriority(newData, weekStart);
     }
-    return transformTasksByStatus(tasks, weekStart);
+    return transformTasksByStatus(newData, weekStart);
   });
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState<number>(1);
 
-  const swimlaneData = transformTasksByStatus(tasks, weekStart);
+  const swimlaneData = transformTasksByStatus(newData, weekStart);
 
   const onViewToggle = (selectedIndex: number) => {
     setSelectedLayout(selectedIndex);
     if (selectedIndex === 0) {
-      setData(transformTasksByPriority(tasks, weekStart));
+      setData(transformTasksByPriority(newData, weekStart));
     } else {
-      setData(transformTasksByStatus(tasks, weekStart));
+      setData(transformTasksByStatus(newData, weekStart));
     }
   };
 
@@ -62,9 +90,9 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
     newDate.setDate(newDate.getDate() - 7);
     setWeekStart(newDate);
     if (selectedLayout === 0) {
-      setData(transformTasksByPriority(tasks, newDate));
+      setData(transformTasksByPriority(newData, newDate));
     } else {
-      setData(transformTasksByStatus(tasks, newDate));
+      setData(transformTasksByStatus(newData, newDate));
     }
   };
 
@@ -73,9 +101,9 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
     newDate.setDate(newDate.getDate() + 7);
     setWeekStart(newDate);
     if (selectedLayout === 0) {
-      setData(transformTasksByPriority(tasks, newDate));
+      setData(transformTasksByPriority(newData, newDate));
     } else {
-      setData(transformTasksByStatus(tasks, newDate));
+      setData(transformTasksByStatus(newData, newDate));
     }
   };
 
@@ -85,6 +113,15 @@ const SwimlaneSection: React.FC<SwimlaneSectionProps> = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [containerRef.current]);
+
+  useEffect(() => {
+    if (selectedLayout === 0) {
+      setData(transformTasksByPriority(newData, weekStart));
+    } else {
+      setData(transformTasksByStatus(newData, weekStart));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tasks]);
 
   const getSectionTitle = (date: Date) => {
     if (isMonthly) {

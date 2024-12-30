@@ -8,49 +8,50 @@ const plans = [
     price: '0',
     description: 'Perfect for getting started with goal tracking',
     features: [
-      'Up to 3 active goals',
-      'Basic goal tracking',
-      'Community access',
-      'Mobile app access',
-      'Progress dashboard',
+      // 'Up to 3 active goals',
+      // 'Basic goal tracking',
+      // 'Community access',
+      // 'Mobile app access',
+      // 'Progress dashboard',
+      'Everything (for now)',
     ],
     cta: 'Get Started',
-    popular: false,
-  },
-  {
-    name: 'Pro',
-    price: '9.99',
-    description: 'Ideal for ambitious goal-setters',
-    features: [
-      'Unlimited active goals',
-      'AI-powered SMART analysis',
-      'Advanced analytics',
-      'Priority support',
-      'Verifier system',
-      'Custom goal templates',
-      'Calendar integration',
-      'No ads',
-    ],
-    cta: 'Join Waitlist',
     popular: true,
   },
-  {
-    name: 'Team',
-    price: '19.99',
-    description: 'Perfect for teams and organizations',
-    features: [
-      'Everything in Pro',
-      'Team goal tracking',
-      'Collaborative features',
-      'Team analytics',
-      'Admin dashboard',
-      'API access',
-      'Custom branding',
-      'Dedicated support',
-    ],
-    cta: 'Contact Sales',
-    popular: false,
-  },
+  // {
+  //   name: 'Pro',
+  //   price: '9.99',
+  //   description: 'Ideal for ambitious goal-setters',
+  //   features: [
+  //     'Unlimited active goals',
+  //     'AI-powered SMART analysis',
+  //     'Advanced analytics',
+  //     'Priority support',
+  //     'Verifier system',
+  //     'Custom goal templates',
+  //     'Calendar integration',
+  //     'No ads',
+  //   ],
+  //   cta: 'Join Waitlist',
+  //   popular: true,
+  // },
+  // {
+  //   name: 'Team',
+  //   price: '19.99',
+  //   description: 'Perfect for teams and organizations',
+  //   features: [
+  //     'Everything in Pro',
+  //     'Team goal tracking',
+  //     'Collaborative features',
+  //     'Team analytics',
+  //     'Admin dashboard',
+  //     'API access',
+  //     'Custom branding',
+  //     'Dedicated support',
+  //   ],
+  //   cta: 'Contact Sales',
+  //   popular: false,
+  // },
 ];
 
 export default function Pricing() {
@@ -69,7 +70,7 @@ export default function Pricing() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="flex md:grid-cols-3 gap-8 max-w-6xl mx-auto justify-center">
           {plans.map((plan, index) => (
             <div
               // eslint-disable-next-line react/no-array-index-key
@@ -123,11 +124,11 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
+        {/* <div className="mt-16 text-center">
           <p className="text-gray-400">
             All plans include a 14-day free trial. No credit card required.
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

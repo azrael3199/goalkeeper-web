@@ -13,13 +13,24 @@ const PriorityGrouping = ({ title, data }: PriorityGroupingProps) => (
       {title}
     </h3>
     <div className="p-2 flex flex-col gap-2">
-      {data.map((task) => (
-        <SwimlaneTask
-          key={task.id}
-          data={task}
-          mask={{ priority: false, status: false }}
-        />
-      ))}
+      {data.length === 0 && (
+        <p className="text-gray-400 text-md text-center lg:text-left">
+          No tasks found
+        </p>
+      )}
+      {data
+        .sort(
+          (a, b) =>
+            new Date(a.dateAndTime).getTime() -
+            new Date(b.dateAndTime).getTime()
+        )
+        .map((task) => (
+          <SwimlaneTask
+            key={task.id}
+            data={task}
+            mask={{ priority: false, status: false }}
+          />
+        ))}
     </div>
   </div>
 );

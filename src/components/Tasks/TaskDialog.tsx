@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Check, Edit2 } from 'lucide-react';
+import { Check, Edit2, FileWarning } from 'lucide-react';
 import { z } from 'zod';
 import { format } from 'date-fns';
 import { useForm } from 'react-hook-form';
-import uuidv4 from 'uuidv4';
+import { uuid } from 'uuidv4';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Task } from '@root/lib/types/common';
 import { goalData, PRIORITY_VALUES } from '@root/lib/utils/dummies';
@@ -21,9 +21,14 @@ import {
   PopoverTrigger,
 } from '@root/components/ui/popover';
 import { useDialog } from '@root/providers/DialogProvider';
-import { useAppDispatch } from '@root/lib/redux/store';
+import { useAppDispatch, useAppSelector } from '@root/lib/redux/store';
 import { addTask, updateTask } from '@root/lib/redux/reducers/tasksReducer';
-import { DialogFooter, DialogHeader, DialogTitle } from '../ui/dialog';
+import {
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Badge } from '../ui/badge';
@@ -98,6 +103,8 @@ const TaskDialog = ({ id, data }: TaskDialogProps) => {
     };
   }
 
+  const tasks = useAppSelector((state) => state.tasks.tasks);
+
   const form = useForm({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -130,7 +137,7 @@ const TaskDialog = ({ id, data }: TaskDialogProps) => {
     } else {
       // Else add a new task
       // @ts-expect-error status is a string
-      dispatch(addTask({ id: uuidv4(), ...d, ...formData }));
+      dispatch(addTask({ ...d, ...formData, id: uuid() }));
     }
     closeDialog();
   };
@@ -140,6 +147,13 @@ const TaskDialog = ({ id, data }: TaskDialogProps) => {
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <DialogHeader>
           <DialogTitle>{data ? 'Edit' : 'Create'} task</DialogTitle>
+          {d.metadata?.cloneOf && (
+            <DialogDescription>
+              <FileWarning /> This task is a clone. Modifying or deleting this
+              task will also delete the original task and other clones. If you
+              want to make this a separate task, you can unlink it.
+            </DialogDescription>
+          )}
         </DialogHeader>
         <div className="grid grid-cols-4 gap-4 py-4">
           <FormItem className="space-y-0 col-span-4 grid grid-cols-4 items-center gap-4">
@@ -420,6 +434,26 @@ const TaskDialog = ({ id, data }: TaskDialogProps) => {
               {form.formState.errors?.dateAndTime?.message}
             </FormMessage>
           </FormItem>
+          {d.metadata?.cloneOf && (
+            <div className="space-y-0 col-span-4 grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="updatedAt" className="text-right">
+                Clone Of
+              </Label>
+              <div className="space-y-0 col-span-3">
+                <Badge className="min-h-6 max-w-full px-2 bg-accent text-foreground hover:bg-accent">
+                  <p
+                    id="updatedAt"
+                    className="text-muted-foreground col-span-3 text-sm"
+                  >
+                    {
+                      tasks.find((task) => task.id === d.metadata?.cloneOf)
+                        ?.title
+                    }
+                  </p>
+                </Badge>
+              </div>
+            </div>
+          )}
           <div className="space-y-0 col-span-4 grid grid-cols-4 items-center gap-4">
             <Label htmlFor="createdAt" className="text-right">
               Created At
