@@ -1,6 +1,7 @@
+'use client';
+
 import React from 'react';
 import { BellIcon, Megaphone } from 'lucide-react';
-import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 
 const NOTIFICATIONS = [
@@ -36,16 +37,13 @@ const NOTIFICATIONS = [
 
 const NotificationsMenu = () => (
   <Popover>
-    <PopoverTrigger asChild>
-      <Button
-        variant="ghost"
-        className="p-2 rounded-full w-[38px] h-[38px] relative"
-      >
-        <BellIcon className="w-full h-full" />
+    <PopoverTrigger>
+      <div className="p-2.5 relative border border-border rounded-md cursor-pointer">
+        <BellIcon className="w-[1.2rem] h-[1.2rem]" />
         {NOTIFICATIONS.length > 0 && (
-          <div className="absolute top-0.5 right-0.5 w-2 h-2 bg-red-600 rounded-full text-[6px] flex items-center justify-center" />
+          <div className="absolute top-[6px] right-[6px] w-2 h-2 bg-red-600 rounded-full text-[6px] flex items-center justify-center" />
         )}
-      </Button>
+      </div>
     </PopoverTrigger>
     <PopoverContent
       sideOffset={5}

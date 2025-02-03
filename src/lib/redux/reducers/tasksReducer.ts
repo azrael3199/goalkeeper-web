@@ -1,16 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Task } from '@root/lib/types/common';
 
-export type Task = {
-  id: string;
-  title?: string;
-  description?: string;
-  parentId?: string;
-  priority?: number;
-  hoursRequired?: number;
-  hoursSpent?: number;
-  status: 'TODO' | 'IN_PROGRESS' | 'DONE';
-};
 interface TasksState {
   tasks: Task[];
 }
@@ -40,9 +31,12 @@ const tasksSlice = createSlice({
       const { payload: id } = action;
       state.tasks = state.tasks.filter((task) => task.id !== id);
     },
+    setTasks: (state: TasksState, action: PayloadAction<Task[]>) => {
+      state.tasks = action.payload;
+    },
   },
 });
 
-export const { addTask, updateTask, deleteTask } = tasksSlice.actions;
+export const { addTask, updateTask, deleteTask, setTasks } = tasksSlice.actions;
 
 export default tasksSlice.reducer;

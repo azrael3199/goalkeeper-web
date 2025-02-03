@@ -1,14 +1,14 @@
 'use client';
 
-import Header from '@root/components/LandingHeader';
+import Header from '@root/components/Landing/LandingHeader';
 import { AppContext } from '@root/providers/AppProvider';
 import { useContext, useEffect } from 'react';
-import Hero from '@root/components/Hero';
-import Stats from '@root/components/Stats';
-import Features from '@root/components/Features';
-import Dashboard from '@root/components/Dashboard';
-import Pricing from '@root/components/Pricing';
-import AboutUs from '@root/components/AboutUs';
+import Hero from '@root/components/Landing/Hero';
+import Stats from '@root/components/Landing/Stats';
+import Features from '@root/components/Landing/Features';
+import Dashboard from '@root/components/Landing/Dashboard';
+import Pricing from '@root/components/Landing/Pricing';
+import AboutUs from '@root/components/Landing/AboutUs';
 
 const LandingPage = () => {
   const { isLoading, setLoading } = useContext(AppContext);

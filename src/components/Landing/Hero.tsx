@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { ChevronRight, Play } from 'lucide-react';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 
 export default function Hero() {
   return (

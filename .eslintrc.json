@@ -20,7 +20,7 @@
   ],
   "ignorePatterns": ["**/*/node_modules/", "public/**/*"],
   "rules": {
-    "indent": "warn",
+    "indent": "off",
     "no-shadow": "off",
     "brace-style": "warn",
     "operator-linebreak": "off",

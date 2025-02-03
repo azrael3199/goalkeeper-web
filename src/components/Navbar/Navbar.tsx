@@ -7,7 +7,6 @@ import React from 'react';
 import env from '@root/environment';
 import { Separator } from '../ui/separator';
 import NAV_ITEMS from './NavItems';
-import DarkThemeToggle from '../DarkThemeToggle';
 
 interface SidebarSectionItemProps {
   children: React.ReactNode;
@@ -26,9 +25,9 @@ const SidebarSectionItem: React.FC<
   <div
     {...props}
     className={cn(
-      'flex gap-3 w-full items-center text-gray-400 text-sm p-2 px-4 cursor-pointer rounded-md hover:bg-slate-800 hover:dark:bg-slate-900',
+      'flex gap-3 w-full items-center text-gray-400 text-sm p-2 px-4 cursor-pointer rounded-md hover:bg-secondary',
       {
-        'bg-slate-800 hover:bg-slate-800 hover:dark:bg-slate-800': selected,
+        'bg-accent hover:bg-accent': selected,
         'font-semibold text-gray-200': selected,
       },
       // eslint-disable-next-line react/prop-types
@@ -97,9 +96,6 @@ const Navbar: React.FC = () => {
             </SidebarSectionItem>
           ))}
         </SidebarSection>
-      </div>
-      <div className="p-4 flex items-center">
-        <DarkThemeToggle />
       </div>
     </aside>
   );
