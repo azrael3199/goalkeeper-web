@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoalKeeper — Turn Ambition Into Achievement</title>
+    <meta
+      name="description"
+      content="GoalKeeper transforms personal goals into shared adventures. Track tasks, earn XP, and grow with your accountability community."
+    />
+    <meta name="theme-color" content="#1A3C6E" />
+    <link rel="apple-touch-icon" href="/vite.svg" />
+
+    <!-- FOUC prevention: apply dark class before React hydrates -->
+    <script>
+      try {
+        var theme =
+          JSON.parse(localStorage.getItem("gk-ui-prefs") || "{}").state
+            ?.theme || "system";
+        if (
+          theme === "dark" ||
+          (theme === "system" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches)
+        ) {
+          document.documentElement.classList.add("dark");
+        }
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
