@@ -1,0 +1,22 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "store",
+  "projectType": "application",
+  "sourceRoot": "services/store",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build -o ../../bin/store ./cmd/server",
+        "cwd": "services/store"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test ./...",
+        "cwd": "services/store"
+      }
+    }
+  }
+}

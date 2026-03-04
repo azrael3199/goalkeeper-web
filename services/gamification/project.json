@@ -1,0 +1,22 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "gamification",
+  "projectType": "application",
+  "sourceRoot": "services/gamification",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build -o ../../bin/gamification ./cmd/server",
+        "cwd": "services/gamification"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test ./...",
+        "cwd": "services/gamification"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "users",
+  "projectType": "application",
+  "sourceRoot": "services/users",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build -o ../../bin/users ./cmd/server",
+        "cwd": "services/users"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test ./...",
+        "cwd": "services/users"
+      }
+    }
+  }
+}

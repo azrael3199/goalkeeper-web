@@ -1,0 +1,22 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "goals",
+  "projectType": "application",
+  "sourceRoot": "services/goals",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build -o ../../bin/goals ./cmd/server",
+        "cwd": "services/goals"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test ./...",
+        "cwd": "services/goals"
+      }
+    }
+  }
+}

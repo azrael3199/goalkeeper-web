@@ -1,0 +1,276 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: goalkeeper
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d goalkeeper"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nats:
+    image: nats:2.10-alpine
+    command: ["-js", "-m", "8222"]
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - nats_data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8222/varz"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Observability
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686"
+      - "4317:4317"
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+
+  pgweb:
+    image: sosedoff/pgweb
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+
+  # Internal Services Placeholder
+  # Note: Requires building Dockerfiles which we'll setup soon.
+  users-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.users
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9001
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9001:9001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      nats:
+        condition: service_healthy
+
+  goals-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.goals
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9002
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9002:9002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  tasks-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.tasks
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9003
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9003:9003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  community-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.community
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9004
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9004:9004"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  gamification-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.gamification
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9005
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9005:9005"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  verification-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.verification
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9006
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9006:9006"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  store-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.store
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9007
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9007:9007"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  notification-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.notification
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9008
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9008:9008"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  search-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.search
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9009
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9009:9009"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  analytics-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.analytics
+    environment:
+      - DATABASE_URL=postgres://user:pass@postgres:5432/goalkeeper?sslmode=disable
+      - REDIS_URL=redis://redis:6379
+      - NATS_URL=nats://nats:4222
+      - PORT=9010
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://jaeger:4317
+    ports:
+      - "9010:9010"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api-gateway:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - CLERK_JWKS_URL=https://composed-ocelot-1.clerk.accounts.dev/.well-known/jwks.json
+      - USERS_SERVICE_URL=http://users-svc:9001
+      - GOALS_SERVICE_URL=http://goals-svc:9002
+      - TASKS_SERVICE_URL=http://tasks-svc:9003
+      - COMMUNITY_SERVICE_URL=http://community-svc:9004
+      - GAMIFICATION_SERVICE_URL=http://gamification-svc:9005
+      - VERIFICATION_SERVICE_URL=http://verification-svc:9006
+      - STORE_SERVICE_URL=http://store-svc:9007
+      - NOTIFICATION_SERVICE_URL=http://notification-svc:9008
+      - SEARCH_SERVICE_URL=http://search-svc:9009
+      - ANALYTICS_SERVICE_URL=http://analytics-svc:9010
+    depends_on:
+      - users-svc
+      - goals-svc
+
+  web:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.web
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+
+volumes:
+  postgres_data:
+  redis_data:
+  nats_data:

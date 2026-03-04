@@ -1,0 +1,74 @@
+version: '3.8'
+
+# Dev/Staging environments normally depend on managed databases and event buses
+# Overrides relative to the original Docker files
+services:
+  users-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.users
+    ports:
+      - "9001:9001"
+
+  goals-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.goals
+    ports:
+      - "9002:9002"
+
+  tasks-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.tasks
+    ports:
+      - "9003:9003"
+    
+  community-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.community
+    ports:
+      - "9004:9004"
+
+  gamification-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.gamification
+    ports:
+      - "9005:9005"
+
+  verification-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.verification
+    ports:
+      - "9006:9006"
+
+  store-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.store
+    ports:
+      - "9007:9007"
+
+  notification-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.notification
+    ports:
+      - "9008:9008"
+
+  search-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.search
+    ports:
+      - "9009:9009"
+
+  analytics-svc:
+    build:
+      context: ../../
+      dockerfile: infra/docker/Dockerfile.analytics
+    ports:
+      - "9010:9010"

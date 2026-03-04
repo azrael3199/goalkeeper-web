@@ -1,0 +1,22 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "analytics",
+  "projectType": "application",
+  "sourceRoot": "services/analytics",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go build -o ../../bin/analytics ./cmd/server",
+        "cwd": "services/analytics"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "go test ./...",
+        "cwd": "services/analytics"
+      }
+    }
+  }
+}

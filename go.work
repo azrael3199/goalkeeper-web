@@ -1,0 +1,17 @@
+go 1.25.0
+
+use (
+	./pkg
+	./pkg/middleware
+	./services/analytics
+	./services/api-gateway
+	./services/community
+	./services/gamification
+	./services/goals
+	./services/notification
+	./services/search
+	./services/store
+	./services/tasks
+	./services/users
+	./services/verification
+)
